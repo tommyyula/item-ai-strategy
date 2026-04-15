@@ -35,7 +35,7 @@ export default function AgentsSection() {
     <section id="agents" className="py-24 md:py-32">
       <div className="container max-w-6xl">
         <SectionTitle
-          number="03"
+          number="04"
           title="Office Automation Agent化"
           subtitle="从「系统记录」到「系统行动」的转变——我们在企业内部办公和运营流程中的Agent化尝试与成果。"
         />

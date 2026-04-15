@@ -38,7 +38,7 @@ export default function HardwareSection() {
     <section id="hardware" className="py-24 md:py-32">
       <div className="container max-w-6xl">
         <SectionTitle
-          number="08"
+          number="09"
           title="硬件与算力基础设施"
           subtitle="从云端到边缘的演进——支撑庞大的Agent集群和物理执行，仅靠软件是不够的。"
         />

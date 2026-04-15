@@ -24,7 +24,7 @@ export default function PhysicalSection() {
     <section id="physical" className="py-24 md:py-32">
       <div className="container max-w-6xl">
         <SectionTitle
-          number="09"
+          number="10"
           title="走向物理世界"
           subtitle="硬件无关的WES（仓库执行系统）——不绑定任何单一硬件厂商，让智能真正离开屏幕。"
         />

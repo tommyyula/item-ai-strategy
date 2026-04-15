@@ -26,7 +26,7 @@ export default function LLMSection() {
     <section id="llm" className="py-24 md:py-32">
       <div className="container max-w-6xl">
         <SectionTitle
-          number="07"
+          number="08"
           title="大模型选型策略"
           subtitle="务实的混合路由策略（Hybrid Router），不绑定单一模型——与联想「Hybrid AI」理念高度一致。"
         />

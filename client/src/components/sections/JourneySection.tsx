@@ -7,7 +7,7 @@ export default function JourneySection() {
     <section id="journey" className="py-24 md:py-32">
       <div className="container max-w-5xl">
         <SectionTitle
-          number="04"
+          number="05"
           title="问题与心路历程"
           subtitle="坦诚分享踩过的坑和认知转变——从迷信大模型到重构架构的觉醒之路。"
         />

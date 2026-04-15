@@ -19,7 +19,7 @@ export default function HarnessSection() {
     <section id="harness" className="py-24 md:py-32">
       <div className="container max-w-6xl">
         <SectionTitle
-          number="06"
+          number="07"
           title="Harness：AI的约束与护城河"
           subtitle="Agent = Model + Harness。Harness是包围在模型外围，用于引导、约束和验证AI输出的结构化软件环境。"
         />

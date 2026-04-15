@@ -1,6 +1,7 @@
 import SideNav from "@/components/SideNav";
 import HeroSection from "@/components/sections/HeroSection";
 import EvolutionSection from "@/components/sections/EvolutionSection";
+import VideoShowcaseSection from "@/components/sections/VideoShowcaseSection";
 import AgentsSection from "@/components/sections/AgentsSection";
 import JourneySection from "@/components/sections/JourneySection";
 import OntologySection from "@/components/sections/OntologySection";
@@ -18,6 +19,8 @@ export default function Home() {
         <HeroSection />
         <div className="section-divider" />
         <EvolutionSection />
+        <div className="section-divider" />
+        <VideoShowcaseSection />
         <div className="section-divider" />
         <AgentsSection />
         <div className="section-divider" />

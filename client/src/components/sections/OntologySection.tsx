@@ -10,7 +10,7 @@ export default function OntologySection() {
     <section id="ontology" className="py-24 md:py-32">
       <div className="container max-w-6xl">
         <SectionTitle
-          number="05"
+          number="06"
           title="Ontology：企业AI的语义骨干"
           subtitle="通用大模型不懂企业的「行业暗知识」和「SOP」。没有Ontology，AI Agent无法在企业级场景中做到准确和行为一致。"
         />
