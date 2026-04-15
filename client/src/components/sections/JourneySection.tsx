@@ -1,3 +1,9 @@
+/**
+ * Design: Deep Space Command — Journey Section
+ * No red/destructive colors — use amber-400 for warnings, cyan for insights
+ * All text clearly readable on dark background
+ */
+
 import SectionTitle from "@/components/SectionTitle";
 import AnimatedSection from "@/components/AnimatedSection";
 import { AlertTriangle, Lightbulb, ArrowDown } from "lucide-react";
@@ -16,17 +22,17 @@ export default function JourneySection() {
 
         <div className="relative">
           {/* Timeline line */}
-          <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-destructive/60 via-muted-foreground/20 to-cyan-glow/60" />
+          <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-amber-400/60 via-muted-foreground/20 to-cyan-glow/60" />
 
           {/* Phase 1: The Trap */}
           <AnimatedSection direction="left" className="relative mb-16">
             <div className="md:grid md:grid-cols-2 md:gap-12">
               <div className="md:text-right md:pr-8">
                 <div className="flex items-center gap-3 mb-1 md:justify-end">
-                  <AlertTriangle className="w-5 h-5 text-destructive" />
-                  <span className="font-mono text-sm text-destructive tracking-wider">Early Pitfall</span>
+                  <AlertTriangle className="w-5 h-5 text-amber-400" />
+                  <span className="font-mono text-sm text-amber-400 tracking-wider">Early Pitfall</span>
                 </div>
-                <p className="text-xs text-destructive/40 mb-4 md:text-right">早期陷阱</p>
+                <p className="text-xs text-amber-400/50 mb-4 md:text-right">早期陷阱</p>
                 <h3 className="text-2xl font-bold mb-1">Over-reliance on LLM "General Capabilities"</h3>
                 <p className="text-sm text-muted-foreground/50 mb-4">迷信大模型的「通用能力」</p>
                 <p className="text-muted-foreground leading-relaxed">
@@ -41,7 +47,7 @@ export default function JourneySection() {
                     "Unreliable Execution",
                     "Compliance Failure",
                   ].map((t) => (
-                    <span key={t} className="text-xs px-2.5 py-1 rounded-full bg-destructive/10 text-destructive border border-destructive/20 font-mono">
+                    <span key={t} className="text-xs px-2.5 py-1 rounded-full bg-amber-400/10 text-amber-400 border border-amber-400/20 font-mono">
                       {t}
                     </span>
                   ))}
@@ -49,7 +55,7 @@ export default function JourneySection() {
               </div>
               <div className="hidden md:block" />
             </div>
-            <div className="absolute left-6 md:left-1/2 top-1 w-3 h-3 rounded-full bg-destructive -translate-x-1.5 ring-4 ring-background" />
+            <div className="absolute left-6 md:left-1/2 top-1 w-3 h-3 rounded-full bg-amber-400 -translate-x-1.5 ring-4 ring-background" />
           </AnimatedSection>
 
           {/* Arrow */}

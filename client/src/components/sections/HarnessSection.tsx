@@ -1,3 +1,9 @@
+/**
+ * Design: Deep Space Command — Harness Section
+ * No red/destructive colors — Generic Harness uses muted slate/gray tones
+ * Business Harness uses cyan, Architecture uses cyan/purple
+ */
+
 import SectionTitle from "@/components/SectionTitle";
 import AnimatedSection from "@/components/AnimatedSection";
 import GlowCard from "@/components/GlowCard";
@@ -56,30 +62,32 @@ export default function HarnessSection() {
             </AnimatedSection>
 
             <div className="grid md:grid-cols-2 gap-6">
+              {/* Generic Harness — muted slate tones instead of red */}
               <AnimatedSection direction="left">
-                <GlowCard className="p-6 h-full border-l-2 border-l-destructive/50">
+                <GlowCard className="p-6 h-full border-l-2 border-l-slate-400/50">
                   <div className="flex items-center gap-3 mb-1">
-                    <TrendingDown className="w-5 h-5 text-destructive" />
+                    <TrendingDown className="w-5 h-5 text-slate-400" />
                     <h3 className="text-lg font-bold">Generic Harness</h3>
                   </div>
-                  <p className="text-xs text-destructive/50 mb-4">通用 Harness</p>
+                  <p className="text-xs text-slate-400/60 mb-4">通用 Harness</p>
                   <p className="text-sm text-muted-foreground leading-relaxed mb-1">
                     Infrastructure-level capabilities: sandbox isolation, credential management, crash recovery, context management, MCP protocol, etc.
                   </p>
                   <p className="text-xs text-muted-foreground/40 leading-relaxed mb-4">
                     沙盒隔离、凭证管理、崩溃恢复、上下文管理、MCP协议等基础设施级能力。
                   </p>
-                  <div className="p-3 rounded bg-destructive/5 border border-destructive/15">
-                    <p className="text-xs text-destructive font-mono">
+                  <div className="p-3 rounded bg-slate-400/5 border border-slate-400/15">
+                    <p className="text-xs text-slate-400 font-mono">
                       Depreciates with model upgrades — belongs to model vendors' territory, gradually becoming commoditized infrastructure
                     </p>
-                    <p className="text-[10px] text-destructive/50 mt-1">
+                    <p className="text-[10px] text-slate-400/50 mt-1">
                       随模型升级而贬值 — 属于模型原厂领地，像水电煤一样会逐渐基础设施化
                     </p>
                   </div>
                 </GlowCard>
               </AnimatedSection>
 
+              {/* Business Harness — cyan tones */}
               <AnimatedSection direction="right">
                 <GlowCard glowColor="cyan" className="p-6 h-full border-l-2 border-l-cyan-glow/50">
                   <div className="flex items-center gap-3 mb-1">

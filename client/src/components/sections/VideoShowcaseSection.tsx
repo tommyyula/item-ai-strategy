@@ -31,7 +31,7 @@ export default function VideoShowcaseSection() {
         <AnimatedSection delay={0.15}>
           <div className="flex flex-wrap justify-center gap-4 mb-10">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-300 text-sm font-mono tracking-wide">
-              <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
               Latest 最新成果
             </span>
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 text-sm font-mono tracking-wide">
