@@ -25,22 +25,26 @@ export default function SectionTitle({
         </span>
         <div className="h-px w-12 bg-gradient-to-r from-cyan-glow/60 to-transparent" />
       </div>
-      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
-        {title}
-      </h2>
+      {/* English title is now primary */}
       {titleEn && (
-        <p className="mt-2 text-lg md:text-xl text-muted-foreground/60 font-light italic tracking-wide">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
           {titleEn}
-        </p>
+        </h2>
       )}
-      {subtitle && (
-        <p className="mt-4 text-lg text-muted-foreground max-w-3xl leading-relaxed">
-          {subtitle}
-        </p>
-      )}
+      {/* Chinese title is now secondary */}
+      <p className={`${titleEn ? "mt-2 text-lg md:text-xl text-muted-foreground/60 font-light tracking-wide" : "text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight"}`}>
+        {title}
+      </p>
+      {/* English subtitle is now primary */}
       {subtitleEn && (
-        <p className="mt-1.5 text-base text-muted-foreground/50 max-w-3xl leading-relaxed italic">
+        <p className="mt-4 text-lg text-muted-foreground max-w-3xl leading-relaxed">
           {subtitleEn}
+        </p>
+      )}
+      {/* Chinese subtitle is now secondary */}
+      {subtitle && (
+        <p className={`${subtitleEn ? "mt-1.5 text-sm text-muted-foreground/50 max-w-3xl leading-relaxed" : "mt-4 text-lg text-muted-foreground max-w-3xl leading-relaxed"}`}>
+          {subtitle}
         </p>
       )}
     </AnimatedSection>

@@ -31,42 +31,46 @@ export default function HeroSection() {
           </div>
         </motion.div>
 
+        {/* English title is now primary */}
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4 }}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-4"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-3"
         >
-          <span className="block">从数字化到</span>
+          <span className="block">From Digitalization to</span>
           <span className="block mt-2 bg-gradient-to-r from-cyan-glow via-foreground to-purple-glow bg-clip-text text-transparent">
-            物理AI
+            Physical AI
           </span>
         </motion.h1>
 
+        {/* Chinese title is now secondary */}
         <motion.p
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className="text-xl md:text-2xl text-muted-foreground/50 font-light italic tracking-wide mb-6"
+          className="text-lg md:text-xl text-muted-foreground/50 font-light tracking-wide mb-6"
         >
-          From Digitalization to Physical AI
+          从数字化到物理AI
         </motion.p>
 
+        {/* English description is now primary */}
         <motion.p
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6 }}
           className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-1"
         >
-          Item过去一年的AI实践、挑战与认知重构
+          Item's AI Journey Over the Past Year — Practices, Challenges &amp; Cognitive Restructuring
         </motion.p>
+        {/* Chinese description is now secondary */}
         <motion.p
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.65 }}
-          className="text-base text-muted-foreground/50 max-w-2xl mx-auto leading-relaxed italic mb-4"
+          className="text-sm text-muted-foreground/40 max-w-2xl mx-auto leading-relaxed mb-4"
         >
-          Item's AI Journey Over the Past Year — Practices, Challenges & Cognitive Restructuring
+          Item过去一年的AI实践、挑战与认知重构
         </motion.p>
 
         <motion.div
@@ -75,11 +79,13 @@ export default function HeroSection() {
           transition={{ duration: 1, delay: 0.9 }}
           className="mt-2 mb-10"
         >
-          <p className="text-sm font-mono text-cyan-glow/60 tracking-wide">
-            Item 是 UNIS 集团所有供应链转型项目的实施底座
-          </p>
-          <p className="text-xs font-mono text-cyan-glow/35 tracking-wide mt-1 italic">
+          {/* English UNIS statement is now primary */}
+          <p className="text-sm font-mono text-cyan-glow/70 tracking-wide">
             Item serves as the implementation foundation for all supply chain transformation projects across UNIS Group
+          </p>
+          {/* Chinese UNIS statement is now secondary */}
+          <p className="text-xs font-mono text-cyan-glow/35 tracking-wide mt-1">
+            Item 是 UNIS 集团所有供应链转型项目的实施底座
           </p>
         </motion.div>
 
@@ -91,7 +97,7 @@ export default function HeroSection() {
         >
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-cyan-glow" />
-            <span>AI 中间件层 <span className="text-muted-foreground/40 italic text-xs">AI Middleware</span></span>
+            <span>AI Middleware <span className="text-muted-foreground/40 text-xs">AI中间件层</span></span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-purple-glow" />

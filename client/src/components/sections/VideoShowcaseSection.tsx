@@ -1,5 +1,5 @@
 /**
- * Design: Deep Space Command — Video Showcase Section (Bilingual)
+ * Design: Deep Space Command — Video Showcase Section (Bilingual, EN primary)
  * Positioned between Evolution and Agents sections
  */
 
@@ -32,13 +32,13 @@ export default function VideoShowcaseSection() {
           <div className="flex flex-wrap justify-center gap-4 mb-10">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-300 text-sm font-mono tracking-wide">
               <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-              最新成果 Latest
+              Latest 最新成果
             </span>
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 text-sm font-mono tracking-wide">
-              多Agent协作 Multi-Agent
+              Multi-Agent 多Agent协作
             </span>
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-300 text-sm font-mono tracking-wide">
-              数字 × 物理 Digital × Physical
+              Digital × Physical 数字×物理
             </span>
           </div>
         </AnimatedSection>
@@ -66,24 +66,24 @@ export default function VideoShowcaseSection() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 max-w-4xl mx-auto">
             <HighlightCard
               icon="🤖"
-              title="Agent 协同编排"
-              titleEn="Agent Orchestration"
-              description="多个专业Agent各司其职——从任务规划、路径优化到实时执行，形成完整的决策-执行闭环。"
-              descriptionEn="Specialized Agents each handle their domain — from task planning and path optimization to real-time execution, forming a complete decision-execution loop."
+              title="Agent Orchestration"
+              titleCn="Agent 协同编排"
+              description="Specialized Agents each handle their domain — from task planning and path optimization to real-time execution, forming a complete decision-execution loop."
+              descriptionCn="多个专业Agent各司其职——从任务规划、路径优化到实时执行，形成完整的决策-执行闭环。"
             />
             <HighlightCard
               icon="🌐"
-              title="数字↔物理打通"
-              titleEn="Digital ↔ Physical Bridge"
-              description="AI Agent的决策不再停留在屏幕上，而是直接驱动物理世界的机器人和设备完成真实作业。"
-              descriptionEn="AI Agent decisions no longer stay on screen — they directly drive robots and devices in the physical world to complete real operations."
+              title="Digital ↔ Physical Bridge"
+              titleCn="数字↔物理打通"
+              description="AI Agent decisions no longer stay on screen — they directly drive robots and devices in the physical world to complete real operations."
+              descriptionCn="AI Agent的决策不再停留在屏幕上，而是直接驱动物理世界的机器人和设备完成真实作业。"
             />
             <HighlightCard
               icon="⚡"
-              title="实时反馈回路"
-              titleEn="Real-time Feedback Loop"
-              description="物理世界的传感器数据实时回传，Agent动态调整策略，实现真正的闭环智能。"
-              descriptionEn="Sensor data from the physical world feeds back in real-time, enabling Agents to dynamically adjust strategies for true closed-loop intelligence."
+              title="Real-time Feedback Loop"
+              titleCn="实时反馈回路"
+              description="Sensor data from the physical world feeds back in real-time, enabling Agents to dynamically adjust strategies for true closed-loop intelligence."
+              descriptionCn="物理世界的传感器数据实时回传，Agent动态调整策略，实现真正的闭环智能。"
             />
           </div>
         </AnimatedSection>
@@ -95,15 +95,15 @@ export default function VideoShowcaseSection() {
 function HighlightCard({
   icon,
   title,
-  titleEn,
+  titleCn,
   description,
-  descriptionEn,
+  descriptionCn,
 }: {
   icon: string;
   title: string;
-  titleEn: string;
+  titleCn: string;
   description: string;
-  descriptionEn: string;
+  descriptionCn: string;
 }) {
   return (
     <motion.div
@@ -115,9 +115,9 @@ function HighlightCard({
       <div className="relative p-5 rounded-lg bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm">
         <div className="text-2xl mb-3">{icon}</div>
         <h4 className="text-white font-semibold text-sm mb-0.5 tracking-wide">{title}</h4>
-        <p className="text-white/30 text-xs italic mb-2">{titleEn}</p>
+        <p className="text-white/30 text-xs mb-2">{titleCn}</p>
         <p className="text-gray-400 text-xs leading-relaxed">{description}</p>
-        <p className="text-gray-500/60 text-[11px] leading-relaxed italic mt-1">{descriptionEn}</p>
+        <p className="text-gray-500/60 text-[11px] leading-relaxed mt-1">{descriptionCn}</p>
       </div>
     </motion.div>
   );

@@ -7,16 +7,16 @@ const WAREHOUSE_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhto
 const ARCH_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/architecture-bg-FYrCw7eGpAKAAaWrFiErBr.webp";
 
 const robots = [
-  { icon: Bot, name: "AirRob AMR", desc: "自主移动机器人", descEn: "Autonomous Mobile Robot" },
-  { icon: Box, name: "四向穿梭车", nameEn: "4-way Shuttle", desc: "高密度存储", descEn: "High-density Storage" },
-  { icon: Forklift, name: "Bluecore AGV", desc: "自动导引车", descEn: "Automated Guided Vehicle" },
-  { icon: Forklift, name: "无人叉车", nameEn: "Autonomous Forklift", desc: "自动搬运", descEn: "Automated Transport" },
+  { icon: Bot, nameEn: "AirRob AMR", nameCn: "AirRob AMR", descEn: "Autonomous Mobile Robot", descCn: "自主移动机器人" },
+  { icon: Box, nameEn: "4-way Shuttle", nameCn: "四向穿梭车", descEn: "High-density Storage", descCn: "高密度存储" },
+  { icon: Forklift, nameEn: "Bluecore AGV", nameCn: "Bluecore AGV", descEn: "Automated Guided Vehicle", descCn: "自动导引车" },
+  { icon: Forklift, nameEn: "Autonomous Forklift", nameCn: "无人叉车", descEn: "Automated Transport", descCn: "自动搬运" },
 ];
 
 const visionAI = [
-  { icon: Eye, name: "员工监控Agent", nameEn: "Staff Monitoring Agent", desc: "行为分析与安全合规", descEn: "Behavior analysis & safety compliance" },
-  { icon: Camera, name: "AI摄像头审计", nameEn: "AI Camera Audit", desc: "打包台视频QC", descEn: "Packing station video QC" },
-  { icon: ScanLine, name: "YMS道闸识别", nameEn: "YMS Gate Recognition", desc: "车辆智能识别与调度", descEn: "Intelligent vehicle recognition & scheduling" },
+  { icon: Eye, nameEn: "Staff Monitoring Agent", nameCn: "员工监控Agent", descEn: "Behavior analysis & safety compliance", descCn: "行为分析与安全合规" },
+  { icon: Camera, nameEn: "AI Camera Audit", nameCn: "AI摄像头审计", descEn: "Packing station video QC", descCn: "打包台视频QC" },
+  { icon: ScanLine, nameEn: "YMS Gate Recognition", nameCn: "YMS道闸识别", descEn: "Intelligent vehicle recognition & scheduling", descCn: "车辆智能识别与调度" },
 ];
 
 export default function PhysicalSection() {
@@ -39,10 +39,10 @@ export default function PhysicalSection() {
             <div className="absolute bottom-6 left-6 max-w-md">
               <p className="text-xs font-mono text-cyan-glow tracking-wider mb-2">HARDWARE-AGNOSTIC WES</p>
               <p className="text-sm text-foreground/80">
-                软件栈在超过1000万平方英尺的真实仓库生产环境中稳定运行
-              </p>
-              <p className="text-xs text-foreground/40 italic mt-1">
                 Software stack running stably in real warehouse production environments covering 10M+ sq ft
+              </p>
+              <p className="text-xs text-foreground/40 mt-1">
+                软件栈在超过1000万平方英尺的真实仓库生产环境中稳定运行
               </p>
             </div>
           </div>
@@ -52,19 +52,19 @@ export default function PhysicalSection() {
           {/* Robot integrations */}
           <AnimatedSection direction="left">
             <GlowCard className="p-6 h-full">
-              <h3 className="font-bold mb-1">已集成的机器人设备</h3>
-              <p className="text-xs text-muted-foreground/50 italic mb-5">Integrated Robotic Equipment</p>
+              <h3 className="font-bold mb-1">Integrated Robotic Equipment</h3>
+              <p className="text-xs text-muted-foreground/50 mb-5">已集成的机器人设备</p>
               <div className="grid grid-cols-2 gap-3">
                 {robots.map((r) => (
-                  <div key={r.name} className="flex items-center gap-3 p-3 rounded-lg bg-secondary/30">
+                  <div key={r.nameEn} className="flex items-center gap-3 p-3 rounded-lg bg-secondary/30">
                     <div className="w-9 h-9 rounded-lg bg-cyan-glow/10 flex items-center justify-center shrink-0">
                       <r.icon className="w-4 h-4 text-cyan-glow" />
                     </div>
                     <div>
-                      <p className="text-sm font-medium">{r.name}</p>
-                      {"nameEn" in r && <p className="text-[10px] text-muted-foreground/30 italic">{r.nameEn}</p>}
-                      <p className="text-xs text-muted-foreground">{r.desc}</p>
-                      <p className="text-[10px] text-muted-foreground/30 italic">{r.descEn}</p>
+                      <p className="text-sm font-medium">{r.nameEn}</p>
+                      <p className="text-[10px] text-muted-foreground/30">{r.nameCn}</p>
+                      <p className="text-xs text-muted-foreground">{r.descEn}</p>
+                      <p className="text-[10px] text-muted-foreground/30">{r.descCn}</p>
                     </div>
                   </div>
                 ))}
@@ -75,19 +75,19 @@ export default function PhysicalSection() {
           {/* Vision AI */}
           <AnimatedSection direction="right">
             <GlowCard glowColor="purple" className="p-6 h-full">
-              <h3 className="font-bold mb-1">视觉与边缘AI应用</h3>
-              <p className="text-xs text-muted-foreground/50 italic mb-5">Vision & Edge AI Applications</p>
+              <h3 className="font-bold mb-1">Vision & Edge AI Applications</h3>
+              <p className="text-xs text-muted-foreground/50 mb-5">视觉与边缘AI应用</p>
               <div className="space-y-3 mb-5">
                 {visionAI.map((v) => (
-                  <div key={v.name} className="flex items-center gap-3 p-3 rounded-lg bg-secondary/30">
+                  <div key={v.nameEn} className="flex items-center gap-3 p-3 rounded-lg bg-secondary/30">
                     <div className="w-9 h-9 rounded-lg bg-purple-glow/10 flex items-center justify-center shrink-0">
                       <v.icon className="w-4 h-4 text-purple-glow" />
                     </div>
                     <div>
-                      <p className="text-sm font-medium">{v.name}</p>
-                      <p className="text-[10px] text-muted-foreground/30 italic">{v.nameEn}</p>
-                      <p className="text-xs text-muted-foreground">{v.desc}</p>
-                      <p className="text-[10px] text-muted-foreground/30 italic">{v.descEn}</p>
+                      <p className="text-sm font-medium">{v.nameEn}</p>
+                      <p className="text-[10px] text-muted-foreground/30">{v.nameCn}</p>
+                      <p className="text-xs text-muted-foreground">{v.descEn}</p>
+                      <p className="text-[10px] text-muted-foreground/30">{v.descCn}</p>
                     </div>
                   </div>
                 ))}

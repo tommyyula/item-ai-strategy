@@ -69,10 +69,10 @@ export default function EvolutionSection() {
                     {p.phase}
                   </span>
                 </div>
-                <h3 className="text-xl font-bold mb-1">{p.title}</h3>
-                <p className="text-xs text-muted-foreground/50 italic mb-3">{p.titleEn}</p>
-                <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
-                <p className="text-xs text-muted-foreground/40 leading-relaxed italic mt-1">{p.descEn}</p>
+                <h3 className="text-xl font-bold mb-0.5">{p.titleEn}</h3>
+                <p className="text-xs text-muted-foreground/50 mb-3">{p.title}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">{p.descEn}</p>
+                <p className="text-xs text-muted-foreground/40 leading-relaxed mt-1">{p.desc}</p>
               </GlowCard>
             </AnimatedSection>
           ))}
@@ -86,8 +86,8 @@ export default function EvolutionSection() {
                 <div className="text-4xl md:text-5xl font-bold font-mono glow-text-cyan text-cyan-glow mb-2">
                   <CountUp end={m.value} suffix={m.suffix} prefix={m.prefix} duration={2.5} />
                 </div>
-                <p className="text-sm text-muted-foreground">{m.label}</p>
-                <p className="text-xs text-muted-foreground/40 italic">{m.labelEn}</p>
+                <p className="text-sm text-muted-foreground">{m.labelEn}</p>
+                <p className="text-xs text-muted-foreground/40">{m.label}</p>
               </div>
             ))}
           </div>
