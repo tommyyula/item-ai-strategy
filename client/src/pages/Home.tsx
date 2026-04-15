@@ -1,24 +1,39 @@
-import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
-import { Streamdown } from 'streamdown';
+import SideNav from "@/components/SideNav";
+import HeroSection from "@/components/sections/HeroSection";
+import EvolutionSection from "@/components/sections/EvolutionSection";
+import AgentsSection from "@/components/sections/AgentsSection";
+import JourneySection from "@/components/sections/JourneySection";
+import OntologySection from "@/components/sections/OntologySection";
+import HarnessSection from "@/components/sections/HarnessSection";
+import LLMSection from "@/components/sections/LLMSection";
+import HardwareSection from "@/components/sections/HardwareSection";
+import PhysicalSection from "@/components/sections/PhysicalSection";
+import FutureSection from "@/components/sections/FutureSection";
 
-/**
- * All content in this page are only for example, replace with your own feature implementation
- * When building pages, remember your instructions in Frontend Best Practices, Design Guide and Common Pitfalls
- */
 export default function Home() {
-  // If theme is switchable in App.tsx, we can implement theme toggling like this:
-  // const { theme, toggleTheme } = useTheme();
-
   return (
-    <div className="min-h-screen flex flex-col">
-      <main>
-        {/* Example: lucide-react for icons */}
-        <Loader2 className="animate-spin" />
-        Example Page
-        {/* Example: Streamdown for markdown rendering */}
-        <Streamdown>Any **markdown** content</Streamdown>
-        <Button variant="default">Example Button</Button>
+    <div className="min-h-screen">
+      <SideNav />
+      <main className="lg:pl-16">
+        <HeroSection />
+        <div className="section-divider" />
+        <EvolutionSection />
+        <div className="section-divider" />
+        <AgentsSection />
+        <div className="section-divider" />
+        <JourneySection />
+        <div className="section-divider" />
+        <OntologySection />
+        <div className="section-divider" />
+        <HarnessSection />
+        <div className="section-divider" />
+        <LLMSection />
+        <div className="section-divider" />
+        <HardwareSection />
+        <div className="section-divider" />
+        <PhysicalSection />
+        <div className="section-divider" />
+        <FutureSection />
       </main>
     </div>
   );
