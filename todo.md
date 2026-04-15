@@ -1,6 +1,15 @@
-# TODO
+# TODO - Bilingual Conversion
 
-- [ ] Create VideoShowcaseSection component with YouTube embed
-- [ ] Update Home.tsx to insert video section between Evolution and Agents
-- [ ] Update SideNav to include the new section (shift numbering)
-- [ ] Test the page renders correctly
+- [ ] SectionTitle component: add English subtitle support
+- [ ] HeroSection: bilingual
+- [ ] EvolutionSection: bilingual
+- [ ] VideoShowcaseSection: bilingual
+- [ ] AgentsSection: bilingual
+- [ ] JourneySection: bilingual
+- [ ] OntologySection: bilingual
+- [ ] HarnessSection: bilingual
+- [ ] LLMSection: bilingual
+- [ ] HardwareSection: bilingual
+- [ ] PhysicalSection: bilingual
+- [ ] FutureSection: bilingual
+- [ ] SideNav: bilingual labels

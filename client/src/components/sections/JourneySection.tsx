@@ -9,7 +9,9 @@ export default function JourneySection() {
         <SectionTitle
           number="05"
           title="问题与心路历程"
+          titleEn="Challenges & Lessons Learned"
           subtitle="坦诚分享踩过的坑和认知转变——从迷信大模型到重构架构的觉醒之路。"
+          subtitleEn="An honest account of pitfalls and cognitive shifts — the awakening journey from blind faith in LLMs to architectural restructuring."
         />
 
         <div className="relative">
@@ -20,25 +22,33 @@ export default function JourneySection() {
           <AnimatedSection direction="left" className="relative mb-16">
             <div className="md:grid md:grid-cols-2 md:gap-12">
               <div className="md:text-right md:pr-8">
-                <div className="flex items-center gap-3 mb-4 md:justify-end">
+                <div className="flex items-center gap-3 mb-1 md:justify-end">
                   <AlertTriangle className="w-5 h-5 text-destructive" />
                   <span className="font-mono text-sm text-destructive tracking-wider">早期陷阱</span>
                 </div>
-                <h3 className="text-2xl font-bold mb-4">迷信大模型的「通用能力」</h3>
+                <p className="text-xs text-destructive/40 italic mb-4 md:text-right">Early Pitfall</p>
+                <h3 className="text-2xl font-bold mb-1">迷信大模型的「通用能力」</h3>
+                <p className="text-sm text-muted-foreground/50 italic mb-4">Over-reliance on LLM "General Capabilities"</p>
                 <p className="text-muted-foreground leading-relaxed">
                   我们曾试图单纯通过Prompt Engineering来解决所有复杂的业务问题。这种做法导致了严重的幻觉问题，系统执行不可靠，且完全无法应对复杂的企业合规红线和SOP要求。
                 </p>
+                <p className="text-sm text-muted-foreground/40 leading-relaxed italic mt-2">
+                  We attempted to solve all complex business problems purely through Prompt Engineering. This led to severe hallucination issues, unreliable execution, and a complete inability to handle enterprise compliance red lines and SOP requirements.
+                </p>
                 <div className="mt-4 flex flex-wrap gap-2 md:justify-end">
-                  {["幻觉问题", "执行不可靠", "合规失控"].map((t) => (
-                    <span key={t} className="text-xs px-2.5 py-1 rounded-full bg-destructive/10 text-destructive border border-destructive/20 font-mono">
-                      {t}
+                  {[
+                    { zh: "幻觉问题", en: "Hallucination" },
+                    { zh: "执行不可靠", en: "Unreliable Execution" },
+                    { zh: "合规失控", en: "Compliance Failure" },
+                  ].map((t) => (
+                    <span key={t.zh} className="text-xs px-2.5 py-1 rounded-full bg-destructive/10 text-destructive border border-destructive/20 font-mono">
+                      {t.zh} {t.en}
                     </span>
                   ))}
                 </div>
               </div>
               <div className="hidden md:block" />
             </div>
-            {/* Timeline dot */}
             <div className="absolute left-6 md:left-1/2 top-1 w-3 h-3 rounded-full bg-destructive -translate-x-1.5 ring-4 ring-background" />
           </AnimatedSection>
 
@@ -54,18 +64,27 @@ export default function JourneySection() {
             <div className="md:grid md:grid-cols-2 md:gap-12">
               <div className="hidden md:block" />
               <div className="md:pl-8">
-                <div className="flex items-center gap-3 mb-4">
+                <div className="flex items-center gap-3 mb-1">
                   <Lightbulb className="w-5 h-5 text-cyan-glow" />
                   <span className="font-mono text-sm text-cyan-glow tracking-wider">认知转折</span>
                 </div>
-                <h3 className="text-2xl font-bold mb-4">基础模型不是护城河</h3>
+                <p className="text-xs text-cyan-glow/40 italic mb-4">Cognitive Turning Point</p>
+                <h3 className="text-2xl font-bold mb-1">基础模型不是护城河</h3>
+                <p className="text-sm text-muted-foreground/50 italic mb-4">Foundation Models Are Not the Moat</p>
                 <p className="text-muted-foreground leading-relaxed">
                   我们意识到，随着模型的快速迭代和开源，通用能力会迅速商品化甚至贬值。真正的护城河在于<strong className="text-foreground">业务Harness</strong>和<strong className="text-foreground">本体知识库（Ontology）</strong>。
                 </p>
+                <p className="text-sm text-muted-foreground/40 leading-relaxed italic mt-2">
+                  We realized that as models rapidly iterate and go open-source, general capabilities quickly commoditize. The true moat lies in <strong className="text-foreground/60">Business Harness</strong> and <strong className="text-foreground/60">Ontology</strong>.
+                </p>
                 <div className="mt-6 p-4 rounded-lg bg-cyan-glow/5 border border-cyan-glow/20">
-                  <p className="text-sm text-cyan-glow font-medium mb-2">架构重构方向</p>
+                  <p className="text-sm text-cyan-glow font-medium mb-1">架构重构方向</p>
+                  <p className="text-xs text-cyan-glow/40 italic mb-2">Architecture Restructuring Direction</p>
                   <p className="text-sm text-muted-foreground">
                     把大脑（大模型）与手脚（执行工具）彻底解耦，全面转向构建强大的「业务Harness」和「Ontology知识库」。
+                  </p>
+                  <p className="text-xs text-muted-foreground/40 italic mt-1">
+                    Fully decouple the brain (LLM) from the hands (execution tools), pivoting entirely toward building robust Business Harness and Ontology knowledge bases.
                   </p>
                 </div>
               </div>

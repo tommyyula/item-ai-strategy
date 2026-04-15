@@ -3,14 +3,18 @@ import AnimatedSection from "./AnimatedSection";
 interface SectionTitleProps {
   number: string;
   title: string;
+  titleEn?: string;
   subtitle?: string;
+  subtitleEn?: string;
   align?: "left" | "center";
 }
 
 export default function SectionTitle({
   number,
   title,
+  titleEn,
   subtitle,
+  subtitleEn,
   align = "left",
 }: SectionTitleProps) {
   return (
@@ -24,9 +28,19 @@ export default function SectionTitle({
       <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
         {title}
       </h2>
+      {titleEn && (
+        <p className="mt-2 text-lg md:text-xl text-muted-foreground/60 font-light italic tracking-wide">
+          {titleEn}
+        </p>
+      )}
       {subtitle && (
         <p className="mt-4 text-lg text-muted-foreground max-w-3xl leading-relaxed">
           {subtitle}
+        </p>
+      )}
+      {subtitleEn && (
+        <p className="mt-1.5 text-base text-muted-foreground/50 max-w-3xl leading-relaxed italic">
+          {subtitleEn}
         </p>
       )}
     </AnimatedSection>

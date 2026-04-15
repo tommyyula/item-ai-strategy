@@ -9,29 +9,35 @@ const phases = [
     icon: Database,
     phase: "Phase 1",
     title: "数字化",
+    titleEn: "Digitalization",
     desc: "全栈SaaS（OMS/WMS/TMS/YMS）+ 数字孪生，让业务变得可被系统理解。",
+    descEn: "Full-stack SaaS (OMS/WMS/TMS/YMS) + Digital Twin, making business processes machine-readable.",
     color: "cyan" as const,
   },
   {
     icon: Brain,
     phase: "Phase 2",
     title: "AI Agent",
+    titleEn: "AI Agent",
     desc: "智能体编排 + 上下文记忆，让决策变得可被自动执行。",
+    descEn: "Agent orchestration + contextual memory, enabling decisions to be automatically executed.",
     color: "purple" as const,
   },
   {
     icon: Bot,
     phase: "Phase 3",
     title: "物理 AI",
+    titleEn: "Physical AI",
     desc: "WES/WCS + 各类机器人（AMR、AS/RS、分拣系统）深度整合，智能离开屏幕。",
+    descEn: "WES/WCS + robotics (AMR, AS/RS, sorters) deep integration — intelligence leaves the screen.",
     color: "cyan" as const,
   },
 ];
 
 const metrics = [
-  { value: 100000000, suffix: "+", label: "年处理订单量", prefix: "" },
-  { value: 55, suffix: "", label: "统一的传统WMS实例", prefix: "" },
-  { value: 10, suffix: "M+ sq ft", label: "仓库覆盖面积", prefix: "" },
+  { value: 100000000, suffix: "+", label: "年处理订单量", labelEn: "Annual Orders Processed", prefix: "" },
+  { value: 55, suffix: "", label: "统一的传统WMS实例", labelEn: "Legacy WMS Instances Unified", prefix: "" },
+  { value: 10, suffix: "M+ sq ft", label: "仓库覆盖面积", labelEn: "Warehouse Coverage", prefix: "" },
 ];
 
 export default function EvolutionSection() {
@@ -41,7 +47,9 @@ export default function EvolutionSection() {
         <SectionTitle
           number="02"
           title="AI 演进路径与规模验证"
+          titleEn="AI Evolution Path & Scale Validation"
           subtitle="从数字化到物理AI的三阶段演进框架，以及经过生产验证的规模数据。"
+          subtitleEn="A three-phase evolution framework from digitalization to Physical AI, backed by production-validated metrics."
         />
 
         {/* Three phases */}
@@ -61,8 +69,10 @@ export default function EvolutionSection() {
                     {p.phase}
                   </span>
                 </div>
-                <h3 className="text-xl font-bold mb-3">{p.title}</h3>
+                <h3 className="text-xl font-bold mb-1">{p.title}</h3>
+                <p className="text-xs text-muted-foreground/50 italic mb-3">{p.titleEn}</p>
                 <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
+                <p className="text-xs text-muted-foreground/40 leading-relaxed italic mt-1">{p.descEn}</p>
               </GlowCard>
             </AnimatedSection>
           ))}
@@ -77,6 +87,7 @@ export default function EvolutionSection() {
                   <CountUp end={m.value} suffix={m.suffix} prefix={m.prefix} duration={2.5} />
                 </div>
                 <p className="text-sm text-muted-foreground">{m.label}</p>
+                <p className="text-xs text-muted-foreground/40 italic">{m.labelEn}</p>
               </div>
             ))}
           </div>

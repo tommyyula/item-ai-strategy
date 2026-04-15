@@ -7,17 +7,23 @@ const visions = [
   {
     icon: Handshake,
     title: "生态融合",
+    titleEn: "Ecosystem Integration",
     desc: "将Item的软件栈与联想的边缘计算硬件及机器人进行深度生态融合，共建「软件定义硬件」的解决方案。",
+    descEn: "Deep ecosystem integration of Item's software stack with Lenovo's edge computing hardware and robotics, co-building 'software-defined hardware' solutions.",
   },
   {
     icon: Target,
     title: "联合参考案例",
+    titleEn: "Joint Reference Cases",
     desc: "以联想内部的AMR Zone Picking项目作为起点，共同打磨联合解决方案并验证商业价值。",
+    descEn: "Starting with Lenovo's internal AMR Zone Picking project, jointly refining solutions and validating business value.",
   },
   {
     icon: Rocket,
     title: "对外输出",
+    titleEn: "External Go-to-Market",
     desc: "不仅服务于联想自身的供应链升级，更要将联合解决方案向外输出，共同构建下一代智能仓库基础设施。",
+    descEn: "Beyond serving Lenovo's own supply chain upgrades, exporting joint solutions externally to co-build next-gen smart warehouse infrastructure.",
   },
 ];
 
@@ -28,7 +34,9 @@ export default function FutureSection() {
         <SectionTitle
           number="11"
           title="合作展望"
+          titleEn="Collaboration Vision"
           subtitle="与联想的联合价值——从内部验证到对外输出的战略路径。"
+          subtitleEn="Joint value with Lenovo — a strategic path from internal validation to external go-to-market."
           align="center"
         />
 
@@ -39,8 +47,10 @@ export default function FutureSection() {
                 <div className="w-14 h-14 rounded-xl bg-cyan-glow/10 flex items-center justify-center mx-auto mb-5 group-hover:bg-cyan-glow/20 transition-colors">
                   <v.icon className="w-7 h-7 text-cyan-glow" />
                 </div>
-                <h3 className="text-lg font-bold mb-3">{v.title}</h3>
+                <h3 className="text-lg font-bold mb-0.5">{v.title}</h3>
+                <p className="text-xs text-muted-foreground/50 italic mb-3">{v.titleEn}</p>
                 <p className="text-sm text-muted-foreground leading-relaxed">{v.desc}</p>
+                <p className="text-xs text-muted-foreground/40 leading-relaxed italic mt-2">{v.descEn}</p>
               </GlowCard>
             </AnimatedSection>
           ))}
@@ -55,8 +65,11 @@ export default function FutureSection() {
                 Item &times; Lenovo = Next-Gen Warehouse Infrastructure
               </span>
             </div>
-            <p className="text-muted-foreground leading-relaxed mb-8">
+            <p className="text-muted-foreground leading-relaxed mb-2">
               Item 作为 UNIS 集团所有供应链转型项目的实施底座，已经在生产环境中验证了从数字化到物理AI的完整路径。我们期待与联想携手，将这套经过实战检验的AI中间件层与联想的硬件生态深度融合，共同定义下一代智能仓库的标准。
+            </p>
+            <p className="text-sm text-muted-foreground/40 leading-relaxed italic">
+              As the implementation foundation for all supply chain transformation projects across UNIS Group, Item has validated the complete path from digitalization to Physical AI in production environments. We look forward to partnering with Lenovo, deeply integrating this battle-tested AI middleware layer with Lenovo's hardware ecosystem, and jointly defining the standard for next-generation smart warehouses.
             </p>
           </div>
         </AnimatedSection>

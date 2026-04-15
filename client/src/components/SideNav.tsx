@@ -2,17 +2,17 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
 const sections = [
-  { id: "hero", label: "01", title: "开场" },
-  { id: "evolution", label: "02", title: "演进" },
-  { id: "video", label: "03", title: "实录" },
-  { id: "agents", label: "04", title: "Agent" },
-  { id: "journey", label: "05", title: "心路" },
+  { id: "hero", label: "01", title: "开场 Opening" },
+  { id: "evolution", label: "02", title: "演进 Evolution" },
+  { id: "video", label: "03", title: "实录 Demo" },
+  { id: "agents", label: "04", title: "Agent化 Agents" },
+  { id: "journey", label: "05", title: "心路 Lessons" },
   { id: "ontology", label: "06", title: "Ontology" },
   { id: "harness", label: "07", title: "Harness" },
-  { id: "llm", label: "08", title: "LLM" },
-  { id: "hardware", label: "09", title: "硬件" },
-  { id: "physical", label: "10", title: "物理AI" },
-  { id: "future", label: "11", title: "展望" },
+  { id: "llm", label: "08", title: "LLM选型 LLM Strategy" },
+  { id: "hardware", label: "09", title: "硬件 Hardware" },
+  { id: "physical", label: "10", title: "物理AI Physical AI" },
+  { id: "future", label: "11", title: "展望 Vision" },
 ];
 
 export default function SideNav() {
