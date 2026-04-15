@@ -17,9 +17,9 @@ export default function Home() {
     <div className="min-h-screen">
       <SideNav />
       <main className="lg:pl-16">
-        <CompanyIntroSection />
-        <div className="section-divider" />
         <HeroSection />
+        <div className="section-divider" />
+        <CompanyIntroSection />
         <div className="section-divider" />
         <EvolutionSection />
         <div className="section-divider" />
