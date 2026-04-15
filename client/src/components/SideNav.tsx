@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
 const sections = [
+  { id: "company", label: "00", title: "Who We Are 关于我们" },
   { id: "hero", label: "01", title: "Opening 开场" },
   { id: "evolution", label: "02", title: "Evolution 演进" },
   { id: "video", label: "03", title: "Demo 实录" },
@@ -16,7 +17,7 @@ const sections = [
 ];
 
 export default function SideNav() {
-  const [active, setActive] = useState("hero");
+  const [active, setActive] = useState("company");
 
   useEffect(() => {
     const observer = new IntersectionObserver(

@@ -186,4 +186,15 @@
   ::-webkit-scrollbar-thumb:hover {
     background: oklch(0.82 0.15 195 / 0.5);
   }
+
+  /* Hide Manus badge */
+  #manus-watermark,
+  [data-manus-watermark],
+  div[style*="Made with Manus"],
+  .manus-watermark {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
 }
