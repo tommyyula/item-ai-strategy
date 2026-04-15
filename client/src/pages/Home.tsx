@@ -1,5 +1,4 @@
 import SideNav from "@/components/SideNav";
-import TopLogo from "@/components/TopLogo";
 import CompanyIntroSection from "@/components/sections/CompanyIntroSection";
 import HeroSection from "@/components/sections/HeroSection";
 import EvolutionSection from "@/components/sections/EvolutionSection";
@@ -16,7 +15,6 @@ import FutureSection from "@/components/sections/FutureSection";
 export default function Home() {
   return (
     <div className="min-h-screen">
-      <TopLogo />
       <SideNav />
       <main className="lg:pl-16">
         <CompanyIntroSection />

@@ -2,7 +2,8 @@ import AnimatedSection from "@/components/AnimatedSection";
 import GlowCard from "@/components/GlowCard";
 import { Truck, Package, MapPin, Users, Building2, Bot, Cpu, Warehouse } from "lucide-react";
 
-const ITEM_LOGO = "https://unisco.sfo3.digitaloceanspaces.com/design-item-com/svg/item-logo-fullcolor-whitetxt.svg";
+const ITEM_LOGO = "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image8_1a8f9bd6.png";
+const ITEM_LOGO_SVG = "https://unisco.sfo3.digitaloceanspaces.com/design-item-com/svg/item-logo-fullcolor-whitetxt.svg";
 
 const unisStats = [
   { value: "100M+", label: "Orders / Year", labelCn: "年订单量" },
@@ -44,16 +45,24 @@ const itemStages = [
   },
 ];
 
+/* Customer logos from PPT extraction - CDN URLs */
 const customerLogos = [
-  { name: "Walmart", url: "https://upload.wikimedia.org/wikipedia/commons/c/ca/Walmart_logo.svg" },
-  { name: "Samsung", url: "https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg" },
-  { name: "Lenovo", url: "https://upload.wikimedia.org/wikipedia/commons/b/b8/Lenovo_logo_2015.svg" },
-  { name: "Foxconn", url: "https://upload.wikimedia.org/wikipedia/commons/5/55/Foxconn_logo.svg" },
+  { name: "Walmart", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image2_0b92a732.png" },
+  { name: "Samsung", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image3_15244f3c.png" },
+  { name: "Lenovo", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image16_5a691ae1.png" },
+  { name: "Amazon", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image4_e5b97640.png" },
+  { name: "Meijer", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image5_f32d6f0a.png" },
+  { name: "Foxconn", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image6_97765300.png" },
+  { name: "SharkNinja", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image7_7fa51092.png" },
+  { name: "VeSync", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image14_7275d439.png" },
 ];
 
 const partnerLogos = [
-  { name: "Omron", url: "https://upload.wikimedia.org/wikipedia/commons/6/6f/Omron_logo.svg" },
-  { name: "GLS", url: "https://upload.wikimedia.org/wikipedia/commons/3/30/GLS_Logo_2021.svg" },
+  { name: "Omron", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image10_7cb86829.png" },
+  { name: "Adastria", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image11_e8f74934.png" },
+  { name: "GLS", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image12_1335d885.png" },
+  { name: "Libiao Robotics", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image13_565b125e.png" },
+  { name: "Unis", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image15_73115e90.png" },
 ];
 
 export default function CompanyIntroSection() {
@@ -62,6 +71,10 @@ export default function CompanyIntroSection() {
       <div className="container max-w-6xl">
         {/* Section header */}
         <AnimatedSection className="mb-12">
+          {/* Item logo at top of section */}
+          <div className="mb-6">
+            <img src={ITEM_LOGO} alt="Item" className="h-6 opacity-50" />
+          </div>
           <div className="flex items-center gap-4 mb-4">
             <span className="font-mono text-sm text-cyan-glow/70 tracking-widest uppercase">00</span>
             <div className="h-px w-12 bg-gradient-to-r from-cyan-glow/60 to-transparent" />
@@ -86,9 +99,8 @@ export default function CompanyIntroSection() {
           <AnimatedSection direction="left">
             <GlowCard className="p-6 h-full">
               <div className="flex items-center gap-3 mb-5">
-                <Warehouse className="w-8 h-8 text-cyan-glow" />
+                <img src="https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image15_73115e90.png" alt="Unis" className="h-8" />
                 <div>
-                  <h3 className="text-2xl font-bold tracking-tight">UNIS</h3>
                   <p className="text-xs text-muted-foreground/50">www.unisco.com</p>
                 </div>
               </div>
@@ -127,13 +139,14 @@ export default function CompanyIntroSection() {
               {/* Customer logos */}
               <div className="mt-5 pt-4 border-t border-panel-border/30">
                 <p className="text-[10px] text-muted-foreground/40 font-mono tracking-wider mb-3">KEY CUSTOMERS</p>
-                <div className="flex items-center gap-5 flex-wrap">
+                <div className="flex items-center gap-4 flex-wrap">
                   {customerLogos.map((logo) => (
                     <img
                       key={logo.name}
                       src={logo.url}
                       alt={logo.name}
-                      className="h-5 opacity-50 hover:opacity-80 transition-opacity brightness-0 invert"
+                      className="h-6 opacity-60 hover:opacity-90 transition-opacity object-contain"
+                      style={{ maxWidth: "80px" }}
                     />
                   ))}
                 </div>
@@ -145,7 +158,7 @@ export default function CompanyIntroSection() {
           <AnimatedSection direction="right">
             <GlowCard glowColor="purple" className="p-6 h-full">
               <div className="flex items-center gap-3 mb-5">
-                <img src={ITEM_LOGO} alt="Item" className="h-8" />
+                <img src={ITEM_LOGO_SVG} alt="Item" className="h-8" />
               </div>
 
               <p className="text-sm text-foreground/80 leading-relaxed mb-1">
@@ -177,13 +190,14 @@ export default function CompanyIntroSection() {
               {/* Partner logos */}
               <div className="pt-4 border-t border-panel-border/30">
                 <p className="text-[10px] text-muted-foreground/40 font-mono tracking-wider mb-3">TECHNOLOGY & ROBOTICS PARTNERS</p>
-                <div className="flex items-center gap-5 flex-wrap">
+                <div className="flex items-center gap-4 flex-wrap">
                   {partnerLogos.map((logo) => (
                     <img
                       key={logo.name}
                       src={logo.url}
                       alt={logo.name}
-                      className="h-5 opacity-50 hover:opacity-80 transition-opacity brightness-0 invert"
+                      className="h-6 opacity-60 hover:opacity-90 transition-opacity object-contain"
+                      style={{ maxWidth: "90px" }}
                     />
                   ))}
                 </div>

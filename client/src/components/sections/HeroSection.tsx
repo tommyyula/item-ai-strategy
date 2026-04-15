@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 
 const HERO_BG = "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/hero-bg-4oHPfcTAqZFTD4ufTYG9tE.webp";
+const ITEM_LOGO = "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image8_1a8f9bd6.png";
 
 export default function HeroSection() {
   return (
@@ -15,6 +16,11 @@ export default function HeroSection() {
         style={{ backgroundImage: `url(${HERO_BG})` }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/60 to-background" />
+
+      {/* Item logo */}
+      <div className="absolute top-6 left-6 z-20">
+        <img src={ITEM_LOGO} alt="Item" className="h-6 opacity-50" />
+      </div>
 
       {/* Content */}
       <div className="relative z-10 container max-w-5xl text-center px-6">

@@ -1,13 +1,19 @@
-const ITEM_LOGO = "https://unisco.sfo3.digitaloceanspaces.com/design-item-com/svg/item-logo-fullcolor-whitetxt.svg";
+// TopLogo is no longer used as a fixed element.
+// Item logo is now embedded in each section via SectionTitle component.
+// This component is kept for special sections (Hero, CompanyIntro) that don't use SectionTitle.
 
-export default function TopLogo() {
+const ITEM_LOGO = "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image8_1a8f9bd6.png";
+
+export default function TopLogo({ className = "" }: { className?: string }) {
   return (
-    <div className="fixed top-5 left-5 lg:left-20 z-40">
+    <div className={className}>
       <img
         src={ITEM_LOGO}
         alt="Item"
-        className="h-7 opacity-70 hover:opacity-100 transition-opacity duration-300 drop-shadow-lg"
+        className="h-6 opacity-50"
       />
     </div>
   );
 }
+
+export { ITEM_LOGO };
