@@ -18,7 +18,7 @@ const agents = [
     descCn: "AI Agent理解客户意图，直接调用OMS/WMS接口进行状态查询和异常处理，大幅降低人工干预率。",
     tags: ["Intent Recognition", "Auto-Ticketing", "OMS/WMS Integration"],
     color: "cyan" as const,
-    videoId: "tX8zB8opwHw",
+    videoIds: ["tX8zB8opwHw", "hs_78Qt5csA"],
   },
   {
     icon: User,
@@ -29,7 +29,7 @@ const agents = [
     descCn: "早期构建通用型个人助理Agent，后替换为OpenClaw。通用任务交由专业工具，内部精力聚焦业务深度。",
     tags: ["Mindset Shift", "Domain Focus", "OpenClaw"],
     color: "purple" as const,
-    videoId: null,
+    videoIds: null,
   },
   {
     icon: Truck,
@@ -40,7 +40,7 @@ const agents = [
     descCn: "在TMS/YMS环节为司机配备AI辅助，处理签到、月台拥堵、文件缺失等异常，提供实时指导。",
     tags: ["Driver Check-in", "Exception Handling", "Real-time Guidance"],
     color: "cyan" as const,
-    videoId: "hxSAx5vjv1I",
+    videoIds: ["hxSAx5vjv1I"],
     isShort: true,
   },
 ];
@@ -77,32 +77,35 @@ export default function AgentsSection() {
                 <p className="text-sm text-muted-foreground leading-relaxed flex-1">{a.descEn}</p>
                 <p className="text-xs text-muted-foreground/40 leading-relaxed mt-1 mb-3">{a.descCn}</p>
 
-                {/* Embedded video */}
-                {a.videoId && (
-                  <div className="mb-3">
-                    <a
-                      href={a.isShort
-                        ? `https://youtube.com/shorts/${a.videoId}`
-                        : `https://youtu.be/${a.videoId}`
-                      }
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group relative block rounded-lg overflow-hidden border border-white/10 hover:border-cyan-500/30 transition-colors"
-                    >
-                      <img
-                        src={`https://img.youtube.com/vi/${a.videoId}/mqdefault.jpg`}
-                        alt={`${a.title} Demo`}
-                        className="w-full h-32 object-cover opacity-70 group-hover:opacity-90 transition-opacity"
-                      />
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-10 h-10 rounded-full bg-black/60 border border-white/20 flex items-center justify-center group-hover:bg-cyan-500/30 group-hover:border-cyan-500/40 transition-all">
-                          <Play className="w-4 h-4 text-white ml-0.5" />
+                {/* Embedded video(s) */}
+                {a.videoIds && a.videoIds.length > 0 && (
+                  <div className="mb-3 flex flex-col gap-2">
+                    {a.videoIds.map((vid: string, vi: number) => (
+                      <a
+                        key={vid}
+                        href={a.isShort && vi === 0
+                          ? `https://youtube.com/shorts/${vid}`
+                          : `https://youtu.be/${vid}`
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group relative block rounded-lg overflow-hidden border border-white/10 hover:border-cyan-500/30 transition-colors"
+                      >
+                        <img
+                          src={`https://img.youtube.com/vi/${vid}/mqdefault.jpg`}
+                          alt={`${a.title} Demo ${vi + 1}`}
+                          className="w-full h-32 object-cover opacity-70 group-hover:opacity-90 transition-opacity"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-10 h-10 rounded-full bg-black/60 border border-white/20 flex items-center justify-center group-hover:bg-cyan-500/30 group-hover:border-cyan-500/40 transition-all">
+                            <Play className="w-4 h-4 text-white ml-0.5" />
+                          </div>
                         </div>
-                      </div>
-                      <div className="absolute bottom-2 left-2 text-[10px] font-mono text-white/60 bg-black/50 px-2 py-0.5 rounded">
-                        ▶ Watch Demo
-                      </div>
-                    </a>
+                        <div className="absolute bottom-2 left-2 text-[10px] font-mono text-white/60 bg-black/50 px-2 py-0.5 rounded">
+                          ▶ Demo {a.videoIds!.length > 1 ? vi + 1 : ''}
+                        </div>
+                      </a>
+                    ))}
                   </div>
                 )}
 

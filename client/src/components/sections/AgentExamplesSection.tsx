@@ -33,7 +33,7 @@ const examples = [
     titleCn: "内容生成与AEO Agent",
     descEn: "AI-driven content generation for marketing and SEO, combined with Answer Engine Optimization (AEO) to maximize visibility in AI-powered search results.",
     descCn: "AI驱动的营销和SEO内容生成，结合答案引擎优化（AEO），在AI搜索结果中最大化曝光。",
-    videoId: "tEJ52CVlz0o",
+    videoId: "WOAr3NfU-QY",
     color: "cyan" as const,
   },
   {
