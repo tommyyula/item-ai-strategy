@@ -1,15 +1,16 @@
 import SideNav from "@/components/SideNav";
-import CompanyIntroSection from "@/components/sections/CompanyIntroSection";
 import HeroSection from "@/components/sections/HeroSection";
+import CompanyIntroSection from "@/components/sections/CompanyIntroSection";
 import EvolutionSection from "@/components/sections/EvolutionSection";
 import VideoShowcaseSection from "@/components/sections/VideoShowcaseSection";
 import AgentsSection from "@/components/sections/AgentsSection";
+import AgentExamplesSection from "@/components/sections/AgentExamplesSection";
+import PhysicalSection from "@/components/sections/PhysicalSection";
 import JourneySection from "@/components/sections/JourneySection";
 import OntologySection from "@/components/sections/OntologySection";
 import HarnessSection from "@/components/sections/HarnessSection";
 import LLMSection from "@/components/sections/LLMSection";
 import HardwareSection from "@/components/sections/HardwareSection";
-import PhysicalSection from "@/components/sections/PhysicalSection";
 import FutureSection from "@/components/sections/FutureSection";
 
 export default function Home() {
@@ -27,6 +28,10 @@ export default function Home() {
         <div className="section-divider" />
         <AgentsSection />
         <div className="section-divider" />
+        <AgentExamplesSection />
+        <div className="section-divider" />
+        <PhysicalSection />
+        <div className="section-divider" />
         <JourneySection />
         <div className="section-divider" />
         <OntologySection />
@@ -36,8 +41,6 @@ export default function Home() {
         <LLMSection />
         <div className="section-divider" />
         <HardwareSection />
-        <div className="section-divider" />
-        <PhysicalSection />
         <div className="section-divider" />
         <FutureSection />
       </main>

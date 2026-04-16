@@ -7,13 +7,14 @@ const sections = [
   { id: "evolution", label: "02", title: "Evolution 演进" },
   { id: "video", label: "03", title: "Demo 实录" },
   { id: "agents", label: "04", title: "Agents Agent化" },
-  { id: "journey", label: "05", title: "Lessons 心路" },
-  { id: "ontology", label: "06", title: "Ontology" },
-  { id: "harness", label: "07", title: "Harness" },
-  { id: "llm", label: "08", title: "LLM Strategy 选型" },
-  { id: "hardware", label: "09", title: "Hardware 硬件" },
-  { id: "physical", label: "10", title: "Physical AI 物理AI" },
-  { id: "future", label: "11", title: "Vision 展望" },
+  { id: "agent-examples", label: "05", title: "More Agents 更多案例" },
+  { id: "physical", label: "06", title: "Physical AI 物理AI" },
+  { id: "journey", label: "07", title: "Lessons 心路" },
+  { id: "ontology", label: "08", title: "Ontology" },
+  { id: "harness", label: "09", title: "Harness" },
+  { id: "llm", label: "10", title: "LLM Strategy 选型" },
+  { id: "hardware", label: "11", title: "Hardware 硬件" },
+  { id: "future", label: "12", title: "Vision 展望" },
 ];
 
 export default function SideNav() {

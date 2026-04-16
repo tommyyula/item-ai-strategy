@@ -32,7 +32,7 @@ export default function FutureSection() {
     <section id="future" className="py-24 md:py-32 relative">
       <div className="container max-w-6xl relative z-10">
         <SectionTitle
-          number="11"
+          number="12"
           title="合作展望"
           titleEn="Collaboration Vision"
           subtitle="与联想的联合价值——从内部验证到对外输出的战略路径。"

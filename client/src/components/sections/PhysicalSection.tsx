@@ -1,102 +1,181 @@
-import SectionTitle from "@/components/SectionTitle";
-import AnimatedSection from "@/components/AnimatedSection";
-import GlowCard from "@/components/GlowCard";
-import { Bot, Camera, Forklift, Box, ScanLine, Eye } from "lucide-react";
+/**
+ * Design: Deep Space Command — Entering the Physical World (Bilingual, EN primary)
+ * Left: AGV Inventory Count Robot (large video)
+ * Right: 5 smaller video demos (YMS Gate, IoT Yard, Pack Station, Vision Pro, Dog Walk)
+ */
+
+import AnimatedSection from "../AnimatedSection";
+import SectionTitle from "../SectionTitle";
+import GlowCard from "../GlowCard";
+import { Play, Bot, Camera, ScanLine, Glasses, Dog, Wifi } from "lucide-react";
 
 const WAREHOUSE_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/warehouse-robots-N5qtLpeJoFJNGcr4G4K6Qk.webp";
-const ARCH_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/architecture-bg-FYrCw7eGpAKAAaWrFiErBr.webp";
 
-const robots = [
-  { icon: Bot, nameEn: "AirRob AMR", nameCn: "AirRob AMR", descEn: "Autonomous Mobile Robot", descCn: "自主移动机器人" },
-  { icon: Box, nameEn: "4-way Shuttle", nameCn: "四向穿梭车", descEn: "High-density Storage", descCn: "高密度存储" },
-  { icon: Forklift, nameEn: "Bluecore AGV", nameCn: "Bluecore AGV", descEn: "Automated Guided Vehicle", descCn: "自动导引车" },
-  { icon: Forklift, nameEn: "Autonomous Forklift", nameCn: "无人叉车", descEn: "Automated Transport", descCn: "自动搬运" },
+const leftVideo = {
+  titleEn: "AGV Inventory Count Robot",
+  titleCn: "AGV盘点机器人",
+  descEn: "Autonomous guided vehicles perform real-time inventory counting across warehouse aisles — replacing manual cycle counts with 24/7 automated precision.",
+  descCn: "自主导引车在仓库通道中执行实时库存盘点——以24/7自动化精度取代人工循环盘点。",
+  videoId: "pdtSXZ2tpQ4",
+  icon: Bot,
+};
+
+const rightVideos = [
+  {
+    titleEn: "YMS Gate Recognition",
+    titleCn: "YMS道闸识别",
+    descEn: "AI-powered vehicle recognition and scheduling at yard gates.",
+    descCn: "AI驱动的道闸车辆识别与调度。",
+    videoId: "DY37zk0J3ck",
+    icon: ScanLine,
+  },
+  {
+    titleEn: "IoT Yard Assistant Agent",
+    titleCn: "IoT堆场助手Agent",
+    descEn: "IoT sensors + AI Agent for real-time yard management.",
+    descCn: "IoT传感器+AI Agent实现实时堆场管理。",
+    videoId: "NAUl7oNpA7s",
+    icon: Wifi,
+  },
+  {
+    titleEn: "Pack Station Monitor",
+    titleCn: "打包台监控",
+    descEn: "Vision AI monitors packing quality and compliance in real-time.",
+    descCn: "视觉AI实时监控打包质量与合规性。",
+    videoId: "1sKOAjcCTq8",
+    icon: Camera,
+  },
+  {
+    titleEn: "Picking by Vision Pro",
+    titleCn: "Vision Pro拣货",
+    descEn: "Apple Vision Pro AR-guided warehouse picking operations.",
+    descCn: "Apple Vision Pro AR引导的仓库拣货作业。",
+    videoId: "AafmAqWqqYM",
+    icon: Glasses,
+  },
+  {
+    titleEn: "Dog Walk — Yard Security",
+    titleCn: "机器狗巡逻——堆场安防",
+    descEn: "Robotic dog patrols for autonomous yard security monitoring.",
+    descCn: "机器狗自主巡逻，实现堆场安防监控。",
+    videoId: "RJ8AzaJF4As",
+    icon: Dog,
+  },
 ];
 
-const visionAI = [
-  { icon: Eye, nameEn: "Staff Monitoring Agent", nameCn: "员工监控Agent", descEn: "Behavior analysis & safety compliance", descCn: "行为分析与安全合规" },
-  { icon: Camera, nameEn: "AI Camera Audit", nameCn: "AI摄像头审计", descEn: "Packing station video QC", descCn: "打包台视频QC" },
-  { icon: ScanLine, nameEn: "YMS Gate Recognition", nameCn: "YMS道闸识别", descEn: "Intelligent vehicle recognition & scheduling", descCn: "车辆智能识别与调度" },
-];
+function VideoCard({
+  titleEn,
+  titleCn,
+  descEn,
+  descCn,
+  videoId,
+  icon: Icon,
+  large = false,
+}: {
+  titleEn: string;
+  titleCn: string;
+  descEn: string;
+  descCn: string;
+  videoId: string;
+  icon: React.ComponentType<{ className?: string }>;
+  large?: boolean;
+}) {
+  return (
+    <a
+      href={`https://youtu.be/${videoId}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group block"
+    >
+      <div className="relative rounded-lg overflow-hidden border border-white/10 hover:border-cyan-500/30 transition-colors">
+        <img
+          src={`https://img.youtube.com/vi/${videoId}/mqdefault.jpg`}
+          alt={titleEn}
+          className={`w-full object-cover opacity-70 group-hover:opacity-90 transition-opacity ${
+            large ? "h-64 md:h-72" : "h-28"
+          }`}
+        />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className={`rounded-full bg-black/60 border border-white/20 flex items-center justify-center group-hover:bg-cyan-500/30 group-hover:border-cyan-500/40 transition-all ${
+            large ? "w-14 h-14" : "w-9 h-9"
+          }`}>
+            <Play className={`text-white ml-0.5 ${large ? "w-6 h-6" : "w-3.5 h-3.5"}`} />
+          </div>
+        </div>
+        <div className="absolute bottom-2 left-2 text-[10px] font-mono text-white/60 bg-black/50 px-2 py-0.5 rounded">
+          ▶ Watch
+        </div>
+      </div>
+      <div className="mt-2 flex items-start gap-2">
+        <Icon className={`shrink-0 text-cyan-glow/60 mt-0.5 ${large ? "w-4 h-4" : "w-3.5 h-3.5"}`} />
+        <div>
+          <p className={`font-semibold ${large ? "text-sm" : "text-xs"}`}>{titleEn}</p>
+          <p className="text-[10px] text-muted-foreground/40">{titleCn}</p>
+          {large && (
+            <>
+              <p className="text-xs text-muted-foreground leading-relaxed mt-1">{descEn}</p>
+              <p className="text-[10px] text-muted-foreground/40 leading-relaxed mt-0.5">{descCn}</p>
+            </>
+          )}
+        </div>
+      </div>
+    </a>
+  );
+}
 
 export default function PhysicalSection() {
   return (
     <section id="physical" className="py-24 md:py-32">
       <div className="container max-w-6xl">
         <SectionTitle
-          number="10"
+          number="06"
           title="走向物理世界"
           titleEn="Entering the Physical World"
-          subtitle="硬件无关的WES（仓库执行系统）——不绑定任何单一硬件厂商，让智能真正离开屏幕。"
-          subtitleEn="Hardware-agnostic WES (Warehouse Execution System) — not locked to any single hardware vendor, bringing intelligence beyond the screen."
+          subtitle="硬件无关的WES——让智能真正离开屏幕，从AGV盘点到Vision Pro拣货，从道闸识别到机器狗巡逻。"
+          subtitleEn="Hardware-agnostic WES — bringing intelligence beyond the screen, from AGV counting to Vision Pro picking, from gate recognition to robotic dog patrols."
         />
 
-        {/* Hero image */}
-        <AnimatedSection className="mb-12">
+        {/* Hero banner */}
+        <AnimatedSection className="mb-10">
           <div className="relative rounded-lg overflow-hidden">
-            <img src={WAREHOUSE_IMG} alt="Smart Warehouse" className="w-full h-64 md:h-80 object-cover rounded-lg" />
+            <img src={WAREHOUSE_IMG} alt="Smart Warehouse" className="w-full h-48 md:h-56 object-cover rounded-lg" />
             <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/40 to-transparent" />
-            <div className="absolute bottom-6 left-6 max-w-md">
-              <p className="text-xs font-mono text-cyan-glow tracking-wider mb-2">HARDWARE-AGNOSTIC WES</p>
+            <div className="absolute bottom-5 left-5 max-w-md">
+              <p className="text-xs font-mono text-cyan-glow tracking-wider mb-1">HARDWARE-AGNOSTIC WES</p>
               <p className="text-sm text-foreground/80">
-                Software stack running stably in real warehouse production environments covering 10M+ sq ft
+                Software stack running in real warehouse production environments covering 10M+ sq ft
               </p>
-              <p className="text-xs text-foreground/40 mt-1">
+              <p className="text-[10px] text-foreground/40 mt-0.5">
                 软件栈在超过1000万平方英尺的真实仓库生产环境中稳定运行
               </p>
             </div>
           </div>
         </AnimatedSection>
 
+        {/* Left/Right layout */}
         <div className="grid lg:grid-cols-2 gap-8">
-          {/* Robot integrations */}
+          {/* Left: AGV large video */}
           <AnimatedSection direction="left">
-            <GlowCard className="p-6 h-full">
-              <h3 className="font-bold mb-1">Integrated Robotic Equipment</h3>
-              <p className="text-xs text-muted-foreground/50 mb-5">已集成的机器人设备</p>
-              <div className="grid grid-cols-2 gap-3">
-                {robots.map((r) => (
-                  <div key={r.nameEn} className="flex items-center gap-3 p-3 rounded-lg bg-secondary/30">
-                    <div className="w-9 h-9 rounded-lg bg-cyan-glow/10 flex items-center justify-center shrink-0">
-                      <r.icon className="w-4 h-4 text-cyan-glow" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium">{r.nameEn}</p>
-                      <p className="text-[10px] text-muted-foreground/30">{r.nameCn}</p>
-                      <p className="text-xs text-muted-foreground">{r.descEn}</p>
-                      <p className="text-[10px] text-muted-foreground/30">{r.descCn}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+            <GlowCard className="p-5 h-full">
+              <h3 className="font-bold text-sm mb-1">Robotics & Automation</h3>
+              <p className="text-[10px] text-muted-foreground/40 mb-4">机器人与自动化</p>
+              <VideoCard {...leftVideo} large />
             </GlowCard>
           </AnimatedSection>
 
-          {/* Vision AI */}
+          {/* Right: 5 smaller videos in a grid */}
           <AnimatedSection direction="right">
-            <GlowCard glowColor="purple" className="p-6 h-full">
-              <h3 className="font-bold mb-1">Vision & Edge AI Applications</h3>
-              <p className="text-xs text-muted-foreground/50 mb-5">视觉与边缘AI应用</p>
-              <div className="space-y-3 mb-5">
-                {visionAI.map((v) => (
-                  <div key={v.nameEn} className="flex items-center gap-3 p-3 rounded-lg bg-secondary/30">
-                    <div className="w-9 h-9 rounded-lg bg-purple-glow/10 flex items-center justify-center shrink-0">
-                      <v.icon className="w-4 h-4 text-purple-glow" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium">{v.nameEn}</p>
-                      <p className="text-[10px] text-muted-foreground/30">{v.nameCn}</p>
-                      <p className="text-xs text-muted-foreground">{v.descEn}</p>
-                      <p className="text-[10px] text-muted-foreground/30">{v.descCn}</p>
-                    </div>
-                  </div>
+            <GlowCard glowColor="purple" className="p-5 h-full">
+              <h3 className="font-bold text-sm mb-1">Vision & Edge AI Applications</h3>
+              <p className="text-[10px] text-muted-foreground/40 mb-4">视觉与边缘AI应用</p>
+              <div className="grid grid-cols-2 gap-4">
+                {rightVideos.slice(0, 4).map((v) => (
+                  <VideoCard key={v.videoId} {...v} />
                 ))}
               </div>
-              <div className="relative rounded-lg overflow-hidden">
-                <img src={ARCH_IMG} alt="5-Layer Architecture" className="w-full h-32 object-cover rounded-lg opacity-60" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <p className="text-xs font-mono text-cyan-glow tracking-wider">5-LAYER AI ARCHITECTURE · 五层AI架构</p>
-                </div>
+              {/* Last one spans full width */}
+              <div className="mt-4">
+                <VideoCard {...rightVideos[4]} />
               </div>
             </GlowCard>
           </AnimatedSection>
