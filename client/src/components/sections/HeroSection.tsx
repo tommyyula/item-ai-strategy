@@ -3,6 +3,8 @@ import { ChevronDown } from "lucide-react";
 
 const HERO_BG = "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/hero-bg-4oHPfcTAqZFTD4ufTYG9tE.webp";
 const ITEM_LOGO = "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image8_1a8f9bd6.png";
+const LENOVO_LOGO = "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/lenovo-logo_1ec253d0.png";
+const ITEM_LOGO_WHITE = "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/item-logo-white_4ff1c5bb.png";
 
 export default function HeroSection() {
   return (
@@ -29,11 +31,10 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2 }}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-glow/30 bg-cyan-glow/5 mb-8">
-            <span className="w-2 h-2 rounded-full bg-cyan-glow animate-pulse" />
-            <span className="text-sm font-mono text-cyan-glow tracking-wider">
-              UNIS Group &times; Lenovo CIO Briefing
-            </span>
+          <div className="inline-flex items-center gap-4 px-6 py-3 rounded-full border border-cyan-glow/20 bg-cyan-glow/5 mb-8">
+            <img src={LENOVO_LOGO} alt="Lenovo" className="h-6" />
+            <span className="text-muted-foreground/40 text-lg font-light">&</span>
+            <img src={ITEM_LOGO_WHITE} alt="Item" className="h-7" />
           </div>
         </motion.div>
 
