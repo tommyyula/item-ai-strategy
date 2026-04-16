@@ -10,13 +10,22 @@ import SectionTitle from "../SectionTitle";
 
 const tabs = [
   {
+    id: "dev-scrum",
+    labelEn: "Developer Agent Scrum",
+    labelCn: "开发者Agent站会",
+    videoId: "hEYO9w0WIas",
+    descEn: "AI Developer Agents conduct autonomous Scrum standups — reporting progress, identifying blockers, and coordinating next steps, just like a real engineering team.",
+    descCn: "AI开发者Agent自主进行Scrum站会——汇报进度、识别阻塞项并协调下一步行动，如同真正的工程团队。",
+    color: "cyan",
+  },
+  {
     id: "multi-agent",
     labelEn: "Multi-Agent Collaboration",
     labelCn: "多Agent协作",
     videoId: "NmYgyat35Rk",
     descEn: "Multiple specialized AI Agents working in concert — from task planning and path optimization to real-time execution, forming a complete decision-execution loop.",
     descCn: "多个专业AI Agent协同工作——从任务规划、路径优化到实时执行，形成完整的决策-执行闭环。",
-    color: "cyan",
+    color: "purple",
   },
   {
     id: "digital-physical",
@@ -25,7 +34,7 @@ const tabs = [
     videoId: "NMLtgGNog3Q",
     descEn: "AI Agent decisions no longer stay on screen — they directly drive robots and devices in the physical world, bridging the gap between digital intelligence and physical execution.",
     descCn: "AI Agent的决策不再停留在屏幕上——直接驱动物理世界的机器人和设备，打通数字智能与物理执行之间的鸿沟。",
-    color: "purple",
+    color: "cyan",
   },
 ];
 
