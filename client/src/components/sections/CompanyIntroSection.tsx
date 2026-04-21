@@ -22,7 +22,7 @@ const unisStats = [
 const allLogos = [
   { name: "Walmart", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image2_0b92a732.png" },
   { name: "Samsung", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image3_15244f3c.png" },
-  { name: "Lenovo", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image16_5a691ae1.png" },
+  { name: "eHub", url: "https://files.manuscdn.com/user_upload_by_module/session_file/117473971/mAUUBLNFAHznsfVv.png" },
   { name: "Amazon", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image4_e5b97640.png" },
   { name: "Meijer", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image5_f32d6f0a.png" },
   { name: "Foxconn", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image6_97765300.png" },
@@ -57,10 +57,10 @@ export default function CompanyIntroSection() {
               </div>
 
               <p className="text-sm text-foreground/80 leading-relaxed mb-1">
-                <span className="font-semibold text-cyan-glow">Omni-channel fulfillment on-time and in-full.</span> UNIS started serving Lenovo since 2019 at Memphis, US. Strategically designed national footprint reaches 98% of consumers with same-or next-day service.
+                <span className="font-semibold text-cyan-glow">Omni-channel fulfillment on-time and in-full.</span> UNIS started serving eHub since 2019 at Memphis, US. Strategically designed national footprint reaches 98% of consumers with same-or next-day service.
               </p>
               <p className="text-xs text-muted-foreground/40 leading-relaxed mb-5">
-                全渠道准时足量履约。UNIS自2019年起在孟菲斯为联想提供服务，全国性网络覆盖98%消费者的当日或次日达。
+                全渠道准时足量履约。UNIS自2019年起在孟菲斯为eHub提供服务，全国性网络覆盖98%消费者的当日或次日达。
               </p>
 
               {/* Stats row */}

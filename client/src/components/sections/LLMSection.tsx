@@ -29,8 +29,8 @@ export default function LLMSection() {
           number="10"
           title="大模型选型策略"
           titleEn="LLM Selection Strategy"
-          subtitle="务实的混合路由策略（Hybrid Router），不绑定单一模型——与联想「Hybrid AI」理念高度一致。"
-          subtitleEn="A pragmatic Hybrid Router strategy, not locked to any single model — highly aligned with Lenovo's 'Hybrid AI' philosophy."
+          subtitle="务实的混合路由策略（Hybrid Router），不绑定单一模型——与eHub「Hybrid AI」理念高度一致。"
+          subtitleEn="A pragmatic Hybrid Router strategy, not locked to any single model — highly aligned with eHub's 'Hybrid AI' philosophy."
         />
 
         <div className="grid md:grid-cols-2 gap-6 mb-10">

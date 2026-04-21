@@ -5,7 +5,7 @@ import GlowCard from "@/components/GlowCard";
 import CountUp from "@/components/CountUp";
 
 const ITEM_LOGO = "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image8_1a8f9bd6.png";
-const LENOVO_LOGO = "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image16_5a691ae1.png";
+const EHUB_LOGO = "https://files.manuscdn.com/user_upload_by_module/session_file/117473971/mAUUBLNFAHznsfVv.png";
 const HERO_BG = "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/v2-hero-partnership-koDv4r3sxSUJryrdd8KhBs.webp";
 const ROI_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/v2-roi-infographic-Wh2rnNZyPQZSQ4yxcLS8jF.webp";
 
@@ -85,7 +85,7 @@ function V2SectionTitle({ number, titleEn, titleCn, subtitleEn, subtitleCn }: {
         <div className="flex items-center gap-3">
           <img src={ITEM_LOGO} alt="Item" className="h-5 opacity-50" />
           <span className="text-muted-foreground/40 text-sm">×</span>
-          <img src={LENOVO_LOGO} alt="Lenovo" className="h-5 opacity-50" />
+          <img src={EHUB_LOGO} alt="eHub" className="h-5 opacity-50" />
         </div>
       </div>
       <div className="flex items-center gap-4 mb-4">
@@ -125,7 +125,7 @@ export default function V2() {
             <div className="flex items-center justify-center gap-6 mb-8">
               <img src={ITEM_LOGO} alt="Item" className="h-10 md:h-14" />
               <span className="text-3xl md:text-4xl text-cyan-glow/60 font-light">×</span>
-              <img src={LENOVO_LOGO} alt="Lenovo" className="h-10 md:h-14" />
+              <img src={EHUB_LOGO} alt="eHub" className="h-10 md:h-14" />
             </div>
           </AnimatedSection>
           <AnimatedSection delay={0.2}>
@@ -138,10 +138,10 @@ export default function V2() {
           </AnimatedSection>
           <AnimatedSection delay={0.4}>
             <p className="mt-8 text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Bundling Lenovo hardware with Item's AI platform to unlock new revenue streams across e-commerce, supply chain, and warehouse automation verticals.
+              Bundling eHub hardware with Item's AI platform to unlock new revenue streams across e-commerce, supply chain, and warehouse automation verticals.
             </p>
             <p className="mt-2 text-sm text-muted-foreground/50">
-              将联想硬件与Item AI平台捆绑，在电商、供应链和仓储自动化领域开拓新的收入渠道。
+              将eHub硬件与Item AI平台捆绑，在电商、供应链和仓储自动化领域开拓新的收入渠道。
             </p>
           </AnimatedSection>
           <AnimatedSection delay={0.6}>
@@ -165,8 +165,8 @@ export default function V2() {
             number="01"
             titleEn="The Opportunity"
             titleCn="市场机遇"
-            subtitleEn="Mid-market enterprises need AI infrastructure but lack the expertise to build and operate it. Item bridges this gap — and Lenovo's hardware completes the stack."
-            subtitleCn="中端企业需要AI基础设施，但缺乏构建和运营的专业能力。Item填补了这一空白，而联想的硬件则完善了整个技术栈。"
+            subtitleEn="Mid-market enterprises need AI infrastructure but lack the expertise to build and operate it. Item bridges this gap — and eHub's hardware completes the stack."
+            subtitleCn="中端企业需要AI基础设施，但缺乏构建和运营的专业能力。Item填补了这一空白，而eHub的硬件则完善了整个技术栈。"
           />
 
           <div className="grid md:grid-cols-3 gap-6 mt-8">
@@ -189,13 +189,13 @@ export default function V2() {
               <GlowCard className="p-8 h-full" glowColor="purple">
                 <div className="text-purple-glow font-mono text-sm mb-3">PROVEN TRACK RECORD</div>
                 <h3 className="text-xl font-bold font-display mb-3">Item + UNIS Since 2019</h3>
-                <p className="text-sm text-muted-foreground/60 mb-4">Item + UNIS 自2019年起服务联想</p>
+                <p className="text-sm text-muted-foreground/60 mb-4">Item + UNIS 自2019年起服务eHub</p>
                 <p className="text-muted-foreground leading-relaxed">
-                  UNIS has served Lenovo since 2019 at Memphis, processing 100M+ orders/year with Item as the technology backbone. 
+                  UNIS has served eHub since 2019 at Memphis, processing 100M+ orders/year with Item as the technology backbone. 
                   This existing relationship provides a natural foundation for deeper strategic collaboration.
                 </p>
                 <p className="mt-2 text-xs text-muted-foreground/50">
-                  UNIS自2019年起在Memphis为联想提供服务，每年处理1亿+订单，Item作为技术底座。这一现有关系为更深层战略合作奠定了天然基础。
+                  UNIS自2019年起在Memphis为eHub提供服务，每年处理1亿+订单，Item作为技术底座。这一现有关系为更深层战略合作奠定了天然基础。
                 </p>
               </GlowCard>
             </AnimatedSection>
@@ -207,10 +207,10 @@ export default function V2() {
                 <p className="text-sm text-muted-foreground/60 mb-4">硬件绑定软件的新收入模式</p>
                 <p className="text-muted-foreground leading-relaxed">
                   Every AI infrastructure deployment Item sells requires GPU servers, networking, and edge devices. 
-                  Lenovo becomes the preferred hardware vendor — creating a recurring sales channel through Item's growing customer base.
+                  eHub becomes the preferred hardware vendor — creating a recurring sales channel through Item's growing customer base.
                 </p>
                 <p className="mt-2 text-xs text-muted-foreground/50">
-                  Item每一个AI基础设施部署都需要GPU服务器、网络和边缘设备。联想成为首选硬件供应商——通过Item不断增长的客户群创造持续销售渠道。
+                  Item每一个AI基础设施部署都需要GPU服务器、网络和边缘设备。eHub成为首选硬件供应商——通过Item不断增长的客户群创造持续销售渠道。
                 </p>
               </GlowCard>
             </AnimatedSection>
@@ -227,8 +227,8 @@ export default function V2() {
             number="02"
             titleEn="The Business Model"
             titleCn="商业模式"
-            subtitleEn="A three-layer value stack where Lenovo provides the foundation, Item delivers the intelligence, and customers get turnkey AI."
-            subtitleCn="三层价值栈：联想提供基础层，Item交付智能层，客户获得交钥匙AI解决方案。"
+            subtitleEn="A three-layer value stack where eHub provides the foundation, Item delivers the intelligence, and customers get turnkey AI."
+            subtitleCn="三层价值栈：eHub提供基础层，Item交付智能层，客户获得交钥匙AI解决方案。"
           />
 
           <AnimatedSection delay={0.1}>
@@ -283,7 +283,7 @@ export default function V2() {
                   </div>
                 </motion.div>
 
-                {/* Layer 1 - Lenovo Hardware */}
+                {/* Layer 1 - eHub Hardware */}
                 <motion.div
                   whileHover={{ scale: 1.02 }}
                   className="relative p-6 rounded-lg border border-cyan-glow/50 bg-gradient-to-r from-cyan-glow/10 to-purple-glow/5"
@@ -291,8 +291,8 @@ export default function V2() {
                   <div className="flex items-center gap-4">
                     <div className="w-16 h-16 rounded-lg bg-cyan-glow/15 border border-cyan-glow/40 flex items-center justify-center text-2xl font-bold font-mono text-cyan-glow">L1</div>
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold font-display">Lenovo Hardware Foundation</h3>
-                      <p className="text-sm text-muted-foreground/60">联想硬件基础层</p>
+                      <h3 className="text-xl font-bold font-display">eHub Hardware Foundation</h3>
+                      <p className="text-sm text-muted-foreground/60">eHub硬件基础层</p>
                       <p className="mt-2 text-muted-foreground">
                         ThinkSystem GPU servers (8× H100 80GB SXM), NVLink 4.0, edge inference devices, 5.5G/Wi-Fi 8 networking, co-location at One Wilshire LA
                       </p>
@@ -301,7 +301,7 @@ export default function V2() {
                       </p>
                     </div>
                     <div className="text-right">
-                      <div className="text-sm font-mono text-cyan-glow">LENOVO</div>
+                      <div className="text-sm font-mono text-cyan-glow">eHub</div>
                       <div className="text-xs text-muted-foreground">Hardware + Infra</div>
                     </div>
                   </div>
@@ -318,10 +318,10 @@ export default function V2() {
             <AnimatedSection delay={0.2}>
               <GlowCard className="p-8">
                 <div className="flex items-center gap-3 mb-4">
-                  <img src={LENOVO_LOGO} alt="Lenovo" className="h-6" />
-                  <h3 className="text-lg font-bold font-display">Value for Lenovo</h3>
+                  <img src={EHUB_LOGO} alt="eHub" className="h-6" />
+                  <h3 className="text-lg font-bold font-display">Value for eHub</h3>
                 </div>
-                <p className="text-sm text-muted-foreground/60 mb-4">联想获得的价值</p>
+                <p className="text-sm text-muted-foreground/60 mb-4">eHub获得的价值</p>
                 <ul className="space-y-3">
                   {[
                     { en: "New hardware sales channel through Item's 1,200+ enterprise customers", cn: "通过Item 1200+企业客户开拓新的硬件销售渠道" },
@@ -350,10 +350,10 @@ export default function V2() {
                 <p className="text-sm text-muted-foreground/60 mb-4">Item获得的价值</p>
                 <ul className="space-y-3">
                   {[
-                    { en: "Preferred pricing on Lenovo ThinkSystem servers and edge devices", cn: "联想ThinkSystem服务器和边缘设备的优惠价格" },
+                    { en: "Preferred pricing on eHub ThinkSystem servers and edge devices", cn: "eHub ThinkSystem服务器和边缘设备的优惠价格" },
                     { en: "Complete solution offering: software + hardware in one proposal", cn: "完整解决方案：一个提案中包含软件+硬件" },
-                    { en: "Co-marketing and joint go-to-market with Lenovo brand", cn: "与联想品牌的联合营销和市场推广" },
-                    { en: "Access to Lenovo's enterprise customer network for cross-selling", cn: "接入联想企业客户网络进行交叉销售" },
+                    { en: "Co-marketing and joint go-to-market with eHub brand", cn: "与eHub品牌的联合营销和市场推广" },
+                    { en: "Access to eHub's enterprise customer network for cross-selling", cn: "接入eHub企业客户网络进行交叉销售" },
                   ].map((item, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-purple-glow shrink-0" />
@@ -410,12 +410,12 @@ export default function V2() {
 
               <div className="mt-6 p-4 rounded-lg bg-cyan-glow/5 border border-cyan-glow/20">
                 <p className="text-sm text-muted-foreground">
-                  <span className="text-cyan-glow font-mono font-bold">Lenovo Opportunity:</span>{" "}
-                  Replace Dell PowerEdge XE9680 with Lenovo ThinkSystem SR675 V3 — equivalent 8×H100 configuration with Lenovo's enterprise support, XClarity management, and competitive pricing.
+                  <span className="text-cyan-glow font-mono font-bold">eHub Opportunity:</span>{" "}
+                  Replace Dell PowerEdge XE9680 with eHub ThinkSystem SR675 V3 — equivalent 8×H100 configuration with eHub's enterprise support, XClarity management, and competitive pricing.
                 </p>
                 <p className="text-xs text-muted-foreground/50 mt-1">
-                  <span className="text-cyan-glow/70 font-mono font-bold">联想机会：</span>{" "}
-                  用联想ThinkSystem SR675 V3替代Dell PowerEdge XE9680——同等8×H100配置，加上联想企业级支持、XClarity管理和有竞争力的价格。
+                  <span className="text-cyan-glow/70 font-mono font-bold">eHub机会：</span>{" "}
+                  用eHub ThinkSystem SR675 V3替代Dell PowerEdge XE9680——同箉8×H100配置，加上eHub企业级支持、XClarity管理和有竞争力的价格。
                 </p>
               </div>
             </GlowCard>
@@ -512,8 +512,8 @@ export default function V2() {
             number="05"
             titleEn="Target Verticals"
             titleCn="目标垂直领域"
-            subtitleEn="Five high-growth verticals where Item's AI platform + Lenovo hardware creates a compelling bundled offering."
-            subtitleCn="五个高增长垂直领域，Item AI平台+联想硬件构成极具吸引力的捆绑方案。"
+            subtitleEn="Five high-growth verticals where Item's AI platform + eHub hardware creates a compelling bundled offering."
+            subtitleCn="五个高增长垂直领域，Item AI平台+eHub硬件构成极具吸引力的捆绑方案。"
           />
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
@@ -563,7 +563,7 @@ export default function V2() {
                   <p className="text-sm text-muted-foreground leading-relaxed">{vertical.descEn}</p>
                   <p className="text-xs text-muted-foreground/50 mt-2">{vertical.descCn}</p>
                   <div className="mt-4 pt-3 border-t border-panel-border/30">
-                    <div className="text-xs font-mono text-cyan-glow/70">LENOVO HARDWARE</div>
+                    <div className="text-xs font-mono text-cyan-glow/70">eHub HARDWARE</div>
                     <div className="text-sm text-foreground/80 mt-1">{vertical.hardware}</div>
                   </div>
                 </GlowCard>
@@ -674,7 +674,7 @@ export default function V2() {
           <div className="max-w-3xl">
             <div className="space-y-6">
               {[
-                { step: "01", titleEn: "Technical Deep-Dive", titleCn: "技术深度交流", descEn: "Joint workshop between Item engineering and Lenovo ISG team to align on ThinkSystem configurations, pricing tiers, and co-location logistics.", descCn: "Item工程团队与联想ISG团队联合研讨，对齐ThinkSystem配置、价格层级和托管物流。" },
+                { step: "01", titleEn: "Technical Deep-Dive", titleCn: "技术深度交流", descEn: "Joint workshop between Item engineering and eHub ISG team to align on ThinkSystem configurations, pricing tiers, and co-location logistics.", descCn: "Item工程团队与eHub ISG团队联合研讨，对齐ThinkSystem配置、价格层级和托管物流。" },
                 { step: "02", titleEn: "Pilot Customer Selection", titleCn: "试点客户选择", descEn: "Identify 2-3 pilot customers from Item's existing pipeline for the first joint deployment — ideally one e-commerce and one supply chain vertical.", descCn: "从Item现有客户管道中选择2-3个试点客户进行首次联合部署——理想情况下一个电商和一个供应链客户。" },
                 { step: "03", titleEn: "Joint Go-to-Market Plan", titleCn: "联合市场推广计划", descEn: "Co-develop marketing materials, case studies, and a joint value proposition for mid-market enterprises seeking AI infrastructure.", descCn: "共同开发营销材料、案例研究和面向寻求AI基础设施的中端企业的联合价值主张。" },
                 { step: "04", titleEn: "Partnership Agreement", titleCn: "合作协议", descEn: "Formalize the strategic partnership with preferred pricing, co-marketing commitments, and revenue-sharing framework.", descCn: "以优惠价格、联合营销承诺和收入分成框架正式确立战略合作伙伴关系。" },
@@ -702,7 +702,7 @@ export default function V2() {
               <div className="flex items-center justify-center gap-6 mb-6">
                 <img src={ITEM_LOGO} alt="Item" className="h-8" />
                 <span className="text-2xl text-cyan-glow/60 font-light">×</span>
-                <img src={LENOVO_LOGO} alt="Lenovo" className="h-8" />
+                <img src={EHUB_LOGO} alt="eHub" className="h-8" />
               </div>
               <p className="text-2xl md:text-3xl font-bold font-display bg-gradient-to-r from-cyan-glow to-purple-glow bg-clip-text text-transparent">
                 From Supply Chain Partner to Strategic AI Alliance
@@ -712,10 +712,10 @@ export default function V2() {
               </p>
               <p className="mt-6 text-muted-foreground max-w-2xl mx-auto leading-relaxed">
                 The infrastructure layer is the new battleground. Together, we can own the mid-market AI infrastructure stack — 
-                Lenovo's hardware excellence paired with Item's AI platform creates a moat that neither can build alone.
+                eHub's hardware excellence paired with Item's AI platform creates a moat that neither can build alone.
               </p>
               <p className="mt-2 text-sm text-muted-foreground/50 max-w-2xl mx-auto">
-                基础设施层是新的战场。联想的硬件卓越性与Item的AI平台相结合，构建起任何一方都无法独自建立的护城河。
+                基础设施层是新的战场。eHub的硬件卓越性与Item的AI平台相结合，构建起任何一方都无法独自建立的护城河。
               </p>
             </div>
           </AnimatedSection>
