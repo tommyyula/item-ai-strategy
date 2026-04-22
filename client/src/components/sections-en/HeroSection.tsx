@@ -104,7 +104,7 @@ export default function HeroSection() {
         >
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-cyan-glow" />
-            <span>AI Middleware <span className="text-muted-foreground/40 text-xs">AI中间件层</span></span>
+            <span>AI Middleware</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-purple-glow" />

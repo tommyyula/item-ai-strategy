@@ -1,7 +1,7 @@
 /**
  * V1 — Lenovo version of the presentation (backup)
  * Uses original Lenovo-branded section components from sections-v1/
- * All other sections are shared with the main (eHub) version
+ * All other sections are shared with the main (Fashion Nova) version
  */
 import SideNav from "@/components/SideNav";
 import HeroSection from "@/components/sections-v1/HeroSection";
