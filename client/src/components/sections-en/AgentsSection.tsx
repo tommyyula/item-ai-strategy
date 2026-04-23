@@ -3,7 +3,7 @@
  * Includes embedded videos for Ticketing and Driver Assistant
  */
 
-import SectionTitle from "@/components/SectionTitle";
+import SectionTitleEn from "./SectionTitleEn";
 import AnimatedSection from "@/components/AnimatedSection";
 import GlowCard from "@/components/GlowCard";
 import { Headphones, User, Truck, ArrowRight, Play } from "lucide-react";
@@ -13,9 +13,7 @@ const agents = [
     icon: Headphones,
     title: "Call Center Ticketing",
     subtitleEn: "In-house AI Customer Service System",
-    subtitleCn: "自研AI客服系统",
     descEn: "AI Agents understand customer intent and directly invoke OMS/WMS APIs for status queries and exception handling, significantly reducing manual intervention.",
-    descCn: "AI Agent理解客户意图，直接调用OMS/WMS接口进行状态查询和异常处理，大幅降低人工干预率。",
     tags: ["Intent Recognition", "Auto-Ticketing", "OMS/WMS Integration"],
     color: "cyan" as const,
     videoIds: ["tX8zB8opwHw", "hs_78Qt5csA"],
@@ -24,9 +22,7 @@ const agents = [
     icon: User,
     title: "Personal Assistant",
     subtitleEn: "Evolution from In-house to OpenClaw",
-    subtitleCn: "从自研到OpenClaw的演进",
     descEn: "Initially built a general-purpose personal assistant Agent, later replaced by OpenClaw. Delegated generic tasks to specialized tools, refocusing internal efforts on domain depth.",
-    descCn: "早期构建通用型个人助理Agent，后替换为OpenClaw。通用任务交由专业工具，内部精力聚焦业务深度。",
     tags: ["Mindset Shift", "Domain Focus", "OpenClaw"],
     color: "purple" as const,
     videoIds: null,
@@ -35,9 +31,7 @@ const agents = [
     icon: Truck,
     title: "Driver AI Agent",
     subtitleEn: "Full-process Agent for Drivers",
-    subtitleCn: "司机端全流程Agent化",
     descEn: "Equips drivers with AI assistance in TMS/YMS workflows — handling check-ins, dock congestion, missing documents, and providing real-time guidance.",
-    descCn: "在TMS/YMS环节为司机配备AI辅助，处理签到、月台拥堵、文件缺失等异常，提供实时指导。",
     tags: ["Driver Check-in", "Exception Handling", "Real-time Guidance"],
     color: "cyan" as const,
     videoIds: ["hxSAx5vjv1I"],
@@ -49,12 +43,10 @@ export default function AgentsSection() {
   return (
     <section id="agents" className="py-24 md:py-32">
       <div className="container max-w-6xl">
-        <SectionTitle
+        <SectionTitleEn
           number="04"
-          title="Office Automation Agent化"
-          titleEn="Office Automation — Agentification"
-          subtitle="从「系统记录」到「系统行动」的转变——我们在企业内部办公和运营流程中的Agent化尝试与成果。"
-          subtitleEn="From 'system of record' to 'system of action' — our experiments and results in agentifying internal office and operational workflows."
+          title="Office Automation — Agentification"
+          subtitle="From 'system of record' to 'system of action' — our experiments and results in agentifying internal office and operational workflows."
         />
 
         <div className="grid md:grid-cols-3 gap-6">
@@ -73,9 +65,7 @@ export default function AgentsSection() {
                 </div>
                 <h3 className="text-lg font-bold mb-1">{a.title}</h3>
                 <p className="text-xs font-mono text-cyan-glow/60 mb-0.5">{a.subtitleEn}</p>
-                <p className="text-[10px] font-mono text-cyan-glow/30 mb-3">{a.subtitleCn}</p>
                 <p className="text-sm text-muted-foreground leading-relaxed flex-1">{a.descEn}</p>
-                <p className="text-xs text-muted-foreground/40 leading-relaxed mt-1 mb-3">{a.descCn}</p>
 
                 {/* Embedded video(s) */}
                 {a.videoIds && a.videoIds.length > 0 && (

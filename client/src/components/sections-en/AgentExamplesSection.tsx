@@ -4,7 +4,7 @@
  */
 
 import AnimatedSection from "../AnimatedSection";
-import SectionTitle from "../SectionTitle";
+import SectionTitleEn from "./SectionTitleEn";
 import GlowCard from "../GlowCard";
 import { Play, UserSearch, Eye, PenTool, Network } from "lucide-react";
 
@@ -12,36 +12,28 @@ const examples = [
   {
     icon: UserSearch,
     titleEn: "AI Recruit Agent",
-    titleCn: "AI招聘Agent",
     descEn: "Automates resume screening, candidate matching, and interview scheduling — reducing time-to-hire by 60% while maintaining quality standards.",
-    descCn: "自动化简历筛选、候选人匹配和面试安排——在保持质量标准的同时将招聘周期缩短60%。",
     videoId: "RAI1Vzoduvw",
     color: "cyan" as const,
   },
   {
     icon: Eye,
     titleEn: "Staff Monitoring Agent",
-    titleCn: "员工行为监控Agent",
     descEn: "Vision-based AI monitors warehouse staff behavior for safety compliance, productivity tracking, and SOP adherence in real-time.",
-    descCn: "基于视觉的AI实时监控仓库员工行为，确保安全合规、生产力追踪和SOP执行。",
     videoId: "0R8umQdRDFE",
     color: "purple" as const,
   },
   {
     icon: PenTool,
     titleEn: "Content Generate & AEO Agent",
-    titleCn: "内容生成与AEO Agent",
     descEn: "AI-driven content generation for marketing and SEO, combined with Answer Engine Optimization (AEO) to maximize visibility in AI-powered search results.",
-    descCn: "AI驱动的营销和SEO内容生成，结合答案引擎优化（AEO），在AI搜索结果中最大化曝光。",
     videoId: "WOAr3NfU-QY",
     color: "cyan" as const,
   },
   {
     icon: Network,
     titleEn: "Ontology-Powered Agent Factory",
-    titleCn: "Ontology驱动的Agent工厂",
     descEn: "Demonstrates how Ontology serves as the foundation for rapid Agent assembly — turning domain knowledge into deployable AI Agents at scale.",
-    descCn: "展示Ontology如何作为快速Agent组装的基础——将领域知识规模化转化为可部署的AI Agent。",
     videoId: "l0Iya3yYmmc",
     color: "purple" as const,
   },
@@ -51,12 +43,10 @@ export default function AgentExamplesSection() {
   return (
     <section id="agent-examples" className="py-24 md:py-32">
       <div className="container max-w-6xl">
-        <SectionTitle
+        <SectionTitleEn
           number="05"
-          title="更多Agent应用案例"
-          titleEn="More Agent Applications in Action"
-          subtitle="从招聘到内容生成，从行为监控到Agent工厂——AI Agent正在渗透企业运营的每一个角落。"
-          subtitleEn="From recruiting to content generation, from behavior monitoring to Agent factory — AI Agents are permeating every corner of enterprise operations."
+          title="More Agent Applications in Action"
+          subtitle="From recruiting to content generation, from behavior monitoring to Agent factory — AI Agents are permeating every corner of enterprise operations."
         />
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -74,13 +64,11 @@ export default function AgentExamplesSection() {
                   </div>
                   <div>
                     <h3 className="text-base font-bold">{ex.titleEn}</h3>
-                    <p className="text-[10px] text-muted-foreground/40">{ex.titleCn}</p>
                   </div>
                 </div>
 
                 {/* Description */}
                 <p className="text-sm text-muted-foreground leading-relaxed mb-1">{ex.descEn}</p>
-                <p className="text-xs text-muted-foreground/40 leading-relaxed mb-4">{ex.descCn}</p>
 
                 {/* Video thumbnail with play link */}
                 <a

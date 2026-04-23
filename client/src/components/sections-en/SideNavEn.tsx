@@ -2,22 +2,22 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
 const sections = [
-  { id: "hero", label: "00", title: "Cover 封面" },
-  { id: "company", label: "01", title: "Who We Are 关于我们" },
-  { id: "evolution", label: "02", title: "Evolution 演进" },
-  { id: "video", label: "03", title: "Demo 实录" },
-  { id: "agents", label: "04", title: "Agents Agent化" },
-  { id: "agent-examples", label: "05", title: "More Agents 更多案例" },
-  { id: "physical", label: "06", title: "Physical AI 物理AI" },
-  { id: "journey", label: "07", title: "Lessons 心路" },
+  { id: "hero", label: "00", title: "Cover" },
+  { id: "company", label: "01", title: "Who We Are" },
+  { id: "evolution", label: "02", title: "Evolution" },
+  { id: "video", label: "03", title: "Demo" },
+  { id: "agents", label: "04", title: "Agents" },
+  { id: "agent-examples", label: "05", title: "More Agents" },
+  { id: "physical", label: "06", title: "Physical AI" },
+  { id: "journey", label: "07", title: "Lessons" },
   { id: "ontology", label: "08", title: "Ontology" },
   { id: "harness", label: "09", title: "Harness" },
-  { id: "llm", label: "10", title: "LLM Strategy 选型" },
-  { id: "hardware", label: "11", title: "Hardware 硬件" },
-  { id: "future", label: "12", title: "Vision 展望" },
+  { id: "llm", label: "10", title: "LLM Strategy" },
+  { id: "hardware", label: "11", title: "Hardware" },
+  { id: "future", label: "12", title: "Vision" },
 ];
 
-export default function SideNav() {
+export default function SideNavEn() {
   const [active, setActive] = useState("hero");
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export default function SideNav() {
           >
             {active === id && (
               <motion.div
-                layoutId="nav-active"
+                layoutId="nav-active-en"
                 className="absolute inset-0 rounded-md bg-cyan-glow/15 border border-cyan-glow/40"
                 transition={{ type: "spring", stiffness: 350, damping: 30 }}
               />
