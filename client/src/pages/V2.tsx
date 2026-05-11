@@ -5,7 +5,6 @@ import GlowCard from "@/components/GlowCard";
 import CountUp from "@/components/CountUp";
 
 const ITEM_LOGO = "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image8_1a8f9bd6.png";
-const FASHIONNOVA_LOGO = "https://files.manuscdn.com/user_upload_by_module/session_file/117473971/wztBmWBqjqhmduNs.png";
 const HERO_BG = "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/v2-hero-partnership-koDv4r3sxSUJryrdd8KhBs.webp";
 const ROI_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/v2-roi-infographic-Wh2rnNZyPQZSQ4yxcLS8jF.webp";
 
@@ -84,8 +83,6 @@ function V2SectionTitle({ number, titleEn, titleCn, subtitleEn, subtitleCn }: {
       <div className="mb-6">
         <div className="flex items-center gap-3">
           <img src={ITEM_LOGO} alt="Item" className="h-5 opacity-50" />
-          <span className="text-muted-foreground/40 text-sm">×</span>
-          <img src={FASHIONNOVA_LOGO} alt="Fashion Nova" className="h-5 opacity-50 bg-white rounded px-1 py-0.5" />
         </div>
       </div>
       <div className="flex items-center gap-4 mb-4">
@@ -124,8 +121,6 @@ export default function V2() {
           <AnimatedSection>
             <div className="flex items-center justify-center gap-6 mb-8">
               <img src={ITEM_LOGO} alt="Item" className="h-10 md:h-14" />
-              <span className="text-3xl md:text-4xl text-cyan-glow/60 font-light">×</span>
-              <img src={FASHIONNOVA_LOGO} alt="Fashion Nova" className="h-10 md:h-14 bg-white rounded px-3 py-1" />
             </div>
           </AnimatedSection>
           <AnimatedSection delay={0.2}>
@@ -318,8 +313,7 @@ export default function V2() {
             <AnimatedSection delay={0.2}>
               <GlowCard className="p-8">
                 <div className="flex items-center gap-3 mb-4">
-                  <img src={FASHIONNOVA_LOGO} alt="Fashion Nova" className="h-6 bg-white rounded px-2 py-0.5" />
-                  <h3 className="text-lg font-bold font-display">Value for Fashion Nova</h3>
+                  <h3 className="text-lg font-bold font-display">Value for Partner</h3>
                 </div>
                 <p className="text-sm text-muted-foreground/60 mb-4">Fashion Nova获得的价值</p>
                 <ul className="space-y-3">
@@ -701,8 +695,6 @@ export default function V2() {
             <div className="mt-16 text-center max-w-3xl mx-auto">
               <div className="flex items-center justify-center gap-6 mb-6">
                 <img src={ITEM_LOGO} alt="Item" className="h-8" />
-                <span className="text-2xl text-cyan-glow/60 font-light">×</span>
-                <img src={FASHIONNOVA_LOGO} alt="Fashion Nova" className="h-8 bg-white rounded px-2 py-1" />
               </div>
               <p className="text-2xl md:text-3xl font-bold font-display bg-gradient-to-r from-cyan-glow to-purple-glow bg-clip-text text-transparent">
                 From Supply Chain Partner to Strategic AI Alliance

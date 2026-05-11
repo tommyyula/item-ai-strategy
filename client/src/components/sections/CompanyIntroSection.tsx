@@ -22,7 +22,6 @@ const unisStats = [
 const allLogos = [
   { name: "Walmart", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image2_0b92a732.png" },
   { name: "Samsung", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image3_15244f3c.png" },
-  { name: "Fashion Nova", url: "https://files.manuscdn.com/user_upload_by_module/session_file/117473971/wztBmWBqjqhmduNs.png" },
   { name: "Amazon", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image4_e5b97640.png" },
   { name: "Meijer", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image5_f32d6f0a.png" },
   { name: "Foxconn", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image6_97765300.png" },

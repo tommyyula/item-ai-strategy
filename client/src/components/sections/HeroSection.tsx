@@ -3,7 +3,6 @@ import { ChevronDown } from "lucide-react";
 
 const HERO_BG = "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/hero-bg-4oHPfcTAqZFTD4ufTYG9tE.webp";
 const ITEM_LOGO = "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image8_1a8f9bd6.png";
-const FASHIONNOVA_LOGO = "https://files.manuscdn.com/user_upload_by_module/session_file/117473971/wztBmWBqjqhmduNs.png";
 const ITEM_LOGO_WHITE = "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/item-logo-white_4ff1c5bb.png";
 
 export default function HeroSection() {
@@ -32,8 +31,6 @@ export default function HeroSection() {
           transition={{ duration: 1, delay: 0.2 }}
         >
           <div className="inline-flex items-center gap-4 px-6 py-3 rounded-full border border-cyan-glow/20 bg-cyan-glow/5 mb-8">
-            <img src={FASHIONNOVA_LOGO} alt="Fashion Nova" className="h-7 bg-white rounded px-2 py-0.5" />
-            <span className="text-muted-foreground/40 text-lg font-light">&</span>
             <img src={ITEM_LOGO_WHITE} alt="Item" className="h-7" />
           </div>
         </motion.div>
