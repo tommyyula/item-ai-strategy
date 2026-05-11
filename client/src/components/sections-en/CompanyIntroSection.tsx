@@ -51,17 +51,17 @@ export default function CompanyIntroSection() {
             <div className="p-6 rounded-xl bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm h-full">
               <div className="flex items-center gap-3 mb-5">
                 <img src="https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image15_73115e90.png" alt="Unis" className="h-7" />
-                <p className="text-xs text-muted-foreground/40 font-mono">www.unisco.com</p>
+                <p className="text-xs text-muted-foreground/65 font-mono">www.unisco.com</p>
               </div>
 
-              <p className="text-sm text-foreground/80 leading-relaxed mb-1">
+              <p className="text-sm text-foreground/90 leading-relaxed mb-1">
                 <span className="font-semibold text-cyan-glow">Omni-channel fulfillment on-time and in-full.</span> UNIS started serving Fashion Nova since 2019 at Memphis, US. Strategically designed national footprint reaches 98% of consumers with same-or next-day service.
               </p>
 
               {/* Stats row */}
               <div className="grid grid-cols-4 gap-2 mb-5">
                 {unisStats.map((s) => (
-                  <div key={s.label} className="p-2.5 rounded-lg bg-white/[0.03] border border-white/[0.04] text-center">
+                  <div key={s.label} className="p-2.5 rounded-lg bg-white/[0.03] border border-white/[0.08] text-center">
                     <p className="text-lg font-bold text-cyan-glow font-mono">{s.value}</p>
                     <p className="text-[10px] text-muted-foreground mt-0.5">{s.label}</p>
                   </div>
@@ -69,7 +69,7 @@ export default function CompanyIntroSection() {
               </div>
 
               {/* Key highlights */}
-              <div className="flex flex-wrap gap-x-6 gap-y-1.5 text-xs text-foreground/60">
+              <div className="flex flex-wrap gap-x-6 gap-y-1.5 text-xs text-foreground/90">
                 <span className="flex items-center gap-1.5"><MapPin className="w-3 h-3 text-cyan-glow/60" /> 4 major US ports (CA, TX, GA, NJ)</span>
                 <span className="flex items-center gap-1.5"><Truck className="w-3 h-3 text-cyan-glow/60" /> 4.5M sq ft in LA area</span>
                 <span className="flex items-center gap-1.5"><Users className="w-3 h-3 text-cyan-glow/60" /> 1,300 service technicians</span>
@@ -84,16 +84,16 @@ export default function CompanyIntroSection() {
                 <img src={ITEM_LOGO_SVG} alt="Item" className="h-7" />
               </div>
 
-              <p className="text-sm text-foreground/80 leading-relaxed mb-1">
+              <p className="text-sm text-foreground/90 leading-relaxed mb-1">
                 <span className="font-semibold text-purple-glow">The technology engine behind UNIS.</span> Item is the implementation foundation for all supply chain transformation projects across UNIS Group.
               </p>
-              <p className="text-xs text-muted-foreground/40 leading-relaxed mb-5">
+              <p className="text-xs text-muted-foreground/65 leading-relaxed mb-5">
                 
               </p>
 
               {/* Simple capability tags instead of detailed stages */}
               <div className="flex-1 flex flex-col justify-center">
-                <p className="text-[10px] text-muted-foreground/40 font-mono tracking-wider mb-3">CAPABILITY STACK</p>
+                <p className="text-[10px] text-muted-foreground/65 font-mono tracking-wider mb-3">CAPABILITY STACK</p>
                 <div className="space-y-2">
                   <CapTag label="SaaS Platform" sub="OMS · WMS · TMS · YMS · RMS · Billing" color="cyan" />
                   <CapTag label="AI Agent Factory" sub="Ontology → Agent Assembly → Runtime" color="purple" />
@@ -101,8 +101,8 @@ export default function CompanyIntroSection() {
                 </div>
               </div>
 
-              <div className="mt-5 pt-4 border-t border-white/[0.04]">
-                <p className="text-[10px] text-muted-foreground/30 italic leading-relaxed">
+              <div className="mt-5 pt-4 border-t border-white/[0.08]">
+                <p className="text-[10px] text-muted-foreground/65 italic leading-relaxed">
                   "Digital Operations → AI Intelligence → Physical Automation"
                 </p>
               </div>
@@ -112,8 +112,8 @@ export default function CompanyIntroSection() {
 
         {/* Unified logo bar — customers & partners */}
         <AnimatedSection delay={0.2}>
-          <div className="p-5 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-            <p className="text-[10px] text-muted-foreground/40 font-mono tracking-wider mb-4 text-center">
+          <div className="p-5 rounded-xl bg-white/[0.04] border border-white/[0.08]">
+            <p className="text-[10px] text-muted-foreground/65 font-mono tracking-wider mb-4 text-center">
               CUSTOMERS & PARTNERS
             </p>
             <div className="flex items-center justify-center gap-6 flex-wrap">
@@ -148,7 +148,7 @@ function CapTag({ label, sub, color }: { label: string; sub: string; color: "cya
         <p className={`text-xs font-semibold ${
           color === "cyan" ? "text-cyan-glow/90" : "text-purple-glow/90"
         }`}>{label}</p>
-        <p className="text-[10px] text-muted-foreground/40 font-mono">{sub}</p>
+        <p className="text-[10px] text-muted-foreground/65 font-mono">{sub}</p>
       </div>
     </div>
   );

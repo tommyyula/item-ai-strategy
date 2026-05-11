@@ -57,7 +57,7 @@ export default function SectionTitle({
       )}
       {/* Chinese subtitle is now secondary */}
       {subtitle && (
-        <p className={`${subtitleEn ? "mt-1.5 text-sm text-muted-foreground/50 max-w-3xl leading-relaxed" : "mt-4 text-lg text-muted-foreground max-w-3xl leading-relaxed"}`}>
+        <p className={`${subtitleEn ? "mt-1.5 text-sm text-muted-foreground/75 max-w-3xl leading-relaxed" : "mt-4 text-lg text-muted-foreground max-w-3xl leading-relaxed"}`}>
           {subtitle}
         </p>
       )}

@@ -57,7 +57,7 @@ export default function HardwareSection() {
             <p className="text-xs font-mono text-muted-foreground tracking-widest uppercase mb-1">
               Current Hardware Foundation
             </p>
-            <p className="text-[10px] font-mono text-muted-foreground/40 tracking-widest uppercase mb-5">
+            <p className="text-[10px] font-mono text-muted-foreground/65 tracking-widest uppercase mb-5">
               当前硬件基础
             </p>
             <div className="grid md:grid-cols-3 gap-4">
@@ -68,9 +68,9 @@ export default function HardwareSection() {
                   </div>
                   <div>
                     <p className="text-sm font-bold">{hw.labelEn}</p>
-                    <p className="text-[10px] text-muted-foreground/40">{hw.labelCn}</p>
+                    <p className="text-[10px] text-muted-foreground/65">{hw.labelCn}</p>
                     <p className="text-xs text-muted-foreground mt-0.5">{hw.descEn}</p>
-                    <p className="text-[10px] text-muted-foreground/30">{hw.descCn}</p>
+                    <p className="text-[10px] text-muted-foreground/65">{hw.descCn}</p>
                   </div>
                 </div>
               ))}
@@ -80,7 +80,7 @@ export default function HardwareSection() {
 
         {/* Arrow */}
         <AnimatedSection className="flex justify-center mb-12">
-          <div className="flex items-center gap-3 text-muted-foreground/50">
+          <div className="flex items-center gap-3 text-muted-foreground/75">
             <div className="h-px w-12 bg-gradient-to-r from-transparent to-cyan-glow/40" />
             <ArrowRight className="w-5 h-5 text-cyan-glow" />
             <span className="text-xs font-mono text-cyan-glow/60 tracking-wider">Expansion Needs 扩展需求</span>
@@ -102,10 +102,10 @@ export default function HardwareSection() {
                   <need.icon className="w-6 h-6" />
                 </div>
                 <h3 className="text-lg font-bold mb-0.5">{need.titleEn}</h3>
-                <p className="text-xs text-muted-foreground/40 mb-1">{need.titleCn}</p>
+                <p className="text-xs text-muted-foreground/65 mb-1">{need.titleCn}</p>
                 <p className="text-xs font-mono text-cyan-glow/60 mb-3">{need.subtitle}</p>
                 <p className="text-sm text-muted-foreground leading-relaxed">{need.descEn}</p>
-                <p className="text-xs text-muted-foreground/40 leading-relaxed mt-1">{need.descCn}</p>
+                <p className="text-xs text-muted-foreground/65 leading-relaxed mt-1">{need.descCn}</p>
               </GlowCard>
             </AnimatedSection>
           ))}

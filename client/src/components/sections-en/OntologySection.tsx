@@ -36,7 +36,7 @@ export default function OntologySection() {
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Ontology is more than a knowledge graph. It is a domain-specific <strong className="text-foreground">structural framework</strong>, <strong className="text-foreground">entity model</strong>, and <strong className="text-foreground">semantic backbone</strong>. It defines relationships, constraints, and reasoning rules among all concepts within a domain, enabling AI Agents to think and act like domain experts.
               </p>
-              <p className="text-xs text-muted-foreground/40 leading-relaxed mt-2">
+              <p className="text-xs text-muted-foreground/65 leading-relaxed mt-2">
                 
               </p>
             </GlowCard>

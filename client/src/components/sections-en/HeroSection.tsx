@@ -83,7 +83,7 @@ export default function HeroSectionEn() {
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="flex flex-col items-center gap-2 text-muted-foreground/50"
+          className="flex flex-col items-center gap-2 text-muted-foreground/75"
         >
           <span className="text-xs font-mono tracking-widest">SCROLL</span>
           <ChevronDown className="w-4 h-4" />

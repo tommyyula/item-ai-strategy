@@ -58,7 +58,7 @@ export default function FutureSection() {
             <p className="text-muted-foreground leading-relaxed mb-2">
               As the implementation foundation for all supply chain transformation projects across UNIS Group, Item has validated the complete path from digitalization to Physical AI in production environments. We look forward to partnering with Partner, deeply integrating this battle-tested AI middleware layer with the partner's hardware ecosystem, and jointly defining the standard for next-generation smart warehouses.
             </p>
-            <p className="text-sm text-muted-foreground/40 leading-relaxed">
+            <p className="text-sm text-muted-foreground/65 leading-relaxed">
               As the implementation foundation for all supply chain transformation projects across UNIS Group, Item has validated the complete path from digitalization to Physical AI in production environments. We look forward to partnering to deeply integrate this battle-tested AI middleware layer with hardware ecosystems, jointly defining the standard for next-generation intelligent warehouses.
             </p>
           </div>
@@ -66,7 +66,7 @@ export default function FutureSection() {
 
         {/* Footer */}
         <div className="mt-20 pt-8 border-t border-panel-border/30 text-center">
-          <p className="text-xs text-muted-foreground/50 font-mono">
+          <p className="text-xs text-muted-foreground/75 font-mono">
             Item AI Strategy Briefing &mdash; Confidential &mdash; UNIS Group
           </p>
         </div>

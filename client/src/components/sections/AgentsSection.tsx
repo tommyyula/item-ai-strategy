@@ -69,13 +69,13 @@ export default function AgentsSection() {
                   }`}>
                     <a.icon className="w-6 h-6" />
                   </div>
-                  <ArrowRight className="w-4 h-4 text-muted-foreground/40" />
+                  <ArrowRight className="w-4 h-4 text-muted-foreground/65" />
                 </div>
                 <h3 className="text-lg font-bold mb-1">{a.title}</h3>
                 <p className="text-xs font-mono text-cyan-glow/60 mb-0.5">{a.subtitleEn}</p>
-                <p className="text-[10px] font-mono text-cyan-glow/30 mb-3">{a.subtitleCn}</p>
+                <p className="text-[10px] font-mono text-cyan-glow/55 mb-3">{a.subtitleCn}</p>
                 <p className="text-sm text-muted-foreground leading-relaxed flex-1">{a.descEn}</p>
-                <p className="text-xs text-muted-foreground/40 leading-relaxed mt-1 mb-3">{a.descCn}</p>
+                <p className="text-xs text-muted-foreground/65 leading-relaxed mt-1 mb-3">{a.descCn}</p>
 
                 {/* Embedded video(s) */}
                 {a.videoIds && a.videoIds.length > 0 && (
@@ -101,7 +101,7 @@ export default function AgentsSection() {
                             <Play className="w-4 h-4 text-white ml-0.5" />
                           </div>
                         </div>
-                        <div className="absolute bottom-2 left-2 text-[10px] font-mono text-white/60 bg-black/50 px-2 py-0.5 rounded">
+                        <div className="absolute bottom-2 left-2 text-[10px] font-mono text-white/80 bg-black/50 px-2 py-0.5 rounded">
                           ▶ Demo {a.videoIds!.length > 1 ? vi + 1 : ''}
                         </div>
                       </a>

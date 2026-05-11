@@ -44,7 +44,7 @@ export default function LLMSection() {
                 <div>
                   <h3 className="font-bold">US Frontier Models</h3>
                   <p className="text-xs text-muted-foreground">High-complexity Reasoning / Code Gen</p>
-                  <p className="text-[10px] text-muted-foreground/40">美国头部大模型 — 高复杂度推理 / 代码生成</p>
+                  <p className="text-[10px] text-muted-foreground/65">美国头部大模型 — 高复杂度推理 / 代码生成</p>
                 </div>
               </div>
               <div className="space-y-3">
@@ -54,7 +54,7 @@ export default function LLMSection() {
                       <span className="text-sm font-medium">{m.name}</span>
                       <span className="text-xs text-muted-foreground font-mono">{m.useEn}</span>
                     </div>
-                    <p className="text-[10px] text-muted-foreground/30 text-right mt-0.5">{m.useCn}</p>
+                    <p className="text-[10px] text-muted-foreground/65 text-right mt-0.5">{m.useCn}</p>
                   </div>
                 ))}
               </div>
@@ -71,7 +71,7 @@ export default function LLMSection() {
                 <div>
                   <h3 className="font-bold">China Open-source / Local Models</h3>
                   <p className="text-xs text-muted-foreground">Privacy / Localization / Cost</p>
-                  <p className="text-[10px] text-muted-foreground/40">中国开源/本土模型 — 隐私 / 本地化 / 成本敏感</p>
+                  <p className="text-[10px] text-muted-foreground/65">中国开源/本土模型 — 隐私 / 本地化 / 成本敏感</p>
                 </div>
               </div>
               <div className="space-y-3">
@@ -81,7 +81,7 @@ export default function LLMSection() {
                       <span className="text-sm font-medium">{m.name}</span>
                       <span className="text-xs text-muted-foreground font-mono">{m.useEn}</span>
                     </div>
-                    <p className="text-[10px] text-muted-foreground/30 text-right mt-0.5">{m.useCn}</p>
+                    <p className="text-[10px] text-muted-foreground/65 text-right mt-0.5">{m.useCn}</p>
                   </div>
                 ))}
               </div>
@@ -97,15 +97,15 @@ export default function LLMSection() {
               <h3 className="font-bold">Future Expansion: From LLM to Multimodal</h3>
               <ArrowRight className="w-4 h-4 text-muted-foreground" />
             </div>
-            <p className="text-xs text-muted-foreground/50 mb-6 ml-8">未来扩展方向：从LLM到多模态</p>
+            <p className="text-xs text-muted-foreground/75 mb-6 ml-8">未来扩展方向：从LLM到多模态</p>
             <div className="grid md:grid-cols-3 gap-4">
               {futureModels.map((m) => (
                 <div key={m.abbr} className="p-4 rounded-lg bg-secondary/30 border border-panel-border/30 text-center">
                   <p className="text-lg font-bold font-mono text-cyan-glow mb-1">{m.abbr}</p>
                   <p className="text-sm font-medium mb-0.5">{m.nameEn}</p>
-                  <p className="text-[10px] text-muted-foreground/40 mb-2">{m.nameCn}</p>
+                  <p className="text-[10px] text-muted-foreground/65 mb-2">{m.nameCn}</p>
                   <p className="text-xs text-muted-foreground">{m.descEn}</p>
-                  <p className="text-[10px] text-muted-foreground/30 mt-0.5">{m.descCn}</p>
+                  <p className="text-[10px] text-muted-foreground/65 mt-0.5">{m.descCn}</p>
                 </div>
               ))}
             </div>

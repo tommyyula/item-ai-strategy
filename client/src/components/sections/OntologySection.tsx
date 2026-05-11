@@ -35,11 +35,11 @@ export default function OntologySection() {
             </div>
             <GlowCard className="p-5">
               <h4 className="font-bold mb-1">What is Ontology?</h4>
-              <p className="text-xs text-muted-foreground/50 mb-2">什么是Ontology？</p>
+              <p className="text-xs text-muted-foreground/75 mb-2">什么是Ontology？</p>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Ontology is more than a knowledge graph. It is a domain-specific <strong className="text-foreground">structural framework</strong>, <strong className="text-foreground">entity model</strong>, and <strong className="text-foreground">semantic backbone</strong>. It defines relationships, constraints, and reasoning rules among all concepts within a domain, enabling AI Agents to think and act like domain experts.
               </p>
-              <p className="text-xs text-muted-foreground/40 leading-relaxed mt-2">
+              <p className="text-xs text-muted-foreground/65 leading-relaxed mt-2">
                 Ontology不仅仅是知识图谱。它是特定领域的结构化框架、实体模型和语义骨干。它定义了领域内所有概念之间的关系、约束和推理规则，让AI Agent能够像领域专家一样思考和行动。
               </p>
             </GlowCard>
@@ -52,7 +52,7 @@ export default function OntologySection() {
                 <p className="text-xs font-mono text-cyan-glow/60 tracking-widest uppercase mb-1">
                   Construction Results
                 </p>
-                <p className="text-[10px] font-mono text-cyan-glow/30 tracking-widest uppercase mb-4">
+                <p className="text-[10px] font-mono text-cyan-glow/55 tracking-widest uppercase mb-4">
                   构建成果
                 </p>
                 <div className="grid grid-cols-3 gap-4 mb-6">
@@ -61,21 +61,21 @@ export default function OntologySection() {
                       <CountUp end={2} suffix=" Days" />
                     </div>
                     <p className="text-xs text-muted-foreground mt-1">Build Time</p>
-                    <p className="text-[10px] text-muted-foreground/40">构建时间</p>
+                    <p className="text-[10px] text-muted-foreground/65">构建时间</p>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl font-bold font-mono text-cyan-glow glow-text-cyan">
                       <CountUp end={630} suffix=" Iter." />
                     </div>
                     <p className="text-xs text-muted-foreground mt-1">Research Iterations</p>
-                    <p className="text-[10px] text-muted-foreground/40">自主研究迭代</p>
+                    <p className="text-[10px] text-muted-foreground/65">自主研究迭代</p>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl font-bold font-mono text-cyan-glow glow-text-cyan">
                       <CountUp end={98} suffix="%" />
                     </div>
                     <p className="text-xs text-muted-foreground mt-1">Domain Coverage</p>
-                    <p className="text-[10px] text-muted-foreground/40">领域知识覆盖</p>
+                    <p className="text-[10px] text-muted-foreground/65">领域知识覆盖</p>
                   </div>
                 </div>
               </GlowCard>
@@ -84,7 +84,7 @@ export default function OntologySection() {
             <AnimatedSection direction="right" delay={0.2}>
               <GlowCard glowColor="purple" className="p-6">
                 <h4 className="font-bold mb-1">Why is Ontology Decisive?</h4>
-                <p className="text-xs text-muted-foreground/50 mb-3">为什么Ontology是决定性的？</p>
+                <p className="text-xs text-muted-foreground/75 mb-3">为什么Ontology是决定性的？</p>
                 <ul className="space-y-3">
                   {[
                     { en: "Unifying 55 independent WMS instances into a single semantic architecture", zh: "将55个独立WMS实例统一到一个语义架构中" },
@@ -96,7 +96,7 @@ export default function OntologySection() {
                       <span className="w-1.5 h-1.5 rounded-full bg-purple-glow mt-2 shrink-0" />
                       <div>
                         <span>{item.en}</span>
-                        <p className="text-xs text-muted-foreground/40 mt-0.5">{item.zh}</p>
+                        <p className="text-xs text-muted-foreground/65 mt-0.5">{item.zh}</p>
                       </div>
                     </li>
                   ))}
@@ -109,7 +109,7 @@ export default function OntologySection() {
                 <p className="text-sm text-cyan-glow/80 italic">
                   "Ontology is the bridge from general intelligence to domain expertise. Without it, LLMs are merely clever but ignorant outsiders."
                 </p>
-                <p className="text-xs text-cyan-glow/40 mt-2">
+                <p className="text-xs text-cyan-glow/60 mt-2">
                   "Ontology是让AI从通用智能走向专业智能的桥梁。没有它，大模型只是一个聪明但无知的外来者。"
                 </p>
               </div>

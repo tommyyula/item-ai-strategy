@@ -102,7 +102,7 @@ function VideoCard({
             <Play className={`text-white ml-0.5 ${large ? "w-6 h-6" : "w-3.5 h-3.5"}`} />
           </div>
         </div>
-        <div className="absolute bottom-2 left-2 text-[10px] font-mono text-white/60 bg-black/50 px-2 py-0.5 rounded">
+        <div className="absolute bottom-2 left-2 text-[10px] font-mono text-white/80 bg-black/50 px-2 py-0.5 rounded">
           ▶ Watch
         </div>
       </div>
@@ -110,11 +110,11 @@ function VideoCard({
         <Icon className={`shrink-0 text-cyan-glow/60 mt-0.5 ${large ? "w-4 h-4" : "w-3.5 h-3.5"}`} />
         <div>
           <p className={`font-semibold ${large ? "text-sm" : "text-xs"}`}>{titleEn}</p>
-          <p className="text-[10px] text-muted-foreground/40">{titleCn}</p>
+          <p className="text-[10px] text-muted-foreground/65">{titleCn}</p>
           {large && (
             <>
               <p className="text-xs text-muted-foreground leading-relaxed mt-1">{descEn}</p>
-              <p className="text-[10px] text-muted-foreground/40 leading-relaxed mt-0.5">{descCn}</p>
+              <p className="text-[10px] text-muted-foreground/65 leading-relaxed mt-0.5">{descCn}</p>
             </>
           )}
         </div>
@@ -142,10 +142,10 @@ export default function PhysicalSection() {
             <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/40 to-transparent" />
             <div className="absolute bottom-5 left-5 max-w-md">
               <p className="text-xs font-mono text-cyan-glow tracking-wider mb-1">HARDWARE-AGNOSTIC WES</p>
-              <p className="text-sm text-foreground/80">
+              <p className="text-sm text-foreground/90">
                 Software stack running in real warehouse production environments covering 10M+ sq ft
               </p>
-              <p className="text-[10px] text-foreground/40 mt-0.5">
+              <p className="text-[10px] text-foreground/70 mt-0.5">
                 软件栈在超过1000万平方英尺的真实仓库生产环境中稳定运行
               </p>
             </div>
@@ -158,7 +158,7 @@ export default function PhysicalSection() {
           <AnimatedSection direction="left">
             <GlowCard className="p-5 h-full">
               <h3 className="font-bold text-sm mb-1">Robotics & Automation</h3>
-              <p className="text-[10px] text-muted-foreground/40 mb-4">机器人与自动化</p>
+              <p className="text-[10px] text-muted-foreground/65 mb-4">机器人与自动化</p>
               <VideoCard {...leftVideo} large />
             </GlowCard>
           </AnimatedSection>
@@ -167,7 +167,7 @@ export default function PhysicalSection() {
           <AnimatedSection direction="right">
             <GlowCard glowColor="purple" className="p-5 h-full">
               <h3 className="font-bold text-sm mb-1">Vision & Edge AI Applications</h3>
-              <p className="text-[10px] text-muted-foreground/40 mb-4">视觉与边缘AI应用</p>
+              <p className="text-[10px] text-muted-foreground/65 mb-4">视觉与边缘AI应用</p>
               <div className="grid grid-cols-2 gap-4">
                 {rightVideos.slice(0, 4).map((v) => (
                   <VideoCard key={v.videoId} {...v} />

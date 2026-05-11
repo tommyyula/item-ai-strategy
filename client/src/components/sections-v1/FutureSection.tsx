@@ -48,9 +48,9 @@ export default function FutureSection() {
                   <v.icon className="w-7 h-7 text-cyan-glow" />
                 </div>
                 <h3 className="text-lg font-bold mb-0.5">{v.titleEn}</h3>
-                <p className="text-xs text-muted-foreground/50 mb-3">{v.titleCn}</p>
+                <p className="text-xs text-muted-foreground/75 mb-3">{v.titleCn}</p>
                 <p className="text-sm text-muted-foreground leading-relaxed">{v.descEn}</p>
-                <p className="text-xs text-muted-foreground/40 leading-relaxed mt-2">{v.descCn}</p>
+                <p className="text-xs text-muted-foreground/65 leading-relaxed mt-2">{v.descCn}</p>
               </GlowCard>
             </AnimatedSection>
           ))}
@@ -68,7 +68,7 @@ export default function FutureSection() {
             <p className="text-muted-foreground leading-relaxed mb-2">
               As the implementation foundation for all supply chain transformation projects across UNIS Group, Item has validated the complete path from digitalization to Physical AI in production environments. We look forward to partnering with Lenovo, deeply integrating this battle-tested AI middleware layer with Lenovo's hardware ecosystem, and jointly defining the standard for next-generation smart warehouses.
             </p>
-            <p className="text-sm text-muted-foreground/40 leading-relaxed">
+            <p className="text-sm text-muted-foreground/65 leading-relaxed">
               Item 作为 UNIS 集团所有供应链转型项目的实施底座，已经在生产环境中验证了从数字化到物理AI的完整路径。我们期待与联想携手，将这套经过实战检验的AI中间件层与联想的硬件生态深度融合，共同定义下一代智能仓库的标准。
             </p>
           </div>
@@ -76,7 +76,7 @@ export default function FutureSection() {
 
         {/* Footer */}
         <div className="mt-20 pt-8 border-t border-panel-border/30 text-center">
-          <p className="text-xs text-muted-foreground/50 font-mono">
+          <p className="text-xs text-muted-foreground/75 font-mono">
             Item AI Strategy Briefing &mdash; Confidential &mdash; UNIS Group
           </p>
         </div>

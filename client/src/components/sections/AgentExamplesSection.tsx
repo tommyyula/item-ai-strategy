@@ -74,13 +74,13 @@ export default function AgentExamplesSection() {
                   </div>
                   <div>
                     <h3 className="text-base font-bold">{ex.titleEn}</h3>
-                    <p className="text-[10px] text-muted-foreground/40">{ex.titleCn}</p>
+                    <p className="text-[10px] text-muted-foreground/65">{ex.titleCn}</p>
                   </div>
                 </div>
 
                 {/* Description */}
                 <p className="text-sm text-muted-foreground leading-relaxed mb-1">{ex.descEn}</p>
-                <p className="text-xs text-muted-foreground/40 leading-relaxed mb-4">{ex.descCn}</p>
+                <p className="text-xs text-muted-foreground/65 leading-relaxed mb-4">{ex.descCn}</p>
 
                 {/* Video thumbnail with play link */}
                 <a
@@ -103,7 +103,7 @@ export default function AgentExamplesSection() {
                       <Play className="w-5 h-5 text-white ml-0.5" />
                     </div>
                   </div>
-                  <div className="absolute bottom-2 left-2 text-[10px] font-mono text-white/60 bg-black/50 px-2 py-0.5 rounded">
+                  <div className="absolute bottom-2 left-2 text-[10px] font-mono text-white/80 bg-black/50 px-2 py-0.5 rounded">
                     ▶ Watch Demo
                   </div>
                 </a>

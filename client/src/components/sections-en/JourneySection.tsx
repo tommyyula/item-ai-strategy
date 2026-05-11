@@ -71,8 +71,8 @@ export default function JourneySection() {
                 <p className="text-muted-foreground leading-relaxed">
                   We realized that as models rapidly iterate and go open-source, general capabilities quickly commoditize. The true moat lies in <strong className="text-foreground">Business Harness</strong> and <strong className="text-foreground">Ontology</strong>.
                 </p>
-                <p className="text-sm text-muted-foreground/40 leading-relaxed mt-2">
- <strong className="text-foreground/60">Harness</strong><strong className="text-foreground/60">Ontology</strong>
+                <p className="text-sm text-muted-foreground/65 leading-relaxed mt-2">
+ <strong className="text-foreground/90">Harness</strong><strong className="text-foreground/90">Ontology</strong>
                 </p>
                 <div className="mt-6 p-4 rounded-lg bg-cyan-glow/5 border border-cyan-glow/20">
                   <p className="text-sm text-cyan-glow font-medium mb-1">Architecture Restructuring Direction</p>

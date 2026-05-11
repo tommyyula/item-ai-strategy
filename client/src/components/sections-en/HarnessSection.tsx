@@ -102,7 +102,7 @@ export default function HarnessSection() {
                 <p className="text-sm text-purple-glow/90 italic">
                   Item's strategic focus is on building deep Business Harness, ensuring platform value won't be displaced by stronger LLMs, but instead compounds as underlying models improve.
                 </p>
-                <p className="text-xs text-purple-glow/50 mt-2">
+                <p className="text-xs text-purple-glow/70 mt-2">
                   
                 </p>
               </div>

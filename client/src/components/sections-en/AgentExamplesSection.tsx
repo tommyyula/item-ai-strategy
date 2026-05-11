@@ -91,7 +91,7 @@ export default function AgentExamplesSection() {
                       <Play className="w-5 h-5 text-white ml-0.5" />
                     </div>
                   </div>
-                  <div className="absolute bottom-2 left-2 text-[10px] font-mono text-white/60 bg-black/50 px-2 py-0.5 rounded">
+                  <div className="absolute bottom-2 left-2 text-[10px] font-mono text-white/80 bg-black/50 px-2 py-0.5 rounded">
                     ▶ Watch Demo
                   </div>
                 </a>

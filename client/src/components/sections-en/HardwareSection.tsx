@@ -67,7 +67,7 @@ export default function HardwareSection() {
 
         {/* Arrow */}
         <AnimatedSection className="flex justify-center mb-12">
-          <div className="flex items-center gap-3 text-muted-foreground/50">
+          <div className="flex items-center gap-3 text-muted-foreground/75">
             <div className="h-px w-12 bg-gradient-to-r from-transparent to-cyan-glow/40" />
             <ArrowRight className="w-5 h-5 text-cyan-glow" />
             <span className="text-xs font-mono text-cyan-glow/60 tracking-wider">Expansion Needs</span>

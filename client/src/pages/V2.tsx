@@ -99,7 +99,7 @@ function V2SectionTitle({ number, titleEn, titleCn, subtitleEn, subtitleCn }: {
         <p className="mt-4 text-lg text-muted-foreground max-w-3xl leading-relaxed">{subtitleEn}</p>
       )}
       {subtitleCn && (
-        <p className="mt-1.5 text-sm text-muted-foreground/50 max-w-3xl leading-relaxed">{subtitleCn}</p>
+        <p className="mt-1.5 text-sm text-muted-foreground/75 max-w-3xl leading-relaxed">{subtitleCn}</p>
       )}
     </AnimatedSection>
   );
@@ -135,18 +135,18 @@ export default function V2() {
             <p className="mt-8 text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Bundling Fashion Nova hardware with Item's AI platform to unlock new revenue streams across e-commerce, supply chain, and warehouse automation verticals.
             </p>
-            <p className="mt-2 text-sm text-muted-foreground/50">
+            <p className="mt-2 text-sm text-muted-foreground/75">
               将Fashion Nova硬件与Item AI平台捆绑，在电商、供应链和仓储自动化领域开拓新的收入渠道。
             </p>
           </AnimatedSection>
           <AnimatedSection delay={0.6}>
             <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-sm text-muted-foreground/60">
               <span className="font-mono">AI Infrastructure</span>
-              <span className="text-cyan-glow/40">|</span>
+              <span className="text-cyan-glow/60">|</span>
               <span className="font-mono">GPU Compute</span>
-              <span className="text-cyan-glow/40">|</span>
+              <span className="text-cyan-glow/60">|</span>
               <span className="font-mono">Co-Hosting</span>
-              <span className="text-cyan-glow/40">|</span>
+              <span className="text-cyan-glow/60">|</span>
               <span className="font-mono">Joint Go-to-Market</span>
             </div>
           </AnimatedSection>
@@ -174,7 +174,7 @@ export default function V2() {
                   Cloud AI costs are spiraling — $860K/year for a typical e-commerce brand running multi-model inference. 
                   Private infrastructure cuts this by 85%, but most companies cannot design, procure, or operate GPU clusters.
                 </p>
-                <p className="mt-2 text-xs text-muted-foreground/50">
+                <p className="mt-2 text-xs text-muted-foreground/75">
                   云端AI成本持续攀升——一个典型电商品牌运行多模型推理每年需$860K。私有化部署可降低85%成本，但大多数企业无力自建GPU集群。
                 </p>
               </GlowCard>
@@ -189,7 +189,7 @@ export default function V2() {
                   UNIS has served Fashion Nova since 2019 at Memphis, processing 100M+ orders/year with Item as the technology backbone. 
                   This existing relationship provides a natural foundation for deeper strategic collaboration.
                 </p>
-                <p className="mt-2 text-xs text-muted-foreground/50">
+                <p className="mt-2 text-xs text-muted-foreground/75">
                   UNIS自2019年起在Memphis为Fashion Nova提供服务，每年处理1亿+订单，Item作为技术底座。这一现有关系为更深层战略合作奠定了天然基础。
                 </p>
               </GlowCard>
@@ -204,7 +204,7 @@ export default function V2() {
                   Every AI infrastructure deployment Item sells requires GPU servers, networking, and edge devices. 
                   Fashion Nova becomes the preferred hardware vendor — creating a recurring sales channel through Item's growing customer base.
                 </p>
-                <p className="mt-2 text-xs text-muted-foreground/50">
+                <p className="mt-2 text-xs text-muted-foreground/75">
                   Item每一个AI基础设施部署都需要GPU服务器、网络和边缘设备。Fashion Nova成为首选硬件供应商——通过Item不断增长的客户群创造持续销售渠道。
                 </p>
               </GlowCard>
@@ -243,7 +243,7 @@ export default function V2() {
                       <p className="mt-2 text-muted-foreground">
                         5 AI Pillars: Data Intelligence, Product Discovery, Customer Experience, Advertising Optimization, Operations Automation
                       </p>
-                      <p className="mt-1 text-xs text-muted-foreground/50">
+                      <p className="mt-1 text-xs text-muted-foreground/75">
                         五大AI支柱：数据智能、产品发现、客户体验、广告优化、运营自动化
                       </p>
                     </div>
@@ -267,7 +267,7 @@ export default function V2() {
                       <p className="mt-2 text-muted-foreground">
                         Ontology modeling, Agent orchestration, GraphRAG, WES integration, Multi-agent runtime with business harness
                       </p>
-                      <p className="mt-1 text-xs text-muted-foreground/50">
+                      <p className="mt-1 text-xs text-muted-foreground/75">
                         本体建模、Agent编排、GraphRAG、WES集成、带业务Harness的多Agent运行时
                       </p>
                     </div>
@@ -291,7 +291,7 @@ export default function V2() {
                       <p className="mt-2 text-muted-foreground">
                         ThinkSystem GPU servers (8× H100 80GB SXM), NVLink 4.0, edge inference devices, 5.5G/Wi-Fi 8 networking, co-location at One Wilshire LA
                       </p>
-                      <p className="mt-1 text-xs text-muted-foreground/50">
+                      <p className="mt-1 text-xs text-muted-foreground/75">
                         ThinkSystem GPU服务器（8×H100 80GB SXM）、NVLink 4.0、边缘推理设备、5.5G/Wi-Fi 8网络、One Wilshire LA托管
                       </p>
                     </div>
@@ -327,7 +327,7 @@ export default function V2() {
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-cyan-glow shrink-0" />
                       <div>
                         <span className="text-foreground/90">{item.en}</span>
-                        <p className="text-xs text-muted-foreground/50 mt-0.5">{item.cn}</p>
+                        <p className="text-xs text-muted-foreground/75 mt-0.5">{item.cn}</p>
                       </div>
                     </li>
                   ))}
@@ -353,7 +353,7 @@ export default function V2() {
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-purple-glow shrink-0" />
                       <div>
                         <span className="text-foreground/90">{item.en}</span>
-                        <p className="text-xs text-muted-foreground/50 mt-0.5">{item.cn}</p>
+                        <p className="text-xs text-muted-foreground/75 mt-0.5">{item.cn}</p>
                       </div>
                     </li>
                   ))}
@@ -397,7 +397,7 @@ export default function V2() {
                     <div className="text-xs font-mono text-cyan-glow/70 mb-2">{spec.label}</div>
                     <div className="text-lg font-bold font-display">{spec.value}</div>
                     <div className="text-sm text-muted-foreground mt-1">{spec.detail}</div>
-                    <div className="text-xs text-muted-foreground/50">{spec.detailCn}</div>
+                    <div className="text-xs text-muted-foreground/75">{spec.detailCn}</div>
                   </div>
                 ))}
               </div>
@@ -407,7 +407,7 @@ export default function V2() {
                   <span className="text-cyan-glow font-mono font-bold">Fashion Nova Opportunity:</span>{" "}
                   Replace Dell PowerEdge XE9680 with Fashion Nova ThinkSystem SR675 V3 — equivalent 8×H100 configuration with Fashion Nova's enterprise support, XClarity management, and competitive pricing.
                 </p>
-                <p className="text-xs text-muted-foreground/50 mt-1">
+                <p className="text-xs text-muted-foreground/75 mt-1">
                   <span className="text-cyan-glow/70 font-mono font-bold">Fashion Nova机会：</span>{" "}
                   用Fashion Nova ThinkSystem SR675 V3替代Dell PowerEdge XE9680——同箉8×H100配置，加上Fashion Nova企业级支持、XClarity管理和有竞争力的价格。
                 </p>
@@ -428,7 +428,7 @@ export default function V2() {
                   <h3 className="text-lg font-bold font-display">{card.titleEn}</h3>
                   <p className="text-sm text-muted-foreground/60 mb-3">{card.titleCn}</p>
                   <p className="text-sm text-muted-foreground leading-relaxed">{card.descEn}</p>
-                  <p className="text-xs text-muted-foreground/50 mt-2">{card.descCn}</p>
+                  <p className="text-xs text-muted-foreground/75 mt-2">{card.descCn}</p>
                 </GlowCard>
               </AnimatedSection>
             ))}
@@ -466,12 +466,12 @@ export default function V2() {
               <AnimatedSection key={i} delay={0.1 * (i + 1)}>
                 <GlowCard className={`p-8 text-center ${item.borderColor}`} glowColor={i === 2 ? "purple" : "cyan"}>
                   <div className="text-sm font-mono text-muted-foreground/70 mb-2">{item.scenario}</div>
-                  <div className="text-xs text-muted-foreground/50 mb-4">{item.scenarioCn}</div>
+                  <div className="text-xs text-muted-foreground/75 mb-4">{item.scenarioCn}</div>
                   <div className={`text-4xl md:text-5xl font-bold font-display ${item.color}`}>
                     $<CountUp end={item.roi} duration={2} />K
                   </div>
                   <div className="text-sm text-muted-foreground mt-2">Year 1 Net Value</div>
-                  <div className="text-xs text-muted-foreground/50">第一年净价值</div>
+                  <div className="text-xs text-muted-foreground/75">第一年净价值</div>
                 </GlowCard>
               </AnimatedSection>
             ))}
@@ -489,7 +489,7 @@ export default function V2() {
                 <div key={i} className="p-4 rounded-lg bg-panel-bg/60 border border-panel-border/30 text-center">
                   <div className={`text-2xl font-bold font-display ${metric.accent ? "text-cyan-glow" : ""}`}>{metric.value}</div>
                   <div className="text-xs text-muted-foreground mt-1">{metric.label}</div>
-                  <div className="text-xs text-muted-foreground/50">{metric.labelCn}</div>
+                  <div className="text-xs text-muted-foreground/75">{metric.labelCn}</div>
                 </div>
               ))}
             </div>
@@ -555,10 +555,10 @@ export default function V2() {
                   <h3 className="text-lg font-bold font-display">{vertical.titleEn}</h3>
                   <p className="text-sm text-muted-foreground/60 mb-3">{vertical.titleCn}</p>
                   <p className="text-sm text-muted-foreground leading-relaxed">{vertical.descEn}</p>
-                  <p className="text-xs text-muted-foreground/50 mt-2">{vertical.descCn}</p>
+                  <p className="text-xs text-muted-foreground/75 mt-2">{vertical.descCn}</p>
                   <div className="mt-4 pt-3 border-t border-panel-border/30">
                     <div className="text-xs font-mono text-cyan-glow/70">Fashion Nova HARDWARE</div>
-                    <div className="text-sm text-foreground/80 mt-1">{vertical.hardware}</div>
+                    <div className="text-sm text-foreground/90 mt-1">{vertical.hardware}</div>
                   </div>
                 </GlowCard>
               </AnimatedSection>
@@ -607,7 +607,7 @@ export default function V2() {
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     Dedicated team embeds with the customer to deploy AI infrastructure, configure models, build initial agent workflows, and validate ROI metrics.
                   </p>
-                  <p className="text-xs text-muted-foreground/50">
+                  <p className="text-xs text-muted-foreground/75">
                     专属团队嵌入客户现场，部署AI基础设施、配置模型、构建初始Agent工作流并验证ROI指标。
                   </p>
                 </div>
@@ -634,7 +634,7 @@ export default function V2() {
                       <div className="flex justify-between items-center">
                         <div>
                           <span className="text-sm font-bold">{t.tier}</span>
-                          <span className="text-xs text-muted-foreground/50 ml-2">{t.tierCn}</span>
+                          <span className="text-xs text-muted-foreground/75 ml-2">{t.tierCn}</span>
                         </div>
                         <span className="font-mono text-purple-glow">{t.price}</span>
                       </div>
@@ -645,7 +645,7 @@ export default function V2() {
                     <div className="text-sm text-muted-foreground">
                       <span className="text-purple-glow font-mono font-bold">Year 1 Total:</span> $466K – $562K depending on tier
                     </div>
-                    <div className="text-xs text-muted-foreground/50 mt-1">第一年总计：$466K – $562K（视层级而定）</div>
+                    <div className="text-xs text-muted-foreground/75 mt-1">第一年总计：$466K – $562K（视层级而定）</div>
                   </div>
                 </div>
               </GlowCard>
@@ -682,7 +682,7 @@ export default function V2() {
                       <h3 className="text-xl font-bold font-display">{item.titleEn}</h3>
                       <p className="text-sm text-muted-foreground/60 mb-2">{item.titleCn}</p>
                       <p className="text-muted-foreground leading-relaxed">{item.descEn}</p>
-                      <p className="text-xs text-muted-foreground/50 mt-1">{item.descCn}</p>
+                      <p className="text-xs text-muted-foreground/75 mt-1">{item.descCn}</p>
                     </div>
                   </div>
                 </AnimatedSection>
@@ -706,7 +706,7 @@ export default function V2() {
                 The infrastructure layer is the new battleground. Together, we can own the mid-market AI infrastructure stack — 
                 Fashion Nova's hardware excellence paired with Item's AI platform creates a moat that neither can build alone.
               </p>
-              <p className="mt-2 text-sm text-muted-foreground/50 max-w-2xl mx-auto">
+              <p className="mt-2 text-sm text-muted-foreground/75 max-w-2xl mx-auto">
                 基础设施层是新的战场。Fashion Nova的硬件卓越性与Item的AI平台相结合，构建起任何一方都无法独自建立的护城河。
               </p>
             </div>

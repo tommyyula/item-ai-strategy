@@ -72,7 +72,7 @@ export default function VideoShowcaseSection() {
                     ? tab.color === "cyan"
                       ? "border-cyan-500/60 bg-cyan-500/15 text-cyan-300 shadow-[0_0_20px_rgba(0,200,255,0.15)]"
                       : "border-purple-500/60 bg-purple-500/15 text-purple-300 shadow-[0_0_20px_rgba(168,85,247,0.15)]"
-                    : "border-white/10 bg-white/[0.03] text-white/40 hover:border-white/20 hover:text-white/60"
+                    : "border-white/10 bg-white/[0.03] text-white/65 hover:border-white/20 hover:text-white/80"
                 }`}
               >
                 {activeTab === i && (

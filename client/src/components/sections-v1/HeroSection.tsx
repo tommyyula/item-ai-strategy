@@ -33,7 +33,7 @@ export default function HeroSection() {
         >
           <div className="inline-flex items-center gap-4 px-6 py-3 rounded-full border border-cyan-glow/20 bg-cyan-glow/5 mb-8">
             <img src={LENOVO_LOGO} alt="Lenovo" className="h-6" />
-            <span className="text-muted-foreground/40 text-lg font-light">&</span>
+            <span className="text-muted-foreground/65 text-lg font-light">&</span>
             <img src={ITEM_LOGO_WHITE} alt="Item" className="h-7" />
           </div>
         </motion.div>
@@ -56,7 +56,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className="text-lg md:text-xl text-muted-foreground/50 font-light tracking-wide mb-6"
+          className="text-lg md:text-xl text-muted-foreground/75 font-light tracking-wide mb-6"
         >
           从数字化到物理AI
         </motion.p>
@@ -75,7 +75,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.65 }}
-          className="text-sm text-muted-foreground/40 max-w-2xl mx-auto leading-relaxed mb-4"
+          className="text-sm text-muted-foreground/65 max-w-2xl mx-auto leading-relaxed mb-4"
         >
           Item过去一年的AI实践、挑战与认知重构
         </motion.p>
@@ -91,7 +91,7 @@ export default function HeroSection() {
             Item serves as the implementation foundation for all supply chain transformation projects across UNIS Group
           </p>
           {/* Chinese UNIS statement is now secondary */}
-          <p className="text-xs font-mono text-cyan-glow/35 tracking-wide mt-1">
+          <p className="text-xs font-mono text-cyan-glow/60 tracking-wide mt-1">
             Item 是 UNIS 集团所有供应链转型项目的实施底座
           </p>
         </motion.div>
@@ -104,7 +104,7 @@ export default function HeroSection() {
         >
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-cyan-glow" />
-            <span>AI Middleware <span className="text-muted-foreground/40 text-xs">AI中间件层</span></span>
+            <span>AI Middleware <span className="text-muted-foreground/65 text-xs">AI中间件层</span></span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-purple-glow" />
@@ -127,7 +127,7 @@ export default function HeroSection() {
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="flex flex-col items-center gap-2 text-muted-foreground/50"
+          className="flex flex-col items-center gap-2 text-muted-foreground/75"
         >
           <span className="text-xs font-mono tracking-widest">SCROLL</span>
           <ChevronDown className="w-4 h-4" />

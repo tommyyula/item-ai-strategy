@@ -86,7 +86,7 @@ function VideoCard({
             <Play className={`text-white ml-0.5 ${large ? "w-6 h-6" : "w-3.5 h-3.5"}`} />
           </div>
         </div>
-        <div className="absolute bottom-2 left-2 text-[10px] font-mono text-white/60 bg-black/50 px-2 py-0.5 rounded">
+        <div className="absolute bottom-2 left-2 text-[10px] font-mono text-white/80 bg-black/50 px-2 py-0.5 rounded">
           ▶ Watch
         </div>
       </div>
@@ -122,7 +122,7 @@ export default function PhysicalSection() {
             <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/40 to-transparent" />
             <div className="absolute bottom-5 left-5 max-w-md">
               <p className="text-xs font-mono text-cyan-glow tracking-wider mb-1">HARDWARE-AGNOSTIC WES</p>
-              <p className="text-sm text-foreground/80">
+              <p className="text-sm text-foreground/90">
                 Software stack running in real warehouse production environments covering 10M+ sq ft
               </p>
             </div>
