@@ -10,6 +10,7 @@ import V2 from "./pages/V2";
 import En from "./pages/En";
 import ProductV4 from "./pages/ProductV4";
 import Product2CustV3 from "./pages/Product2CustV3";
+import ProductGeneralV4 from "./pages/ProductGeneralV4";
 
 function Router() {
   return (
@@ -20,6 +21,7 @@ function Router() {
       <Route path={"/en"} component={En} />
       <Route path={"/product_v4"} component={ProductV4} />
       <Route path={"/product_2_cust_v3"} component={Product2CustV3} />
+      <Route path={"/product_general_v4"} component={ProductGeneralV4} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>
