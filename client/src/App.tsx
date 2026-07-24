@@ -25,6 +25,7 @@ function Router() {
       <Route path={"/product_2_cust_v3"} component={Product2CustV3} />
       <Route path={"/product_general_v4"} component={ProductGeneralV4} />
       <Route path={"/product_general_investor_v4.3"} component={ProductGeneralInvestorV43} />
+      <Route path={"/product_general_investor_v43"} component={ProductGeneralInvestorV43} />
       <Route path={"/product_general_customer_v5"} component={ProductGeneralCustomerV5} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
