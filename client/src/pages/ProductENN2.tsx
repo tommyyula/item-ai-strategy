@@ -40,7 +40,8 @@ export default function ProductENN2() {
           <img 
             src={ENN_LOGO} 
             alt="ENN Group 新奥集团" 
-            className={`h-7 object-contain transition-all duration-500 ${isDayMode ? "" : "brightness-0 invert"}`}
+            className={`h-7 object-contain transition-all duration-500 ${isDayMode ? "" : ""}`}
+            style={isDayMode ? {} : { filter: 'drop-shadow(0 0 1px rgba(255,255,255,0.3))', background: 'rgba(255,255,255,0.9)', borderRadius: '4px', padding: '2px 6px' }}
           />
         </div>
 
