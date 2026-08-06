@@ -16,6 +16,7 @@ import ProductGeneralCustomerV5 from "./pages/ProductGeneralCustomerV5";
 import ProductV6 from "./pages/ProductV6";
 import ProductENN from "./pages/ProductENN";
 import ProductENN2 from "./pages/ProductENN2";
+import TMSProductV1 from "./pages/TMSProductV1";
 
 function Router() {
   return (
@@ -33,6 +34,7 @@ function Router() {
       <Route path={"/product_v6"} component={ProductV6} />
       <Route path={"/product_enn"} component={ProductENN} />
       <Route path={"/product_enn2"} component={ProductENN2} />
+      <Route path={"/TMS_Product_v1"} component={TMSProductV1} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>
