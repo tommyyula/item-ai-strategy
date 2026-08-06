@@ -18,6 +18,11 @@ async function startServer() {
 
   app.use(express.static(staticPath));
 
+  // Serve TMS Product v1 static HTML page
+  app.get("/TMS_Product_v1", (_req, res) => {
+    res.sendFile(path.join(staticPath, "TMS_Product_v1.html"));
+  });
+
   // Handle client-side routing - serve index.html for all routes
   app.get("*", (_req, res) => {
     res.sendFile(path.join(staticPath, "index.html"));

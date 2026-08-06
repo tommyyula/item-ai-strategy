@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITEM Freight Trust Platform - Product Presentation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #111827;
+            --bg-card: #1a2332;
+            --bg-card-hover: #1f2b3d;
+            --text-primary: #f0f4f8;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-purple: #8b5cf6;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --accent-yellow: #f59e0b;
+            --border-color: #1e293b;
+            --navy-dark: #0f172a;
+            --navy-medium: #1e293b;
+        }
+
+        /* Light theme */
+        [data-theme="light"] {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border-color: #e2e8f0;
+            --navy-dark: #f1f5f9;
+            --navy-medium: #e2e8f0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 16px;
+            right: 24px;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 6px 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .theme-toggle:hover { border-color: var(--accent-blue); }
+        .theme-toggle .toggle-label { font-size: 11px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+        .theme-toggle .toggle-switch {
+            width: 36px; height: 20px; border-radius: 10px;
+            background: var(--accent-blue); position: relative; transition: 0.3s;
+        }
+        .theme-toggle .toggle-switch::after {
+            content: ''; position: absolute; top: 2px; left: 2px;
+            width: 16px; height: 16px; border-radius: 50%;
+            background: white; transition: 0.3s;
+        }
+        [data-theme="light"] .theme-toggle .toggle-switch::after { left: 18px; }
+        .theme-toggle .icon { font-size: 14px; }
+
+        /* Navigation Sidebar */
+        .nav-sidebar {
+            position: fixed; left: 0; top: 0; width: 48px; height: 100vh;
+            background: rgba(10, 14, 26, 0.95); backdrop-filter: blur(10px);
+            border-right: 1px solid var(--border-color); z-index: 1000;
+            display: flex; flex-direction: column; align-items: center;
+            padding: 16px 0; overflow-y: auto; scrollbar-width: none;
+        }
+        [data-theme="light"] .nav-sidebar { background: rgba(255,255,255,0.95); }
+        .nav-sidebar::-webkit-scrollbar { display: none; }
+        .nav-item {
+            width: 32px; height: 32px; border-radius: 6px;
+            display: flex; align-items: center; justify-content: center;
+            margin: 3px 0; cursor: pointer; font-size: 10px; font-weight: 600;
+            color: var(--text-muted); transition: all 0.3s; border: 1px solid transparent;
+            text-decoration: none;
+        }
+        .nav-item:hover { background: var(--navy-medium); color: var(--text-primary); border-color: var(--accent-blue); }
+        .nav-item.active { background: var(--accent-blue); color: white; }
+
+        .main-content { margin-left: 48px; }
+
+        .slide {
+            min-height: 100vh; padding: 60px 80px;
+            display: flex; flex-direction: column; justify-content: center;
+            position: relative; border-bottom: 1px solid var(--border-color);
+        }
+
+        .slide-number {
+            font-size: 14px; font-weight: 600; color: var(--accent-cyan);
+            margin-bottom: 8px; letter-spacing: 1px;
+        }
+        .slide-number::after {
+            content: ''; display: inline-block; width: 40px; height: 2px;
+            background: var(--accent-cyan); margin-left: 12px; vertical-align: middle;
+        }
+
+        /* Cover */
+        .slide-cover {
+            background: linear-gradient(180deg, #0f172a 0%, #020617 100%);
+            text-align: center; align-items: center; position: relative; overflow: hidden;
+        }
+        [data-theme="light"] .slide-cover { background: linear-gradient(180deg, #1e3a5f 0%, #0f172a 100%); }
+        .slide-cover::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse at 20% 50%, rgba(59,130,246,0.08) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 20%, rgba(139,92,246,0.06) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .slide-cover .logo { font-size: 16px; font-weight: 600; color: #94a3b8; margin-bottom: 40px; display: flex; align-items: center; justify-content: center; gap: 8px; position: relative; z-index: 1; }
+        .slide-cover .logo-icon { width: 32px; height: 32px; background: var(--accent-blue); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; color: white; }
+        .slide-cover h1 { font-size: 56px; font-weight: 800; line-height: 1.1; margin-bottom: 24px; color: white; position: relative; z-index: 1; }
+        .slide-cover .subtitle { font-size: 20px; color: #94a3b8; margin-bottom: 16px; position: relative; z-index: 1; }
+        .slide-cover .tagline { font-size: 15px; color: #64748b; max-width: 700px; line-height: 1.6; position: relative; z-index: 1; }
+        .slide-cover .scroll-hint { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); color: #64748b; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; animation: bounce 2s infinite; }
+        @keyframes bounce { 0%,20%,50%,80%,100%{transform:translateX(-50%) translateY(0)} 40%{transform:translateX(-50%) translateY(-8px)} 60%{transform:translateX(-50%) translateY(-4px)} }
+
+        .slide h2 { font-size: 38px; font-weight: 800; margin-bottom: 12px; line-height: 1.2; }
+        .slide .slide-subtitle { font-size: 15px; color: var(--text-secondary); margin-bottom: 36px; max-width: 750px; line-height: 1.7; }
+
+        /* Cards */
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 12px; padding: 24px; transition: all 0.3s;
+        }
+        .card:hover { border-color: var(--accent-blue); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(59,130,246,0.08); }
+        .card h3 { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+        .card p { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+
+        .tag { display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; margin: 2px 4px 2px 0; }
+        .tag-blue { background: rgba(59,130,246,0.12); color: var(--accent-blue); }
+        .tag-cyan { background: rgba(6,182,212,0.12); color: var(--accent-cyan); }
+        .tag-purple { background: rgba(139,92,246,0.12); color: var(--accent-purple); }
+        .tag-green { background: rgba(16,185,129,0.12); color: var(--accent-green); }
+        .tag-red { background: rgba(239,68,68,0.12); color: var(--accent-red); }
+        .tag-yellow { background: rgba(245,158,11,0.12); color: var(--accent-yellow); }
+
+        .mockup-container { margin: 24px 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); background: var(--bg-card); padding: 12px; }
+        .mockup-container img, .mockup-container picture { width: 100%; height: auto; border-radius: 8px; display: block; }
+        .mockup-container picture img { width: 100%; height: auto; border-radius: 8px; display: block; }
+        .mockup-container.large { max-width: 900px; }
+
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+        .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+
+        .comparison { display: grid; grid-template-columns: 1fr auto 1fr; gap: 32px; align-items: center; margin: 28px 0; }
+        .comparison-vs { font-size: 20px; font-weight: 800; color: var(--accent-purple); padding: 10px 16px; border-radius: 50%; background: rgba(139,92,246,0.1); border: 1px solid rgba(139,92,246,0.3); }
+        .comparison-side { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 28px; }
+        .comparison-side h4 { font-size: 15px; font-weight: 700; margin-bottom: 14px; }
+        .comparison-side ul { list-style: none; padding: 0; }
+        .comparison-side ul li { padding: 8px 0; font-size: 14px; color: var(--text-secondary); border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 8px; }
+
+        .highlight-box { background: linear-gradient(135deg, rgba(59,130,246,0.06) 0%, rgba(139,92,246,0.04) 100%); border: 1px solid rgba(59,130,246,0.15); border-radius: 12px; padding: 20px 28px; margin: 20px 0; }
+        .highlight-box p { font-size: 15px; font-weight: 500; color: var(--text-primary); line-height: 1.7; }
+
+        .badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+        .badge-green { background: rgba(16,185,129,0.12); color: var(--accent-green); border: 1px solid rgba(16,185,129,0.25); }
+        .badge-yellow { background: rgba(245,158,11,0.12); color: var(--accent-yellow); border: 1px solid rgba(245,158,11,0.25); }
+        .badge-red { background: rgba(239,68,68,0.12); color: var(--accent-red); border: 1px solid rgba(239,68,68,0.25); }
+
+        .feature-list { list-style: none; padding: 0; }
+        .feature-list li { padding: 9px 0; font-size: 13px; color: var(--text-secondary); border-bottom: 1px solid var(--border-color); display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
+        .feature-list li .check { color: var(--accent-green); font-weight: bold; flex-shrink: 0; }
+
+        .process-flow { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin: 20px 0; }
+        .process-step { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 16px; font-size: 12px; font-weight: 500; white-space: nowrap; }
+        .process-arrow { color: var(--accent-cyan); font-size: 16px; }
+
+        .timeline { position: relative; margin: 24px 0; padding-left: 28px; }
+        .timeline::before { content: ''; position: absolute; left: 6px; top: 0; bottom: 0; width: 2px; background: var(--border-color); }
+        .timeline-item { position: relative; margin-bottom: 16px; padding: 14px 20px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; }
+        .timeline-item::before { content: ''; position: absolute; left: -26px; top: 20px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent-blue); }
+        .timeline-item h4 { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+        .timeline-item p { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+
+        .stats-row { display: flex; gap: 24px; margin: 28px 0; flex-wrap: wrap; }
+        .stat-item { text-align: center; padding: 20px 28px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; min-width: 130px; }
+        .stat-item .stat-value { font-size: 28px; font-weight: 800; color: var(--accent-cyan); margin-bottom: 4px; }
+        .stat-item .stat-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+
+        .slide-footer { position: absolute; bottom: 20px; right: 80px; font-size: 11px; color: var(--text-muted); }
+
+        .arch-layer { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px 20px; margin: 10px 0; }
+        .arch-layer-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-cyan); margin-bottom: 10px; }
+        .arch-modules { display: flex; flex-wrap: wrap; gap: 6px; }
+        .arch-module { background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.15); border-radius: 6px; padding: 6px 12px; font-size: 11px; font-weight: 500; }
+
+        /* Explanation blocks */
+        .explanation { font-size: 13px; color: var(--text-secondary); line-height: 1.8; margin: 12px 0; padding: 16px 20px; background: var(--bg-card); border-left: 3px solid var(--accent-blue); border-radius: 0 8px 8px 0; }
+
+        @media (max-width: 768px) {
+            .slide { padding: 40px 24px; }
+            .slide-cover h1 { font-size: 32px; }
+            .two-col, .three-col, .comparison { grid-template-columns: 1fr; }
+            .nav-sidebar { width: 40px; }
+            .main-content { margin-left: 40px; }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <span class="icon">&#9790;</span>
+        <div class="toggle-switch"></div>
+        <span class="icon">&#9788;</span>
+    </div>
+
+    <!-- Navigation Sidebar -->
+    <nav class="nav-sidebar">
+        <a class="nav-item active" href="#slide-0" title="Cover">00</a>
+        <a class="nav-item" href="#slide-1" title="Trust Problem">01</a>
+        <a class="nav-item" href="#slide-2" title="Verified Freight">02</a>
+        <a class="nav-item" href="#slide-3" title="Platform Overview">03</a>
+        <a class="nav-item" href="#slide-4" title="System Architecture">04</a>
+        <a class="nav-item" href="#slide-5" title="DIEV + TMS">05</a>
+        <a class="nav-item" href="#slide-6" title="End-to-End Process">06</a>
+        <a class="nav-item" href="#slide-7" title="Trailer Inspection">07</a>
+        <a class="nav-item" href="#slide-8" title="Dock Loading">08</a>
+        <a class="nav-item" href="#slide-9" title="eBOL & Seal">09</a>
+        <a class="nav-item" href="#slide-10" title="Multi-Signal Tracking">10</a>
+        <a class="nav-item" href="#slide-11" title="Checkpoint">11</a>
+        <a class="nav-item" href="#slide-12" title="AI Control Tower">12</a>
+        <a class="nav-item" href="#slide-13" title="Delivery & ePOD">13</a>
+        <a class="nav-item" href="#slide-14" title="Claims">14</a>
+        <a class="nav-item" href="#slide-15" title="Risk & Scorecard">15</a>
+        <a class="nav-item" href="#slide-16" title="Data Flow">16</a>
+        <a class="nav-item" href="#slide-17" title="Dashboard">17</a>
+        <a class="nav-item" href="#slide-18" title="Integration">18</a>
+        <a class="nav-item" href="#slide-19" title="Value">19</a>
+    </nav>
+
+    <main class="main-content">
+
+        <!-- Slide 0: Cover -->
+        <section class="slide slide-cover" id="slide-0">
+            <div class="logo"><div class="logo-icon">IT</div><span style="color:#94a3b8">item</span></div>
+            <h1>ITEM Freight Trust<br>Platform</h1>
+            <p class="subtitle">AI-Powered Freight Execution, Verification & Risk Management</p>
+            <p class="tagline"><strong>Verify the Driver. Verify the Equipment. Verify Every Checkpoint. Trust Every Shipment.</strong></p>
+            <div style="margin-top:40px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap; position:relative; z-index:1;">
+                <span style="padding:8px 16px; border-radius:6px; background:rgba(59,130,246,0.1); border:1px solid rgba(59,130,246,0.3); font-size:12px; color:#94a3b8;">Shipper TMS</span>
+                <span style="padding:8px 16px; border-radius:6px; background:rgba(139,92,246,0.1); border:1px solid rgba(139,92,246,0.3); font-size:12px; color:#94a3b8;">Identity Verification</span>
+                <span style="padding:8px 16px; border-radius:6px; background:rgba(6,182,212,0.1); border:1px solid rgba(6,182,212,0.3); font-size:12px; color:#94a3b8;">Multi-Signal Tracking</span>
+                <span style="padding:8px 16px; border-radius:6px; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); font-size:12px; color:#94a3b8;">AI Risk Management</span>
+            </div>
+            <div class="scroll-hint">SCROLL &#8595;</div>
+        </section>
+
+        <!-- Slide 1: Trust Problem -->
+        <section class="slide" id="slide-1">
+            <span class="slide-number">01</span>
+            <h2>Freight Has a Trust Problem</h2>
+            <p class="slide-subtitle">Traditional freight visibility tells you where a shipment might be. But as a shipper, you cannot verify whether the driver, vehicle, and cargo are actually what they claim to be. The real gap is not visibility — it is verifiability.</p>
+
+            <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="card">
+                    <h3 style="color:var(--accent-red);">GPS Can Be Spoofed</h3>
+                    <p>Drivers or bad actors can disable, spoof, or manipulate GPS signals. A dot on a map does not prove a truck is actually there. Shippers have no way to independently confirm location claims.</p>
+                </div>
+                <div class="card">
+                    <h3 style="color:var(--accent-red);">Drivers Can Be Swapped</h3>
+                    <p>The person behind the wheel may not be the vetted, assigned driver. Identity fraud and unauthorized driver substitution expose shippers to liability and security risks.</p>
+                </div>
+                <div class="card">
+                    <h3 style="color:var(--accent-red);">Equipment Can Be Substituted</h3>
+                    <p>Tractors and trailers can be changed mid-route without shipper knowledge. This breaks the chain of custody and makes it impossible to trace responsibility for damage or theft.</p>
+                </div>
+                <div class="card">
+                    <h3 style="color:var(--accent-red);">Photos Can Be Fabricated</h3>
+                    <p>Historical, edited, or screen-captured photos can be submitted as current evidence. Without AI verification, shippers cannot distinguish real-time proof from recycled images.</p>
+                </div>
+                <div class="card">
+                    <h3 style="color:var(--accent-red);">Seals Can Be Tampered</h3>
+                    <p>Traditional bolt seals can be cut and replaced with matching numbers. Without electronic seal monitoring, shippers have no way to detect mid-route tampering.</p>
+                </div>
+                <div class="card">
+                    <h3 style="color:var(--accent-red);">Claims Evidence is Scattered</h3>
+                    <p>When cargo theft or damage occurs, evidence is fragmented across emails, phone calls, and disconnected systems. Building a claims case takes weeks instead of minutes.</p>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top:32px;">
+                <p><strong>Tracked Freight is not Trusted Freight.</strong> Shippers need a platform that doesn't just show status updates — it proves transportation facts with multiple independent signals.</p>
+            </div>
+            <div class="slide-footer">ITEM Freight Trust Platform — Confidential</div>
+        </section>
+
+        <!-- Slide 2: From Tracked to Verified -->
+        <section class="slide" id="slide-2">
+            <span class="slide-number">02</span>
+            <h2>From Tracked Freight to Verified Freight</h2>
+            <p class="slide-subtitle">ITEM transforms shipment status updates into verified transportation facts. Instead of relying on a single GPS signal, every critical event is corroborated by multiple independent data sources.</p>
+
+            <div class="comparison">
+                <div class="comparison-side">
+                    <h4 style="color: var(--text-muted);">Traditional TMS</h4>
+                    <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">Single-signal, carrier-reported data</p>
+                    <ul>
+                        <li>Plan shipment</li>
+                        <li>Tender to carrier</li>
+                        <li>Track via carrier GPS</li>
+                        <li>Receive delivery confirmation</li>
+                    </ul>
+                    <p style="font-size:12px; color:var(--accent-red); margin-top:12px;">Result: You know what the carrier tells you, but cannot independently verify it.</p>
+                </div>
+                <div class="comparison-vs">VS</div>
+                <div class="comparison-side" style="border-color: rgba(59,130,246,0.3);">
+                    <h4 style="color: var(--accent-blue);">ITEM Freight Trust Platform</h4>
+                    <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">Multi-signal, independently verified data</p>
+                    <ul>
+                        <li>&#10003; Verify driver identity before pickup</li>
+                        <li>&#10003; Verify vehicle & carrier compliance</li>
+                        <li>&#10003; Verify trailer condition & loading</li>
+                        <li>&#10003; Verify seal integrity throughout transit</li>
+                        <li>&#10003; Verify location via multiple signals</li>
+                        <li>&#10003; Verify delivery with ePOD evidence</li>
+                        <li>&#10003; Explain every exception with data</li>
+                    </ul>
+                    <p style="font-size:12px; color:var(--accent-green); margin-top:12px;">Result: Every shipment event is backed by independent, auditable evidence.</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p><strong>Core Principle:</strong> No single signal is trusted by itself. Every critical shipment event must be verified by multiple independent signals — this is what we call the Digital Chain of Custody.</p>
+            </div>
+            <div class="slide-footer">ITEM Freight Trust Platform — Confidential</div>
+        </section>
+
+        <!-- Slide 3: Platform Overview -->
+        <section class="slide" id="slide-3">
+            <span class="slide-number">03</span>
+            <h2>Platform Overview</h2>
+            <p class="slide-subtitle">ITEM Freight Trust Platform is built on a four-layer architecture designed specifically for shippers who need complete control and visibility over their freight operations — from the moment a load is created to final delivery and claims resolution.</p>
+
+            <div class="arch-layer">
+                <div class="arch-layer-title">Layer 1 — Identity Trust Layer (ITEM DIEV)</div>
+                <p style="font-size:12px; color:var(--text-secondary); margin-bottom:10px;">Verifies WHO is handling your freight before any movement begins. Ensures the driver, vehicle, and carrier are legitimate, compliant, and match your appointment.</p>
+                <div class="arch-modules">
+                    <span class="arch-module">Driver Verification</span>
+                    <span class="arch-module">Vehicle Verification</span>
+                    <span class="arch-module">Carrier Compliance</span>
+                    <span class="arch-module">Insurance Validation</span>
+                    <span class="arch-module">Appointment Matching</span>
+                    <span class="arch-module">QR Credential</span>
+                </div>
+            </div>
+            <div class="arch-layer">
+                <div class="arch-layer-title">Layer 2 — Freight Execution Layer (Shipper TMS Core)</div>
+                <p style="font-size:12px; color:var(--text-secondary); margin-bottom:10px;">Manages the complete shipment lifecycle from your perspective as a shipper — load planning, carrier assignment, trailer inspection, dock operations, and in-transit management.</p>
+                <div class="arch-modules">
+                    <span class="arch-module">Order & Load Management</span>
+                    <span class="arch-module">Carrier & Capacity</span>
+                    <span class="arch-module">Tender & Assignment</span>
+                    <span class="arch-module">Trailer Inspection</span>
+                    <span class="arch-module">Dock Loading</span>
+                    <span class="arch-module">eBOL & Seal</span>
+                    <span class="arch-module">Tracking & Visibility</span>
+                    <span class="arch-module">Appointment Management</span>
+                </div>
+            </div>
+            <div class="arch-layer">
+                <div class="arch-layer-title">Layer 3 — Evidence & Checkpoint Layer</div>
+                <p style="font-size:12px; color:var(--text-secondary); margin-bottom:10px;">Continuously collects and verifies evidence at every checkpoint along the route. Automatically detects exceptions and builds a complete audit trail for claims and compliance.</p>
+                <div class="arch-modules">
+                    <span class="arch-module">Checkpoint Intelligence</span>
+                    <span class="arch-module">AI Exception Management</span>
+                    <span class="arch-module">Delivery & ePOD</span>
+                    <span class="arch-module">Claims Investigation</span>
+                    <span class="arch-module">Analytics & Reporting</span>
+                    <span class="arch-module">Carrier Performance</span>
+                </div>
+            </div>
+            <div class="arch-layer">
+                <div class="arch-layer-title">Layer 4 — Data & AI Layer</div>
+                <p style="font-size:12px; color:var(--text-secondary); margin-bottom:10px;">Powers intelligent decision-making through a knowledge graph connecting all shipment entities, AI/ML models for anomaly detection, and real-time event processing.</p>
+                <div class="arch-modules">
+                    <span class="arch-module">Verified Freight Graph</span>
+                    <span class="arch-module">AI & ML Engine</span>
+                    <span class="arch-module">Data Lake</span>
+                    <span class="arch-module">Event Streaming</span>
+                    <span class="arch-module">Security & Access Control</span>
+                </div>
+            </div>
+            <div class="slide-footer">ITEM Freight Trust Platform — Confidential</div>
+        </section>
+
+        <!-- Slide 4: System Architecture Diagram -->
+        <section class="slide" id="slide-4">
+            <span class="slide-number">04</span>
+            <h2>System Architecture</h2>
+            <p class="slide-subtitle">The platform connects your identity verification layer, core TMS operations, and third-party integrations into a unified system — all powered by a shared Data & AI layer that enables intelligent automation and risk management.</p>
+
+            <div class="mockup-container large">
+                <picture><source srcset="/tms_images/01_System_Architecture.svg" type="image/svg+xml"><img src="/tms_images/01_System_Architecture.png" alt="System Architecture Diagram"></picture>
+            </div>
+
+            <div class="explanation">
+                <strong>How it works for shippers:</strong> Your existing ERP, OMS, and WMS systems feed load and order data into ITEM. The platform then orchestrates identity verification (DIEV), freight execution (TMS Core), and integrates with telematics, cameras, GenLogs roadside networks, and smart seals to build a complete evidence trail. All data flows into the Verified Freight Graph for AI-powered analysis and risk scoring.
+            </div>
+
+            <div class="mockup-container large" style="margin-top:16px;">
+                <picture><source srcset="/tms_images/02_Business_Modules.svg" type="image/svg+xml"><img src="/tms_images/02_Business_Modules.png" alt="Business Modules Overview"></picture>
+            </div>
+            <div class="slide-footer">ITEM Freight Trust Platform — Confidential</div>
+        </section>
+
+        <!-- Slide 5: DIEV + Shipper TMS -->
+        <section class="slide" id="slide-5">
+            <span class="slide-number">05</span>
+            <h2>ITEM DIEV + Shipper TMS</h2>
+            <p class="slide-subtitle">Two integrated products forming one unified trust chain. DIEV verifies WHO is handling your freight. Shipper TMS verifies WHAT HAPPENED during execution. Together, they create an unbroken Digital Chain of Custody from pickup to delivery.</p>
+
+            <div class="two-col">
+                <div>
+                    <div class="card" style="border-left: 3px solid var(--accent-purple);">
+                        <h3 style="color: var(--accent-purple);">ITEM DIEV</h3>
+                        <p style="margin-bottom:12px;"><strong>Driver Identity & Equipment Verification</strong></p>
+                        <p style="font-size:12px; color:var(--text-secondary); margin-bottom:14px;">Before a driver enters your facility, DIEV performs multi-layer verification to ensure the right person, with the right vehicle, from the right carrier, arrives for the right appointment. Results are instant: Pass, Review, or Decline.</p>
+                        <div>
+                            <span class="tag tag-purple">Liveness Selfie</span>
+                            <span class="tag tag-purple">CDL Scan & Match</span>
+                            <span class="tag tag-purple">Face-to-ID</span>
+                            <span class="tag tag-purple">VIN / Plate</span>
+                            <span class="tag tag-purple">USDOT / MC</span>
+                            <span class="tag tag-purple">Insurance</span>
+                            <span class="tag tag-purple">Geofence</span>
+                            <span class="tag tag-purple">QR Credential</span>
+                        </div>
+                        <div style="margin-top:16px;">
+                            <span class="badge badge-green">&#10003; Pass</span>
+                            <span class="badge badge-yellow">&#9888; Review</span>
+                            <span class="badge badge-red">&#10007; Decline</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="card" style="border-left: 3px solid var(--accent-blue);">
+                        <h3 style="color: var(--accent-blue);">ITEM Shipper TMS</h3>
+                        <p style="margin-bottom:12px;"><strong>Freight Execution, Verification & Risk Management</strong></p>
+                        <p style="font-size:12px; color:var(--text-secondary); margin-bottom:14px;">Once identity is verified, Shipper TMS manages the complete freight lifecycle from your dock to final delivery. Every step generates verified evidence that accumulates into a complete shipment record.</p>
+                        <div>
+                            <span class="tag tag-blue">Load & Order</span>
+                            <span class="tag tag-blue">Carrier Assignment</span>
+                            <span class="tag tag-blue">Trailer Inspection</span>
+                            <span class="tag tag-blue">Dock Loading</span>
+                            <span class="tag tag-blue">eBOL & Seal</span>
+                            <span class="tag tag-blue">Multi-Signal Tracking</span>
+                            <span class="tag tag-blue">Checkpoint Verification</span>
+                            <span class="tag tag-blue">Exception Management</span>
+                            <span class="tag tag-blue">Delivery & ePOD</span>
+                            <span class="tag tag-blue">Claims & Risk</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="process-flow" style="margin-top:32px; justify-content:center;">
+                <span class="process-step" style="background:rgba(139,92,246,0.12); border-color:rgba(139,92,246,0.3);">DIEV Verify</span>
+                <span class="process-arrow">&#8594;</span>
+                <span class="process-step">Gate Entry</span>
+                <span class="process-arrow">&#8594;</span>
+                <span class="process-step">Inspect Trailer</span>
+                <span class="process-arrow">&#8594;</span>
+                <span class="process-step">Dock & Load</span>
+                <span class="process-arrow">&#8594;</span>
+                <span class="process-step">Seal & eBOL</span>
+                <span class="process-arrow">&#8594;</span>
+                <span class="process-step">Track & Verify</span>
+                <span class="process-arrow">&#8594;</span>
+                <span class="process-step">Checkpoints</span>
+                <span class="process-arrow">&#8594;</span>
+                <span class="process-step">Delivery</span>
+                <span class="process-arrow">&#8594;</span>
+                <span class="process-step" style="background:rgba(16,185,129,0.12); border-color:rgba(16,185,129,0.3);">Evidence Complete</span>
+            </div>
+            <div class="slide-footer">ITEM Freight Trust Platform — Confidential</div>
+        </section>
+
+        <!-- Slide 6: End-to-End Process Flow -->
+        <section class="slide" id="slide-6">
+            <span class="slide-number">06</span>
+            <h2>End-to-End Shipment Process</h2>
+            <p class="slide-subtitle">From the shipper's perspective, every shipment passes through a structured sequence of verification stages. At each stage, the system automatically collects evidence and validates against expected conditions — building a complete digital chain of custody without requiring manual intervention.</p>
+
+            <div class="mockup-container large">
+                <picture><source srcset="/tms_images/04_End_to_End_Process_Flow.svg" type="image/svg+xml"><img src="/tms_images/04_End_to_End_Process_Flow.png" alt="End-to-End Process Flow"></picture>
+            </div>
+
+            <div class="explanation">
+                <strong>Evidence accumulates automatically:</strong> As a shipment progresses through each stage, the system captures photos, GPS coordinates, timestamps, device identifiers, seal readings, and telematics data. This evidence is linked to the shipment record in real-time, so if a claim occurs later, the complete case file already exists.
+            </div>
+
+            <div class="mockup-container" style="max-width:600px;">
+                <picture><source srcset="/tms_images/06_Key_Data_Entities.svg" type="image/svg+xml"><img src="/tms_images/06_Key_Data_Entities.png" alt="Key Data Entities Relationship"></picture>
+            </div>
+
+            <div class="explanation">
+                <strong>Connected data entities:</strong> Every shipment connects Order, Carrier, Driver, Tractor, Trailer, Appointment, Route, Facility, and Seal/Device into a unified graph. This allows the system to detect inconsistencies (e.g., a different trailer than expected) and flag them immediately.
+            </div>
+            <div class="slide-footer">ITEM Freight Trust Platform — Confidential</div>
+        </section>
+
+        <!-- Slide 7: Trailer Safety Inspection -->
+        <section class="slide" id="slide-7">
+            <span class="slide-number">07</span>
+            <h2>Trailer Safety Inspection</h2>
+            <p class="slide-subtitle">Before loading begins, the system guides a structured trailer inspection at your facility. AI analyzes submitted photos to detect damage, verify the trailer is empty, and confirm the trailer number matches the appointment — protecting you from pre-existing damage claims.</p>
+
+            <div class="two-col">
+                <div>
+                    <div class="card" style="margin-bottom:16px;">
+                        <h3 style="font-size:14px; color:var(--accent-cyan);">What Gets Inspected</h3>
+                        <p style="font-size:12px; color:var(--text-secondary); margin-bottom:12px;">The inspection covers both exterior structural integrity and interior cleanliness/condition:</p>
+                        <div style="margin-bottom:8px;"><strong style="font-size:11px; color:var(--text-muted);">EXTERIOR:</strong></div>
+                        <div><span class="tag tag-blue">Trailer Number</span><span class="tag tag-blue">Door & Hinges</span><span class="tag tag-blue">Locking Bars</span><span class="tag tag-blue">Roof & Walls</span><span class="tag tag-blue">Underbody</span></div>
+                        <div style="margin:8px 0;"><strong style="font-size:11px; color:var(--text-muted);">INTERIOR:</strong></div>
+                        <div><span class="tag tag-cyan">Floor Condition</span><span class="tag tag-cyan">Wall Integrity</span><span class="tag tag-cyan">Moisture/Odor</span><span class="tag tag-cyan">Cleanliness</span><span class="tag tag-cyan">Empty Confirmed</span></div>
+                        <div style="margin:8px 0;"><strong style="font-size:11px; color:var(--text-muted);">REEFER (if applicable):</strong></div>
+                        <div><span class="tag tag-green">Unit Status</span><span class="tag tag-green">Temperature</span><span class="tag tag-green">Set Point</span><span class="tag tag-green">Fuel Level</span></div>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size:14px; color:var(--accent-purple);">AI Photo Analysis</h3>
+                        <p style="font-size:12px; color:var(--text-secondary); margin-bottom:10px;">AI automatically validates every submitted photo:</p>
+                        <ul class="feature-list">
+                            <li><span class="check">&#10003;</span> Detects if trailer is truly empty</li>
+                            <li><span class="check">&#10003;</span> Identifies door hinge anomalies</li>
+                            <li><span class="check">&#10003;</span> Flags duplicate or historical photos</li>
+                            <li><span class="check">&#10003;</span> Verifies photo location matches facility</li>
+                            <li><span class="check">&#10003;</span> Detects screen captures or edits</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="mockup-container">
+                        <picture><source srcset="/tms_images/08_Load_Shipment_Detail.svg" type="image/svg+xml"><img src="/tms_images/08_Load_Shipment_Detail.png" alt="Shipment Detail with Inspection"></picture>
+                    </div>
+                    <div class="explanation">
+                        <strong>Why this matters for shippers:</strong> Pre-loading inspection evidence protects you in claims disputes. If cargo arrives damaged, you have timestamped, GPS-tagged, AI-verified photos proving the trailer was clean and undamaged before your goods were loaded.
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">ITEM Freight Trust Platform — Confidential</div>
+        </section>
+
+        <!-- Slide 8: Dock Loading Intelligence -->
+        <section class="slide" id="slide-8">
+            <span class="slide-number">08</span>
+            <h2>Dock Loading Intelligence</h2>
+            <p class="slide-subtitle">Your dock cameras and warehouse systems work together to create a complete, timestamped loading evidence package. AI monitors the entire process — from trailer arrival to seal application — detecting anomalies and counting cargo automatically.</p>
+
+            <div class="two-col">
+                <div>
+                    <h3 style="margin-bottom:14px; font-size:15px; color:var(--accent-cyan);">Automated Loading Timeline</h3>
+                    <div class="timeline">
+                        <div class="timeline-item"><h4>Trailer Docked</h4><p>Vehicle positioned at assigned dock door, confirmed by dock sensor</p></div>
+                        <div class="timeline-item"><h4>Empty Confirmed</h4><p>AI vision verifies trailer interior is empty before loading begins</p></div>
+                        <div class="timeline-item"><h4>Loading in Progress</h4><p>Pallet movements tracked, count verified against order</p></div>
+                        <div class="timeline-item"><h4>Loading Complete</h4><p>Final count confirmed, any discrepancies flagged immediately</p></div>
+                        <div class="timeline-item"><h4>Door Closed & Sealed</h4><p>Seal number captured via camera OCR, linked to shipment</p></div>
+                        <div class="timeline-item"><h4>Trailer Departed</h4><p>Departure timestamp recorded, custody transferred to carrier</p></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="card" style="margin-bottom:16px;">
+                        <h3 style="font-size:14px; color:var(--accent-purple);">AI Dock Camera Capabilities</h3>
+                        <ul class="feature-list">
+                            <li><span class="check">&#10003;</span> Automatic pallet/carton counting from video</li>
+                            <li><span class="check">&#10003;</span> Barcode and SSCC label recognition</li>
+                            <li><span class="check">&#10003;</span> Missing load detection (order vs actual)</li>
+                            <li><span class="check">&#10003;</span> Unauthorized re-unloading detection</li>
+                            <li><span class="check">&#10003;</span> Packaging damage identification</li>
+                            <li><span class="check">&#10003;</span> Unauthorized personnel alerts</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size:14px; color:var(--accent-blue);">Integrates With Your Systems</h3>
+                        <div style="margin-top:8px;">
+                            <span class="tag tag-blue">WMS</span><span class="tag tag-blue">Barcode Scanner</span><span class="tag tag-blue">RFID Portal</span><span class="tag tag-cyan">Weight Scale</span><span class="tag tag-cyan">Dock Door Sensor</span><span class="tag tag-cyan">Forklift System</span>
+                        </div>
+                    </div>
+                    <div class="highlight-box" style="margin-top:16px;">
+                        <p style="font-size:13px;"><strong>Output:</strong> A complete Loading Evidence Package — visual proof of what was loaded, when, and in what condition. This becomes critical evidence if a shortage or damage claim is filed later.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">ITEM Freight Trust Platform — Confidential</div>
+        </section>
+
+        <!-- Slide 9: eBOL & Smart Seal -->
+        <section class="slide" id="slide-9">
+            <span class="slide-number">09</span>
+            <h2>eBOL & Smart Seal</h2>
+            <p class="slide-subtitle">The electronic Bill of Lading captures the exact moment custody transfers from your facility to the carrier — with digital signatures, GPS, timestamps, and seal numbers all recorded simultaneously. Smart seals then monitor door integrity throughout transit.</p>
+
+            <div class="two-col">
+                <div>
+                    <div class="card" style="border-left:3px solid var(--accent-blue);">
+                        <h3>Electronic Bill of Lading</h3>
+                        <p style="font-size:12px; color:var(--text-secondary); margin-bottom:14px;">Every eBOL signature is synchronized with identity verification, GPS location, device fingerprint, and cargo condition — creating an immutable custody transfer record.</p>
+                        <ul class="feature-list">
+                            <li><span class="check">&#10003;</span> Digital signature with identity verification</li>
+                            <li><span class="check">&#10003;</span> GPS-stamped at moment of signing</li>
+                            <li><span class="check">&#10003;</span> Commodity, quantity, weight, pallet count</li>
+                            <li><span class="check">&#10003;</span> Seal number linked at signing</li>
+                            <li><span class="check">&#10003;</span> Exception notes and special instructions</li>
+                            <li><span class="check">&#10003;</span> Loading evidence package attached</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="card" style="border-left:3px solid var(--accent-green);">
+                        <h3>Smart Seal & Door Monitoring</h3>
+                        <p style="font-size:12px; color:var(--text-secondary); margin-bottom:14px;">Multiple seal technologies supported — from basic photo verification to real-time electronic monitoring. The system continuously watches for unauthorized access.</p>
+                        <div class="card-grid" style="grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;">
+                            <div style="padding:10px; background:rgba(16,185,129,0.04); border-radius:8px; border:1px solid rgba(16,185,129,0.15);">
+                                <strong style="font-size:11px; color:var(--accent-green);">Traditional Seal</strong>
+                                <p style="font-size:11px; margin-top:4px; color:var(--text-secondary);">Photo OCR + GPS + Timestamp at application and removal</p>
+                            </div>
+                            <div style="padding:10px; background:rgba(6,182,212,0.04); border-radius:8px; border:1px solid rgba(6,182,212,0.15);">
+                                <strong style="font-size:11px; color:var(--accent-cyan);">RFID Seal</strong>
+                                <p style="font-size:11px; margin-top:4px; color:var(--text-secondary);">Tamper detection at every gate/checkpoint with RFID readers</p>
+                            </div>
+                            <div style="padding:10px; background:rgba(139,92,246,0.04); border-radius:8px; border:1px solid rgba(139,92,246,0.15);">
+                                <strong style="font-size:11px; color:var(--accent-purple);">Electronic Seal</strong>
+                                <p style="font-size:11px; margin-top:4px; color:var(--text-secondary);">Real-time open/close alerts via BLE/Cellular with location</p>
+                            </div>
+                            <div style="padding:10px; background:rgba(245,158,11,0.04); border-radius:8px; border:1px solid rgba(245,158,11,0.15);">
+                                <strong style="font-size:11px; color:var(--accent-yellow);">Door Sensor</strong>
+                                <p style="font-size:11px; margin-top:4px; color:var(--text-secondary);">Light, shock, motion, and temperature monitoring 24/7</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top:20px; border-left:3px solid var(--accent-red);">
+                <h3 style="font-size:14px; color:var(--accent-red); margin-bottom:8px;">AI Classifies Every Door Event</h3>
+                <p style="font-size:12px; color:var(--text-secondary); margin-bottom:10px;">When a door event is detected, AI automatically classifies it based on context — location, time, route plan, and supporting signals:</p>
+                <div>
+                    <span class="badge badge-green">Authorized Open (at delivery)</span>
+                    <span class="badge badge-yellow">Unverified Open (unexpected location)</span>
+                    <span class="badge badge-red">Suspicious Stop + Open (high-risk area)</span>
+                    <span class="badge badge-red">Possible Seal Replacement</span>
+                </div>
+            </div>
+            <div class="slide-footer">ITEM Freight Trust Platform — Confidential</div>
+        </section>
+
+        <!-- Slide 10: Multi-Signal Tracking -->
+        <section class="slide" id="slide-10">
+            <span class="slide-number">10</span>
+            <h2>Multi-Signal Tracking</h2>
+            <p class="slide-subtitle">Traditional tracking shows a single GPS dot. ITEM fuses multiple independent signal sources to generate a Tracking Confidence Score — giving you certainty about where your freight actually is, not just where a phone app claims it is.</p>
+
+            <div class="two-col">
+                <div>
+                    <h3 style="margin-bottom:14px; font-size:15px; color:var(--accent-cyan);">Signal Sources Fused by the Platform</h3>
+                    <div class="card" style="margin-bottom:12px;">
+                        <h3 style="font-size:13px; color:var(--accent-blue);">Carrier-Provided Signals</h3>
+                        <p style="font-size:12px; color:var(--text-secondary); margin-bottom:8px;">Data from carrier's own systems — useful but not independently verifiable by shipper alone:</p>
+                        <span class="tag tag-blue">Tractor Telematics (ELD)</span><span class="tag tag-blue">Trailer GPS Tracker</span><span class="tag tag-blue">Smart Seal Location</span>
+                    </div>
+                    <div class="card" style="margin-bottom:12px;">
+                        <h3 style="font-size:13px; color:var(--accent-purple);">Independent Verification Signals</h3>
+                        <p style="font-size:12px; color:var(--text-secondary); margin-bottom:8px;">Third-party data that confirms or contradicts carrier-reported location:</p>
+                        <span class="tag tag-purple">GenLogs Roadside Sighting</span><span class="tag tag-purple">LPR Camera Match</span><span class="tag tag-purple">Toll Event Records</span><span class="tag tag-purple">Gate Camera Recognition</span>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size:13px; color:var(--accent-green);">Contextual Signals</h3>
+                        <p style="font-size:12px; color:var(--text-secondary); margin-bottom:8px;">Environmental data that validates location claims:</p>
+                        <span class="tag tag-green">Geofence Events</span><span class="tag tag-green">Route Consistency</span><span class="tag tag-green">Wi-Fi Fingerprint</span><span class="tag tag-green">Photo Background Match</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="card" style="background:linear-gradient(135deg, rgba(6,182,212,0.04) 0%, rgba(59,130,246,0.04) 100%); border-color:rgba(6,182,212,0.25);">
+                        <h3 style="font-size:14px; margin-bottom:14px;">Tracking Confidence Example</h3>
+                        <div style="background:var(--navy-dark); border-radius:8px; padding:20px; font-family:monospace; font-size:13px; line-height:2;">
+                            <div style="color:var(--text-muted);">Current Location:</div>
+                            <div style="color:var(--text-primary); font-weight:600;">I-40 Eastbound, near Flagstaff, AZ</div>
+                            <br>
+                            <div style="color:var(--text-muted);">Tracking Confidence:</div>
+                            <div style="color:var(--accent-green); font-size:28px; font-weight:800;">96%</div>
+                            <br>
+                            <div style="color:var(--text-muted);">Supporting Signals:</div>
+                            <div style="color:var(--accent-green);">&#10003; Tractor Telematics</div>
+                            <div style="color:var(--accent-green);">&#10003; Trailer GPS</div>
+                            <div style="color:var(--accent-green);">&#10003; GenLogs Sighting (independent)</div>
+                            <div style="color:var(--accent-green);">&#10003; Route Consistency</div>
+                            <div style="color:var(--accent-green);">&#10003; ETA on track</div>
+                        </div>
+                    </div>
+                    <div class="explanation" style="margin-top:14px;">
+                        <strong>What this means:</strong> When confidence is 96%, you know the shipment location is corroborated by 5 independent signals. If confidence drops (e.g., telematics goes offline), the system immediately alerts you and explains which signals are missing.
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">ITEM Freight Trust Platform — Confidential</div>
+        </section>
+
+        <!-- Slide 11: Checkpoint Intelligence -->
+        <section class="slide" id="slide-11">
+            <span class="slide-number">11</span>
+            <h2>Checkpoint Intelligence</h2>
+            <p class="slide-subtitle">Checkpoints are not just geofences — they are multi-signal verification nodes placed along the route. At each checkpoint, the system collects and cross-references multiple independent signals to confirm the shipment's identity, integrity, and location.</p>
+
+            <div class="mockup-container large">
+                <picture><source srcset="/tms_images/05_Checkpoint_Verification_Mechanism.svg" type="image/svg+xml"><img src="/tms_images/05_Checkpoint_Verification_Mechanism.png" alt="Checkpoint Verification Mechanism"></picture>
+            </div>
+
+            <div class="three-col" style="margin-top:24px;">
+                <div class="card" style="border-top:3px solid var(--accent-green);">
+                    <h3 style="color:var(--accent-green); font-size:14px;">1. Active Checkpoint</h3>
+                    <p style="font-size:12px; color:var(--text-secondary); margin:8px 0;">Triggered by shipper-defined rules. The driver's app prompts a check-in action at specific locations:</p>
+                    <ul class="feature-list">
+                        <li><span class="check">&#10003;</span> App check-in with selfie</li>
+                        <li><span class="check">&#10003;</span> Seal photo scan</li>
+                        <li><span class="check">&#10003;</span> QR/NFC verification</li>
+                    </ul>
+                </div>
+                <div class="card" style="border-top:3px solid var(--accent-blue);">
+                    <h3 style="color:var(--accent-blue); font-size:14px;">2. Passive Checkpoint</h3>
+                    <p style="font-size:12px; color:var(--text-secondary); margin:8px 0;">Automatically collected without driver action. These signals come from infrastructure you or partners control:</p>
+                    <ul class="feature-list">
+                        <li><span class="check">&#10003;</span> Telematics / ELD ping</li>
+                        <li><span class="check">&#10003;</span> LPR camera match</li>
+                        <li><span class="check">&#10003;</span> RFID seal reading</li>
+                        <li><span class="check">&#10003;</span> GenLogs roadside sighting</li>
+                    </ul>
+                </div>
+                <div class="card" style="border-top:3px solid var(--accent-purple);">
+                    <h3 style="color:var(--accent-purple); font-size:14px;">3. Corroborated Checkpoint</h3>
+                    <p style="font-size:12px; color:var(--text-secondary); margin:8px 0;">Multiple independent signals agree — this is the gold standard. No single source can be faked when 3+ signals confirm:</p>
+                    <ul class="feature-list">
+                        <li><span class="check">&#10003;</span> Telematics + Trailer GPS</li>
+                        <li><span class="check">&#10003;</span> + GenLogs sighting</li>
+                        <li><span class="check">&#10003;</span> + LPR camera</li>
+                        <li><span class="check" style="color:var(--accent-purple);">= Verified &#10003;</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top:20px;">
+                <p style="font-size:13px;"><strong>Checkpoint Status:</strong>
+                    <span class="badge badge-green" style="margin-left:8px;">Verified</span>
+                    <span class="badge badge-yellow" style="margin-left:4px;">Partial</span>
+                    <span class="badge badge-red" style="margin-left:4px;">Missed</span>
+                    <span style="display:inline-block;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;background:rgba(239,68,68,0.12);color:var(--accent-red);border:1px solid rgba(239,68,68,0.25);margin-left:4px;">Conflicted</span>
+                    — A "Conflicted" status means signals disagree, triggering immediate investigation.
+                </p>
+            </div>
+            <div class="slide-footer">ITEM Freight Trust Platform — Confidential</div>
+        </section>
+
+        <!-- Slide 12: AI Freight Control Tower -->
+        <section class="slide" id="slide-12">
+            <span class="slide-number">12</span>
+            <h2>AI Freight Control Tower</h2>
+            <p class="slide-subtitle">AI continuously monitors all active shipments, comparing real-time signals against expected behavior. When anomalies are detected, it automatically classifies the risk level and takes action — from requesting a driver check-in to escalating to your security team.</p>
+
+            <div class="two-col">
+                <div>
+                    <div class="card" style="border-left:3px solid var(--accent-red); margin-bottom:16px;">
+                        <h3 style="font-size:14px; color:var(--accent-red); margin-bottom:10px;">What AI Monitors</h3>
+                        <p style="font-size:12px; color:var(--text-secondary); margin-bottom:10px;">Continuous real-time analysis of all shipment signals:</p>
+                        <div>
+                            <span class="tag tag-red">Route Deviation</span>
+                            <span class="tag tag-red">Tracking Signal Loss</span>
+                            <span class="tag tag-red">Missed Checkpoint</span>
+                            <span class="tag tag-red">Unexpected Stop</span>
+                            <span class="tag tag-red">Door Open Event</span>
+                            <span class="tag tag-red">Seal Integrity Alert</span>
+                            <span class="tag tag-yellow">Equipment Change</span>
+                            <span class="tag tag-yellow">Late vs ETA</span>
+                            <span class="tag tag-yellow">Temperature Excursion</span>
+                            <span class="tag tag-yellow">Suspicious Photo</span>
+                        </div>
+                    </div>
+                    <div class="card" style="border-left:3px solid var(--accent-green);">
+                        <h3 style="font-size:14px; color:var(--accent-green); margin-bottom:10px;">Automated Actions</h3>
+                        <p style="font-size:12px; color:var(--text-secondary); margin-bottom:10px;">AI responds proportionally based on risk level:</p>
+                        <ul class="feature-list">
+                            <li><span class="check">&#8594;</span> Create exception with full context</li>
+                            <li><span class="check">&#8594;</span> Request immediate driver check-in</li>
+                            <li><span class="check">&#8594;</span> Alert your operations team</li>
+                            <li><span class="check">&#8594;</span> Notify security for high-risk events</li>
+                            <li><span class="check">&#8594;</span> Recommend next-best action</li>
+                            <li><span class="check">&#8594;</span> Auto-generate incident report</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="mockup-container">
+                        <picture><source srcset="/tms_images/07_Executive_Dashboard.svg" type="image/svg+xml"><img src="/tms_images/07_Executive_Dashboard.png" alt="Operations Dashboard"></picture>
+                    </div>
+                    <div class="explanation">
+                        <strong>Shipper benefit:</strong> Instead of your team manually monitoring dozens of shipments and making phone calls, AI handles routine verification and only escalates true anomalies. Your team focuses on decisions, not data gathering.
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">ITEM Freight Trust Platform — Confidential</div>
+        </section>
+
+        <!-- Slide 13: Delivery & ePOD -->
+        <section class="slide" id="slide-13">
+            <span class="slide-number">13</span>
+            <h2>Delivery & ePOD</h2>
+            <p class="slide-subtitle">At delivery, the system verifies seal integrity, captures unloading evidence, and generates a complete electronic Proof of Delivery. AI compares loading photos against unloading photos to automatically detect discrepancies in quantity or condition.</p>
+
+            <div class="two-col">
+                <div>
+                    <h3 style="margin-bottom:14px; font-size:15px; color:var(--accent-cyan);">Delivery Verification Sequence</h3>
+                    <ul class="feature-list">
+                        <li><span class="check">&#10003;</span> Arrival confirmed at delivery geofence</li>
+                        <li><span class="check">&#10003;</span> Tractor/Trailer identity re-verified via LPR</li>
+                        <li><span class="check">&#10003;</span> Seal number verified — matches original</li>
+                        <li><span class="check">&#10003;</span> Seal integrity confirmed (no tamper)</li>
+                        <li><span class="check">&#10003;</span> Door open event recorded with timestamp</li>
+                        <li><span class="check">&#10003;</span> Unloading photos captured</li>
+                        <li><span class="check">&#10003;</span> Pallet count verified against eBOL</li>
+                        <li><span class="check">&#10003;</span> Any damage/shortage documented</li>
+                        <li><span class="check">&#10003;</span> Receiver signature captured digitally</li>
+                        <li><span class="check">&#10003;</span> ePOD generated and linked to shipment</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="card" style="margin-bottom:16px;">
+                        <h3 style="font-size:14px; color:var(--accent-purple); margin-bottom:10px;">AI Comparison Engine</h3>
+                        <p style="font-size:12px; color:var(--text-secondary); margin-bottom:12px;">Automatically compares pickup vs delivery evidence:</p>
+                        <div style="display:grid; grid-template-columns:1fr auto 1fr; gap:10px; align-items:center; margin-bottom:12px;">
+                            <div style="text-align:center; padding:10px; background:rgba(59,130,246,0.04); border-radius:8px; border:1px solid rgba(59,130,246,0.15);">
+                                <div style="font-size:11px; color:var(--text-muted);">At Loading</div>
+                                <div style="font-size:12px; font-weight:600; margin-top:4px;">Photos + Count</div>
+                            </div>
+                            <div style="color:var(--accent-purple); font-weight:bold;">vs</div>
+                            <div style="text-align:center; padding:10px; background:rgba(139,92,246,0.04); border-radius:8px; border:1px solid rgba(139,92,246,0.15);">
+                                <div style="font-size:11px; color:var(--text-muted);">At Delivery</div>
+                                <div style="font-size:12px; font-weight:600; margin-top:4px;">Photos + Count</div>
+                            </div>
+                        </div>
+                        <ul class="feature-list">
+                            <li><span class="check">&#10003;</span> Shipped quantity vs received quantity</li>
+                            <li><span class="check">&#10003;</span> Original seal vs delivery seal number</li>
+                            <li><span class="check">&#10003;</span> Packaging condition comparison</li>
+                            <li><span class="check">&#10003;</span> Pallet count verification</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box">
+                        <p style="font-size:13px;"><strong>Output:</strong> Complete Shipment Evidence Package — an auditable record from pickup to delivery that serves as the foundation for any claims process.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">ITEM Freight Trust Platform — Confidential</div>
+        </section>
+
+        <!-- Slide 14: AI Claims Investigation -->
+        <section class="slide" id="slide-14">
+            <span class="slide-number">14</span>
+            <h2>AI Claims Investigation</h2>
+            <p class="slide-subtitle">With ITEM, evidence accumulates continuously during shipment execution — not after a claim is filed. When a claim occurs, the system instantly generates a complete case file with timeline, evidence, and AI-powered responsibility analysis.</p>
+
+            <div class="comparison" style="margin-bottom:28px;">
+                <div class="comparison-side" style="border-color:rgba(239,68,68,0.25);">
+                    <h4 style="color:var(--accent-red);">Traditional Approach</h4>
+                    <p style="font-size:13px; color:var(--text-secondary); text-align:center; padding:16px 0;">Claim happens &#8594; Start searching for evidence across emails, calls, and disconnected systems &#8594; Weeks of investigation &#8594; Incomplete case</p>
+                </div>
+                <div class="comparison-vs">VS</div>
+                <div class="comparison-side" style="border-color:rgba(16,185,129,0.25);">
+                    <h4 style="color:var(--accent-green);">ITEM Approach</h4>
+                    <p style="font-size:13px; color:var(--text-secondary); text-align:center; padding:16px 0;">Evidence accumulates during execution &#8594; Claim happens &#8594; Complete case file generated instantly &#8594; AI identifies responsibility</p>
+                </div>
+            </div>
+
+            <div class="two-col">
+                <div>
+                    <div class="card">
+                        <h3 style="font-size:14px; margin-bottom:10px;">Auto-Generated Claims Case File</h3>
+                        <p style="font-size:12px; color:var(--text-secondary); margin-bottom:10px;">Everything already collected during execution:</p>
+                        <div>
+                            <span class="tag tag-blue">DIEV Verification Record</span>
+                            <span class="tag tag-blue">Trailer Inspection Photos</span>
+                            <span class="tag tag-cyan">Dock Loading Video</span>
+                            <span class="tag tag-cyan">eBOL with Signatures</span>
+                            <span class="tag tag-purple">Seal Installation Record</span>
+                            <span class="tag tag-purple">Complete Tracking Timeline</span>
+                            <span class="tag tag-purple">All Checkpoint Records</span>
+                            <span class="tag tag-green">Door/Seal Events</span>
+                            <span class="tag tag-green">Delivery Photos & ePOD</span>
+                            <span class="tag tag-yellow">Temperature Records</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="card">
+                        <h3 style="font-size:14px; margin-bottom:10px;">AI Claims Investigator</h3>
+                        <p style="font-size:12px; color:var(--text-secondary); margin-bottom:10px;">AI analyzes the evidence and produces:</p>
+                        <ul class="feature-list">
+                            <li><span class="check">&#10003;</span> Complete reconstructed timeline</li>
+                            <li><span class="check">&#10003;</span> Responsibility transfer points identified</li>
+                            <li><span class="check">&#10003;</span> Evidence gaps flagged</li>
+                            <li><span class="check">&#10003;</span> Suspicious stops/door events highlighted</li>
+                            <li><span class="check">&#10003;</span> Probable loss stage determined</li>
+                            <li><span class="check">&#10003;</span> Insurance submission package generated</li>
+                            <li><span class="check">&#10003;</span> Executive summary for management</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">ITEM Freight Trust Platform — Confidential</div>
+        </section>
+
+        <!-- Slide 15: Risk & Carrier Scorecard -->
+        <section class="slide" id="slide-15">
+            <span class="slide-number">15</span>
+            <h2>Risk Scoring & Carrier Scorecard</h2>
+            <p class="slide-subtitle">Every shipment receives a dynamic risk score based on cargo value, route, carrier history, and available security measures. High-risk shipments automatically trigger enhanced security protocols. Carrier performance is tracked with two unique metrics that go beyond on-time delivery.</p>
+
+            <div class="three-col">
+                <div class="card" style="border-top:3px solid var(--accent-red);">
+                    <h3 style="font-size:14px; color:var(--accent-red); margin-bottom:10px;">Shipment Risk Score</h3>
+                    <p style="font-size:12px; color:var(--text-secondary); margin-bottom:10px;">Per-shipment assessment considering:</p>
+                    <ul class="feature-list">
+                        <li><span class="check">&#8226;</span> Cargo value & theft attractiveness</li>
+                        <li><span class="check">&#8226;</span> Route risk (high-theft corridors)</li>
+                        <li><span class="check">&#8226;</span> Carrier risk profile</li>
+                        <li><span class="check">&#8226;</span> Time of day / weekend / holiday</li>
+                        <li><span class="check">&#8226;</span> Available tracking coverage</li>
+                        <li><span class="check">&#8226;</span> Smart seal availability</li>
+                        <li><span class="check">&#8226;</span> Historical claims on this lane</li>
+                    </ul>
+                </div>
+                <div class="card" style="border-top:3px solid var(--accent-blue);">
+                    <h3 style="font-size:14px; color:var(--accent-blue); margin-bottom:10px;">Carrier Scorecard</h3>
+                    <p style="font-size:12px; color:var(--text-secondary); margin-bottom:10px;">Beyond traditional on-time metrics:</p>
+                    <ul class="feature-list">
+                        <li><span class="check">&#8226;</span> Safety & compliance rating</li>
+                        <li><span class="check">&#8226;</span> On-time performance</li>
+                        <li><span class="check">&#8226;</span> <strong>Evidence Compliance</strong> — do they complete all verification steps?</li>
+                        <li><span class="check">&#8226;</span> <strong>Identity Consistency</strong> — does the same driver/vehicle stay throughout?</li>
+                        <li><span class="check">&#8226;</span> Claims ratio</li>
+                        <li><span class="check">&#8226;</span> Security event history</li>
+                    </ul>
+                </div>
+                <div class="card" style="border-top:3px solid var(--accent-green);">
+                    <h3 style="font-size:14px; color:var(--accent-green); margin-bottom:10px;">Auto Security Policies</h3>
+                    <p style="font-size:12px; color:var(--text-secondary); margin-bottom:10px;">Risk-driven actions triggered automatically:</p>
+                    <ul class="feature-list">
+                        <li><span class="check">&#8594;</span> Require smart seal</li>
+                        <li><span class="check">&#8594;</span> Require trailer GPS tracker</li>
+                        <li><span class="check">&#8594;</span> Add extra checkpoints</li>
+                        <li><span class="check">&#8594;</span> Restrict to approved routes</li>
+                        <li><span class="check">&#8594;</span> Require team driver</li>
+                        <li><span class="check">&#8594;</span> Increase insurance coverage</li>
+                        <li><span class="check">&#8594;</span> Require manual approval</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-footer">ITEM Freight Trust Platform — Confidential</div>
+        </section>
+
+        <!-- Slide 16: Data Flow -->
+        <section class="slide" id="slide-16">
+            <span class="slide-number">16</span>
+            <h2>Data Flow Architecture</h2>
+            <p class="slide-subtitle">Data flows from multiple sources into the ITEM platform through a unified ingestion API. Real-time event processing feeds the Verified Freight Graph and AI engine, which power operational dashboards, alerts, documents, and analytics for your team.</p>
+
+            <div class="mockup-container large">
+                <picture><source srcset="/tms_images/03_Data_Flow.svg" type="image/svg+xml"><img src="/tms_images/03_Data_Flow.png" alt="Data Flow Architecture"></picture>
+            </div>
+
+            <div class="three-col" style="margin-top:24px;">
+                <div class="card">
+                    <h3 style="font-size:13px; color:var(--accent-blue); margin-bottom:8px;">Data Sources (Input)</h3>
+                    <p style="font-size:12px; color:var(--text-secondary); line-height:1.8;">ITEM DIEV &bull; ERP / OMS / WMS &bull; Carrier / TMS &bull; Telematics / ELD &bull; Trailer Tracker &bull; Dock Camera &bull; LPR / Gate Camera &bull; RFID / Smart Seal &bull; GenLogs / Roadside</p>
+                </div>
+                <div class="card">
+                    <h3 style="font-size:13px; color:var(--accent-cyan); margin-bottom:8px;">Processing Engine</h3>
+                    <p style="font-size:12px; color:var(--text-secondary); line-height:1.8;">Data Ingestion API &bull; Event Stream (Real-time) &bull; Verified Freight Graph &bull; AI & Rules Engine &bull; Data Lake / Storage</p>
+                </div>
+                <div class="card">
+                    <h3 style="font-size:13px; color:var(--accent-green); margin-bottom:8px;">Operational Outputs</h3>
+                    <p style="font-size:12px; color:var(--text-secondary); line-height:1.8;">Operations Dashboard &bull; Real-time Visibility &bull; Exception Alerts &bull; eBOL / Documents &bull; Customer Portal &bull; Claims Portal &bull; BI / Analytics &bull; API / Webhooks</p>
+                </div>
+            </div>
+            <div class="slide-footer">ITEM Freight Trust Platform — Confidential</div>
+        </section>
+
+        <!-- Slide 17: Product Experience -->
+        <section class="slide" id="slide-17">
+            <span class="slide-number">17</span>
+            <h2>Product Experience</h2>
+            <p class="slide-subtitle">Purpose-built interfaces for shipper operations teams — from high-level dashboards showing all active shipments to detailed checkpoint verification views. Every screen is designed to surface actionable insights, not just raw data.</p>
+
+            <div class="mockup-container large">
+                <picture><source srcset="/tms_images/07_Executive_Dashboard.svg" type="image/svg+xml"><img src="/tms_images/07_Executive_Dashboard.png" alt="Shipper Operations Dashboard"></picture>
+            </div>
+
+            <div class="two-col" style="margin-top:20px;">
+                <div>
+                    <div class="mockup-container">
+                        <picture><source srcset="/tms_images/08_Load_Shipment_Detail.svg" type="image/svg+xml"><img src="/tms_images/08_Load_Shipment_Detail.png" alt="Shipment Detail View"></picture>
+                    </div>
+                    <p style="font-size:12px; color:var(--text-muted); text-align:center; margin-top:8px;">Shipment Detail — complete timeline, evidence, and status</p>
+                </div>
+                <div>
+                    <div class="mockup-container">
+                        <picture><source srcset="/tms_images/09_Checkpoint_Detail.svg" type="image/svg+xml"><img src="/tms_images/09_Checkpoint_Detail.png" alt="Checkpoint Detail View"></picture>
+                    </div>
+                    <p style="font-size:12px; color:var(--text-muted); text-align:center; margin-top:8px;">Checkpoint Detail — multi-signal verification evidence</p>
+                </div>
+            </div>
+
+            <div class="mockup-container" style="max-width:700px; margin-top:20px;">
+                <picture><source srcset="/tms_images/10_Driver_Mobile_App.svg" type="image/svg+xml"><img src="/tms_images/10_Driver_Mobile_App.png" alt="Driver Mobile App"></picture>
+            </div>
+            <p style="font-size:12px; color:var(--text-muted); text-align:center; margin-top:8px;">Driver Mobile App — guided check-in workflow at your facilities</p>
+            <div class="slide-footer">ITEM Freight Trust Platform — Confidential</div>
+        </section>
+
+        <!-- Slide 18: Integration Ecosystem -->
+        <section class="slide" id="slide-18">
+            <span class="slide-number">18</span>
+            <h2>Open Integration Ecosystem</h2>
+            <p class="slide-subtitle">ITEM connects with your existing technology stack — no rip-and-replace required. The platform ingests data from your ERP, WMS, and existing TMS, while adding verification capabilities through telematics, camera, and sensor integrations.</p>
+
+            <div class="card-grid" style="grid-template-columns: repeat(4, 1fr);">
+                <div class="card" style="padding:16px; text-align:center;">
+                    <h3 style="font-size:12px; color:var(--accent-blue); margin-bottom:8px;">ERP Systems</h3>
+                    <p style="font-size:11px;">SAP &bull; Oracle &bull; NetSuite &bull; Dynamics 365 &bull; Infor</p>
+                </div>
+                <div class="card" style="padding:16px; text-align:center;">
+                    <h3 style="font-size:12px; color:var(--accent-cyan); margin-bottom:8px;">WMS</h3>
+                    <p style="font-size:11px;">Manhattan &bull; Blue Yonder &bull; Korber &bull; SAP EWM</p>
+                </div>
+                <div class="card" style="padding:16px; text-align:center;">
+                    <h3 style="font-size:12px; color:var(--accent-purple); margin-bottom:8px;">Telematics</h3>
+                    <p style="font-size:11px;">Samsara &bull; Motive &bull; Geotab &bull; Omnitracs &bull; Trimble</p>
+                </div>
+                <div class="card" style="padding:16px; text-align:center;">
+                    <h3 style="font-size:12px; color:var(--accent-green); margin-bottom:8px;">Visibility</h3>
+                    <p style="font-size:11px;">project44 &bull; FourKites &bull; MacroPoint &bull; Trucker Tools</p>
+                </div>
+                <div class="card" style="padding:16px; text-align:center;">
+                    <h3 style="font-size:12px; color:var(--accent-yellow); margin-bottom:8px;">Compliance</h3>
+                    <p style="font-size:11px;">FMCSA &bull; Highway &bull; RMIS &bull; CargoNet &bull; Carrier411</p>
+                </div>
+                <div class="card" style="padding:16px; text-align:center;">
+                    <h3 style="font-size:12px; color:var(--accent-red); margin-bottom:8px;">Hardware</h3>
+                    <p style="font-size:11px;">Dock Camera &bull; LPR &bull; RFID Reader &bull; Smart Seal &bull; Door Sensor</p>
+                </div>
+                <div class="card" style="padding:16px; text-align:center;">
+                    <h3 style="font-size:12px; color:var(--accent-blue); margin-bottom:8px;">TMS / Brokerage</h3>
+                    <p style="font-size:11px;">Oracle TM &bull; MercuryGate &bull; McLeod &bull; Turvo &bull; Descartes</p>
+                </div>
+                <div class="card" style="padding:16px; text-align:center;">
+                    <h3 style="font-size:12px; color:var(--accent-cyan); margin-bottom:8px;">Insurance</h3>
+                    <p style="font-size:11px;">Claims Systems &bull; Insurance Platforms &bull; Risk Assessment</p>
+                </div>
+            </div>
+
+            <div class="explanation" style="margin-top:20px;">
+                <strong>Integration approach:</strong> ITEM provides pre-built connectors for major platforms and a REST API for custom integrations. Data flows bidirectionally — your systems feed shipment data in, and ITEM pushes verified status, alerts, and evidence back to your dashboards and workflows.
+            </div>
+            <div class="slide-footer">ITEM Freight Trust Platform — Confidential</div>
+        </section>
+
+        <!-- Slide 19: Customer Value -->
+        <section class="slide" id="slide-19" style="position:relative; overflow:hidden;">
+            <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%, rgba(59,130,246,0.04) 0%, transparent 70%);pointer-events:none;"></div>
+            <span class="slide-number" style="position:relative;z-index:1;">19</span>
+            <h2 style="position:relative;z-index:1;">Customer Value</h2>
+            <p class="slide-subtitle" style="position:relative;z-index:1;">ITEM Freight Trust Platform delivers measurable improvements across cargo security, operational efficiency, visibility confidence, and claims management — specifically designed for shippers who need to protect high-value freight.</p>
+
+            <div class="card-grid" style="grid-template-columns:repeat(4,1fr); position:relative;z-index:1;">
+                <div class="card" style="text-align:center;">
+                    <div style="font-size:24px; margin-bottom:10px;">&#128274;</div>
+                    <h3 style="font-size:14px; margin-bottom:8px;">Cargo Security</h3>
+                    <p style="font-size:12px;">Dramatically reduce theft, identity fraud, and double-brokering through multi-layer verification at every stage.</p>
+                </div>
+                <div class="card" style="text-align:center;">
+                    <div style="font-size:24px; margin-bottom:10px;">&#128065;</div>
+                    <h3 style="font-size:14px; margin-bottom:8px;">Verified Visibility</h3>
+                    <p style="font-size:12px;">Know where your freight is with confidence — backed by multiple independent signals, not just a single GPS dot.</p>
+                </div>
+                <div class="card" style="text-align:center;">
+                    <div style="font-size:24px; margin-bottom:10px;">&#9889;</div>
+                    <h3 style="font-size:14px; margin-bottom:8px;">Operational Speed</h3>
+                    <p style="font-size:12px;">Faster gate processing, fewer manual check calls, automated exception handling, and streamlined dock operations.</p>
+                </div>
+                <div class="card" style="text-align:center;">
+                    <div style="font-size:24px; margin-bottom:10px;">&#128200;</div>
+                    <h3 style="font-size:14px; margin-bottom:8px;">Claims Resolution</h3>
+                    <p style="font-size:12px;">Complete evidence packages generated automatically. Faster responsibility determination and higher claim success rates.</p>
+                </div>
+            </div>
+
+            <div class="stats-row" style="justify-content:center; position:relative;z-index:1; margin-top:36px;">
+                <div class="stat-item"><div class="stat-value">&#8595; 70%</div><div class="stat-label">Cargo Theft Risk</div></div>
+                <div class="stat-item"><div class="stat-value">&#8595; 50%</div><div class="stat-label">Claims Cycle Time</div></div>
+                <div class="stat-item"><div class="stat-value">&#8593; 40%</div><div class="stat-label">Gate Efficiency</div></div>
+                <div class="stat-item"><div class="stat-value">96%</div><div class="stat-label">Tracking Confidence</div></div>
+            </div>
+
+            <div style="text-align:center; margin-top:48px; position:relative;z-index:1;">
+                <h2 style="font-size:26px; line-height:1.7;">Every Shipment Visible.<br>Every Checkpoint Verified.<br>Every Exception Explainable.</h2>
+                <div style="margin-top:28px; display:flex; align-items:center; justify-content:center; gap:8px;">
+                    <div style="width:32px;height:32px;background:var(--accent-blue);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:white;">IT</div>
+                    <span style="font-size:15px; font-weight:600; color:var(--text-secondary);">ITEM Freight Trust Platform</span>
+                </div>
+            </div>
+            <div class="slide-footer">ITEM Freight Trust Platform — Confidential</div>
+        </section>
+
+    </main>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const current = body.getAttribute('data-theme');
+            body.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+        }
+
+        // Smooth scroll navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = this.getAttribute('href');
+                document.querySelector(target).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Active nav item on scroll
+        const sections = document.querySelectorAll('.slide');
+        const navItems = document.querySelectorAll('.nav-item');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    navItems.forEach(item => {
+                        item.classList.remove('active');
+                        if (item.getAttribute('href') === '#' + id) item.classList.add('active');
+                    });
+                }
+            });
+        }, { threshold: 0.3 });
+        sections.forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>
