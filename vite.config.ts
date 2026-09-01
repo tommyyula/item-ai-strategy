@@ -150,9 +150,15 @@ function vitePluginManusDebugCollector(): Plugin {
   };
 }
 
-const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector()];
+const isStaticDeploy = !!process.env.DEPLOY_BASE;
+
+// Manus editor tooling is dev-only; exclude it from static (GitHub Pages) builds.
+const plugins = isStaticDeploy
+  ? [react(), tailwindcss()]
+  : [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector()];
 
 export default defineConfig({
+  base: process.env.DEPLOY_BASE || "/",
   plugins,
   resolve: {
     alias: {
