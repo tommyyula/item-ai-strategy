@@ -50,9 +50,10 @@ jobs:
           cp dist/public/index.html dist/public/404.html
           touch dist/public/.nojekyll
 
+      # Requires Pages to be enabled once, manually:
+      # Settings -> Pages -> Source: GitHub Actions.
+      # (`enablement: true` needs a token with Pages write, which GITHUB_TOKEN lacks.)
       - uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
