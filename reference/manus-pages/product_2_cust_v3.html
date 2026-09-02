@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en" class="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>ITEM AI — Operating System for the Physical Economy</title>
+<style>
+:root{
+  --bg:#FFFFFF; --bg2:#F4F8FD; --card:#FFFFFF; --tint:#F6F9FE; --ink-card:#EFF4FC;
+  --border:#DCE6F4; --border-soft:#E7EEF8;
+  --head:#0A1A33; --text:#2E435E; --muted:#5E7390; --faint:#8DA0B9;
+  --blue:#2456D6; --purple:#6D28D9; --green:#15803D; --cyan:#0E7490; --orange:#C2410C; --teal:#0F766E; --gold:#B45309; --red:#C0303A;
+  --t-blue:#EBF1FF; --t-purple:#F3EEFF; --t-green:#EAF7EE; --t-cyan:#E8F6FA; --t-orange:#FDF0E7; --t-teal:#E7F6F4; --t-red:#FCEDEE;
+  --shadow:0 1px 2px rgba(10,26,51,.05),0 8px 24px -12px rgba(10,26,51,.12);
+  --mono:ui-monospace,"SF Mono","Cascadia Code",Consolas,"Liberation Mono",monospace;
+}
+html.dark{
+  --bg:#04070F; --bg2:#070C1C; --card:#0B1226; --tint:#0E1730; --ink-card:#0A1124;
+  --border:#1C2B4F; --border-soft:#16223F;
+  --head:#F2F6FF; --text:#C9D6EE; --muted:#8FA3C7; --faint:#5C6F94;
+  --blue:#3B82F6; --purple:#A78BFA; --green:#4ADE80; --cyan:#38BDF8; --orange:#FB923C; --teal:#2DD4BF; --gold:#FBBF24; --red:#F87171;
+  --t-blue:#0D1B38; --t-purple:#151230; --t-green:#0A1F17; --t-cyan:#0B1D33; --t-orange:#23150C; --t-teal:#0A2024; --t-red:#240F12;
+  --shadow:none;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans","Noto Sans JP","Noto Sans SC",Arial,sans-serif;font-size:15.5px;line-height:1.65;transition:background .35s,color .35s}
+html.en .zh,html.en .ja,html.en .es{display:none!important}
+html.zh .en,html.zh .ja,html.zh .es{display:none!important}
+html.ja .zh,html.ja .en,html.ja .es{display:none!important}
+html.es .zh,html.es .en,html.es .ja{display:none!important}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+section{padding:72px 0;border-top:1px solid var(--border-soft)}
+section:first-of-type{border-top:none}
+section.alt{background:var(--bg2)}
+h1{color:var(--head);font-size:46px;line-height:1.16;letter-spacing:-.5px;font-weight:800}
+h2{color:var(--head);font-size:31px;line-height:1.25;letter-spacing:-.3px;font-weight:800;margin-bottom:12px}
+h3{color:var(--head);font-size:17px;font-weight:700}
+.lede{max-width:820px;color:var(--muted);font-size:16.5px;margin-bottom:34px}
+.eyebrow{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:11.5px;letter-spacing:2.2px;text-transform:uppercase;color:var(--faint);margin-bottom:14px}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%}
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(330px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(215px,1fr))}
+.g5{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px 24px;box-shadow:var(--shadow)}
+.card h3{margin-bottom:6px}
+.card p{font-size:14px;color:var(--muted)}
+.note{font-size:12.5px;color:var(--faint);margin-top:16px}
+ul.tick{list-style:none}
+ul.tick li{padding:5px 0 5px 26px;position:relative;font-size:14.5px}
+ul.tick li::before{content:"✓";position:absolute;left:2px;color:var(--green);font-weight:700}
+ul.x li::before{content:"✕";color:var(--red)}
+/* ---------- topbar ---------- */
+.topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border-soft)}
+.topbar .wrap{display:flex;align-items:center;gap:18px;height:58px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:800;color:var(--head);font-size:17px;letter-spacing:.3px;white-space:nowrap}
+.brand .cube{width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,var(--blue),var(--cyan))}
+.brand i{font-style:normal;color:var(--blue)}
+.brand small{font-family:var(--mono);font-size:10px;letter-spacing:1.6px;color:var(--faint);border-left:1px solid var(--border);padding-left:10px;margin-left:2px;text-transform:uppercase}
+.nav{display:flex;gap:16px;margin-left:auto;font-size:13px;overflow-x:auto}
+.nav a{color:var(--muted);text-decoration:none;white-space:nowrap}
+.nav a:hover{color:var(--blue)}
+.ctrl{display:flex;align-items:center;gap:8px;margin-left:8px}
+.lang{display:flex;background:var(--tint);border:1px solid var(--border);border-radius:99px;padding:3px;gap:2px}
+.lang button{border:none;background:transparent;color:var(--muted);font-size:12px;font-weight:600;padding:4px 10px;border-radius:99px;cursor:pointer;font-family:inherit;white-space:nowrap}
+.lang button.active{background:var(--blue);color:#fff}
+.theme{border:1px solid var(--border);background:var(--tint);color:var(--head);width:32px;height:32px;border-radius:99px;cursor:pointer;font-size:15px;line-height:1}
+/* ---------- hero ---------- */
+.hero{padding:84px 0 70px;background:
+  radial-gradient(900px 420px at 85% -10%,var(--t-blue),transparent 60%),
+  radial-gradient(700px 380px at -10% 30%,var(--t-cyan),transparent 55%)}
+.hero .grid-hero{display:grid;grid-template-columns:1.25fr .85fr;gap:44px;align-items:start}
+.hero h1 .blue{color:var(--blue)}
+.hero .sub{color:var(--muted);font-size:17px;max-width:620px;margin:20px 0 30px}
+.hstats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.hstat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}
+.hstat .v{font-size:24px;font-weight:800;color:var(--blue)}
+.hstat .l{font-size:11.5px;color:var(--muted);margin-top:2px}
+.live{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow)}
+.live .lh{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:1.8px;color:var(--faint);margin-bottom:12px;text-transform:uppercase}
+.live .lh .pulse{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 color-mix(in srgb,var(--green) 60%,transparent);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--green) 45%,transparent)}70%{box-shadow:0 0 0 9px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.live table{width:100%;border-collapse:collapse;font-size:13.5px}
+.live td{padding:8px 0;border-top:1px solid var(--border-soft)}
+.live tr:first-child td{border-top:none}
+.live td.num{text-align:right;font-family:var(--mono);font-weight:600;color:var(--head)}
+.live td.up{color:var(--green);text-align:right;font-size:12px;width:64px}
+.live td.down{color:var(--red);text-align:right;font-size:12px;width:64px}
+.syschips{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.syschips span{font-family:var(--mono);font-size:11.5px;font-weight:600;padding:6px 14px;border-radius:99px;border:1px solid var(--border);background:var(--card)}
+.fiveline{margin-top:14px;font-size:13px;color:var(--faint);font-family:var(--mono);letter-spacing:.5px}
+/* ---------- chips / accents ---------- */
+.c-purple{color:var(--purple)} .c-green{color:var(--green)} .c-cyan{color:var(--cyan)} .c-orange{color:var(--orange)} .c-teal{color:var(--teal)} .c-blue{color:var(--blue)}
+.b-purple{background:var(--t-purple)} .b-green{background:var(--t-green)} .b-cyan{background:var(--t-cyan)} .b-orange{background:var(--t-orange)} .b-teal{background:var(--t-teal)} .b-blue{background:var(--t-blue)}
+.chip{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:600;padding:4px 11px;border-radius:99px;border:1px solid var(--border)}
+/* ---------- section 2 ---------- */
+.fail{display:grid;grid-template-columns:1fr 1.15fr;gap:20px}
+.legacychain{font-family:var(--mono);font-size:13px;color:var(--head);background:var(--tint);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin:14px 0;text-align:center}
+.quad{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.quad .q{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+.quad .q b{display:block;color:var(--head);font-size:15px;margin-bottom:4px}
+.quad .q p{font-size:13px;color:var(--muted)}
+.quad .q .qn{font-family:var(--mono);font-size:11px;letter-spacing:1.5px;margin-bottom:6px;display:block}
+.punch{margin-top:22px;text-align:center;background:var(--tint);border:1px solid var(--border);border-radius:12px;padding:16px;font-size:16px;color:var(--head)}
+.punch b{color:var(--blue)}
+/* ---------- architecture ---------- */
+.arch{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.sysc{border:1px solid var(--border);border-radius:14px;padding:18px;background:var(--card);box-shadow:var(--shadow);border-top:3px solid var(--ac)}
+.sysc .sn{font-family:var(--mono);font-size:11px;letter-spacing:1.6px;color:var(--faint);display:block;margin-bottom:8px;text-transform:uppercase}
+.sysc h3{font-size:19px;color:var(--ac)}
+.sysc p{font-size:13px;margin:6px 0 12px}
+.sysc .tagchip{font-family:var(--mono);font-size:10.5px;border:1px solid var(--border);border-radius:7px;padding:3px 9px;color:var(--head);background:var(--tint)}
+.flowstrip{margin-top:22px;text-align:center;font-family:var(--mono);font-size:13px;letter-spacing:.5px;color:var(--muted);background:var(--tint);border:1px solid var(--border);border-radius:10px;padding:12px}
+.flowstrip b{color:var(--head)}
+/* ---------- ontology graph ---------- */
+.ontograph{position:relative;background:var(--tint);border:1px solid var(--border);border-radius:14px;padding:20px;min-height:300px}
+.node{position:absolute;transform:translate(-50%,-50%);font-size:12px;font-weight:600;color:var(--head);background:var(--card);border:1px solid var(--border);border-radius:99px;padding:6px 13px;box-shadow:var(--shadow);white-space:nowrap}
+.node.hot{border-color:var(--purple);color:var(--purple)}
+.glabel{position:absolute;top:14px;left:18px;font-family:var(--mono);font-size:10.5px;letter-spacing:1.8px;color:var(--faint);text-transform:uppercase}
+svg.wires{position:absolute;inset:0;width:100%;height:100%}
+svg.wires line{stroke:var(--border);stroke-width:1.4}
+/* ---------- foundry pipeline ---------- */
+.pipe{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0}
+.pipe span{font-family:var(--mono);font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:8px;background:var(--t-green);color:var(--green);border:1px solid color-mix(in srgb,var(--green) 30%,transparent)}
+.pipe i{color:var(--faint);font-style:normal}
+.foundry{display:grid;grid-template-columns:.8fr 1.5fr .9fr;gap:16px;align-items:stretch}
+.srcs{display:flex;flex-direction:column;gap:8px}
+.srcs span{font-size:13px;background:var(--card);border:1px solid var(--border);border-radius:9px;padding:8px 12px;color:var(--head)}
+.outbox .o{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--border-soft)}
+.outbox .o:first-of-type{border-top:none}
+.outbox .o .ck{color:var(--green);font-weight:800}
+.outbox .o b{color:var(--head);display:block;font-size:14.5px}
+.outbox .o span{font-size:12.5px;color:var(--muted)}
+.colhead{font-family:var(--mono);font-size:11px;letter-spacing:1.8px;color:var(--faint);text-transform:uppercase;margin-bottom:10px}
+.mini2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px}
+.mini2 .m{border:1px solid var(--border);border-left:3px solid var(--green);border-radius:10px;background:var(--card);padding:10px 13px}
+.mini2 .m b{display:block;color:var(--head);font-size:13.5px}
+.mini2 .m span{font-size:11.5px;color:var(--muted)}
+/* ---------- AI OS ---------- */
+.loop{counter-reset:s}
+.loop .st{display:flex;gap:14px;padding:13px 0;border-top:1px solid var(--border-soft)}
+.loop .st:first-child{border-top:none}
+.loop .st .n{width:30px;height:30px;flex:none;border-radius:50%;border:2px solid var(--cyan);color:var(--cyan);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:700}
+.loop .st b{color:var(--head);display:block}
+.loop .st span{font-size:13px;color:var(--muted)}
+.rt{border:1px solid var(--cyan);background:var(--t-cyan);color:var(--head);border-radius:10px;text-align:center;padding:10px;font-weight:700;margin-bottom:12px}
+.rt small{font-weight:400;color:var(--muted);margin-left:8px}
+.modgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.modgrid .md{background:var(--card);border:1px solid var(--border);border-radius:10px;text-align:center;padding:12px 6px;box-shadow:var(--shadow)}
+.modgrid .md b{display:block;font-family:var(--mono);font-size:12px;color:var(--head)}
+.modgrid .md span{font-size:10.5px;color:var(--muted)}
+/* ---------- AIP workflow ---------- */
+.wf{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:8px}
+.wf .w{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 12px;box-shadow:var(--shadow)}
+.wf .w .n{font-family:var(--mono);font-size:11px;color:var(--orange);letter-spacing:1.5px;display:block;margin-bottom:6px}
+.wf .w b{color:var(--head);font-size:14px;display:block;margin-bottom:4px}
+.wf .w p{font-size:12px;color:var(--muted)}
+/* ---------- harness ---------- */
+.envs .e{display:flex;justify-content:space-between;gap:10px;padding:10px 2px;border-top:1px solid var(--border-soft);font-size:13.5px}
+.envs .e:first-of-type{border-top:none}
+.envs .e b{color:var(--teal)}
+.envs .e span{color:var(--muted);text-align:right}
+/* ---------- roadmap ---------- */
+.road{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.road .r{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;box-shadow:var(--shadow)}
+.road .r .n{width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:700;margin-bottom:8px}
+.road .r b{color:var(--head);font-size:13.5px;display:block}
+.road .r span{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.tiers .t .price{font-size:25px;font-weight:800;margin:4px 0 8px}
+.tiers .t p{font-size:13px}
+/* ---------- table ---------- */
+table.cmp{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+table.cmp th,table.cmp td{padding:11px 14px;border-bottom:1px solid var(--border-soft);text-align:left}
+table.cmp th{font-family:var(--mono);font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--faint);background:var(--tint)}
+table.cmp td:first-child{color:var(--head);font-weight:600}
+table.cmp tr:last-child td{border-bottom:none}
+td.pos{color:var(--green);font-weight:700}
+td.mid{color:var(--gold)}
+td.neg{color:var(--faint)}
+.tablewrap{overflow-x:auto}
+/* ---------- CTA ---------- */
+.next{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:18px 0}
+.cta{display:inline-block;background:var(--blue);color:#fff;font-weight:700;font-size:15.5px;border-radius:11px;padding:13px 26px;text-decoration:none}
+footer{border-top:1px solid var(--border-soft);padding:26px 0 40px;font-size:12px;color:var(--faint)}
+/* ---------- reveal ---------- */
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+@media (max-width:920px){
+  .hero .grid-hero{grid-template-columns:1fr}
+  .fail{grid-template-columns:1fr}
+  .foundry{grid-template-columns:1fr}
+  .wf{grid-template-columns:1fr 1fr}
+  .road{grid-template-columns:1fr 1fr}
+  .modgrid{grid-template-columns:repeat(2,1fr)}
+  h1{font-size:34px}
+  .nav{display:none}
+  .brand small{display:none}
+  .topbar .wrap{gap:8px;padding:0 12px}
+  .lang button{padding:4px 7px;font-size:11px}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <div class="brand"><span class="cube"></span>ITEM <i>AI</i><small><span class="zh">产品说明</span><span class="en">Product Overview</span><span class="ja">プロダクト概要</span><span class="es">Resumen del producto</span></small></div>
+  <nav class="nav">
+    <a href="#why"><span class="zh">为什么</span><span class="en">Why</span><span class="ja">課題</span><span class="es">Por qué</span></a>
+    <a href="#arch"><span class="zh">架构</span><span class="en">Architecture</span><span class="ja">アーキテクチャ</span><span class="es">Arquitectura</span></a>
+    <a href="#systems"><span class="zh">五大系统</span><span class="en">Systems</span><span class="ja">システム</span><span class="es">Sistemas</span></a>
+    <a href="#impact"><span class="zh">落地与商业</span><span class="en">Impact</span><span class="ja">導入と商業</span><span class="es">Implementación</span></a>
+    <a href="#why-item"><span class="zh">为什么选 ITEM</span><span class="en">Why ITEM</span><span class="ja">ITEM の優位性</span><span class="es">Por qué ITEM</span></a>
+  </nav>
+  <div class="ctrl">
+    <div class="lang">
+      <button id="btn-zh" onclick="setLang('zh')">中文</button>
+      <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+      <button id="btn-ja" onclick="setLang('ja')">日本語</button>
+      <button id="btn-es" onclick="setLang('es')">ES</button>
+    </div>
+    <button class="theme" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle theme">☾</button>
+  </div>
+</div></div>
+
+<!-- ============ 01 HERO ============ -->
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot" style="background:var(--blue)"></span><span style="color:var(--blue)">ITEM AI</span><span class="zh">企业讨论稿 · 机密</span><span class="en">Enterprise discussion draft · Confidential</span><span class="ja">エンタープライズ討議用ドラフト · 機密</span><span class="es">Borrador de discusión empresarial · Confidencial</span></div>
+    <div class="grid-hero">
+      <div>
+        <h1><span class="zh">面向实体经济的<br/><span class="blue">ITEM AI 操作系统</span></span><span class="en">The ITEM AI Operating System<br/>for the <span class="blue">Physical Economy</span></span><span class="ja">実体経済のための<br/><span class="blue">ITEM AI オペレーティングシステム</span></span><span class="es">El sistema operativo ITEM AI<br/>para la <span class="blue">economía física</span></span></h1>
+        <p class="sub"><span class="zh">把企业数据转化为运营智能，再把智能转化为跨工厂、仓储、运输、堆场与月台的自主执行。</span><span class="en">Transform enterprise data into operational intelligence — then turn intelligence into autonomous execution across factories, warehouses, transportation, yards and docks.</span><span class="ja">企業データをオペレーショナルインテリジェンスに変換し、そのインテリジェンスを工場・倉庫・輸送・ヤード・ドックを横断する自律実行へとつなげます。</span><span class="es">Transforme los datos de su empresa en inteligencia operativa — y convierta esa inteligencia en ejecución autónoma en fábricas, almacenes, transporte, patios y muelles.</span></p>
+        <div class="hstats">
+          <div class="hstat"><div class="v">20–35%</div><div class="l"><span class="zh">运营成本下降</span><span class="en">Lower operational cost</span><span class="ja">運営コスト削減</span><span class="es">Menor costo operativo</span></div></div>
+          <div class="hstat"><div class="v">15–40%</div><div class="l"><span class="zh">准时履约提升</span><span class="en">On-time performance lift</span><span class="ja">定時パフォーマンス向上</span><span class="es">Mejora en cumplimiento puntual</span></div></div>
+          <div class="hstat"><div class="v">95%+</div><div class="l"><span class="zh">异常处理自动化</span><span class="en">Exception automation</span><span class="ja">例外処理の自動化</span><span class="es">Automatización de excepciones</span></div></div>
+          <div class="hstat"><div class="v"><span class="zh">实时</span><span class="en">Real-Time</span><span class="ja">リアルタイム</span><span class="es">Tiempo real</span></div><div class="l"><span class="zh">全网络可视化</span><span class="en">Network-wide visibility</span><span class="ja">ネットワーク全体の可視化</span><span class="es">Visibilidad de toda la red</span></div></div>
+        </div>
+        <div class="syschips">
+          <span class="c-purple">Ontology</span><span class="c-green">Foundry</span><span class="c-cyan">AI OS</span><span class="c-orange">AIP</span><span class="c-teal">Harness</span>
+        </div>
+        <div class="fiveline"><span class="zh">五大系统，一个操作系统。</span><span class="en">Five Systems. One Operating System.</span><span class="ja">5 つのシステム、ひとつのオペレーティングシステム。</span><span class="es">Cinco sistemas. Un solo sistema operativo.</span></div>
+      </div>
+      <div class="live">
+        <div class="lh"><span class="pulse"></span><span class="zh">实时运营</span><span class="en">Live Operations</span><span class="ja">ライブオペレーション</span><span class="es">Operaciones en vivo</span></div>
+        <table>
+          <tr><td><span class="zh">订单</span><span class="en">Orders</span><span class="ja">受注</span><span class="es">Pedidos</span></td><td class="num">12,834</td><td class="up">▲ 8.2%</td></tr>
+          <tr><td><span class="zh">货件</span><span class="en">Shipments</span><span class="ja">出荷</span><span class="es">Envíos</span></td><td class="num">6,723</td><td class="up">▲ 5.4%</td></tr>
+          <tr><td><span class="zh">集装箱</span><span class="en">Containers</span><span class="ja">コンテナ</span><span class="es">Contenedores</span></td><td class="num">8,612</td><td class="up">▲ 7.1%</td></tr>
+          <tr><td><span class="zh">异常</span><span class="en">Exceptions</span><span class="ja">例外</span><span class="es">Excepciones</span></td><td class="num">72</td><td class="down">▼ 12.7%</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 WHY TRADITIONAL FAILS ============ -->
+<section id="why" class="alt">
+  <div class="wrap">
+    <div class="eyebrow reveal"><span class="dot" style="background:var(--red)"></span>02 · <span class="zh">问题</span><span class="en">The Problem</span><span class="ja">課題</span><span class="es">El problema</span></div>
+    <h2 class="reveal"><span class="zh">为什么传统系统会失效</span><span class="en">Why Traditional Systems Fail</span><span class="ja">なぜ従来のシステムは機能しないのか</span><span class="es">Por qué fallan los sistemas tradicionales</span></h2>
+    <p class="lede reveal"><span class="zh">ERP、MES、WMS 与 TMS 生来是为了「记录」工作——而不是跨价值链地推理、决策与执行。</span><span class="en">ERP, MES, WMS and TMS were built to record work — not to reason, decide and execute across the value chain.</span><span class="ja">ERP・MES・WMS・TMS は作業を「記録する」ために作られました——バリューチェーンを横断して推論し、決定し、実行するためではありません。</span><span class="es">ERP, MES, WMS y TMS nacieron para registrar el trabajo — no para razonar, decidir y ejecutar a lo largo de la cadena de valor.</span></p>
+    <div class="fail">
+      <div class="card reveal">
+        <div class="colhead"><span class="zh">传统运营模式</span><span class="en">The legacy operating model</span><span class="ja">レガシー運営モデル</span><span class="es">El modelo operativo heredado</span></div>
+        <div class="legacychain"><span class="zh">记录 → 报表 → 开会 → 人工处理</span><span class="en">Record → Report → Meeting → Manual Action</span><span class="ja">記録 → レポート → 会議 → 手作業</span><span class="es">Registrar → Reportar → Reunión → Acción manual</span></div>
+        <ul class="tick x">
+          <li><span class="zh">数据被困在各自独立的系统里</span><span class="en">Data is trapped in separate systems</span><span class="ja">データは個別のシステムに閉じ込められている</span><span class="es">Los datos quedan atrapados en sistemas separados</span></li>
+          <li><span class="zh">问题总是在发生之后才浮现</span><span class="en">Problems surface after they happen</span><span class="ja">問題は起きてから表面化する</span><span class="es">Los problemas aparecen después de ocurrir</span></li>
+          <li><span class="zh">关键决策依赖资深运营人员</span><span class="en">Critical decisions depend on senior operators</span><span class="ja">重要な意思決定はベテラン担当者に依存</span><span class="es">Las decisiones críticas dependen de operadores expertos</span></li>
+          <li><span class="zh">规则、异常与经验留在软件之外</span><span class="en">Rules, exceptions and tribal knowledge live outside software</span><span class="ja">ルール・例外・暗黙知はソフトウェアの外にある</span><span class="es">Las reglas, excepciones y el conocimiento tácito viven fuera del software</span></li>
+          <li><span class="zh">情况一变，自动化就停止工作</span><span class="en">Automation stops when the situation changes</span><span class="ja">状況が変わると自動化は止まる</span><span class="es">La automatización se detiene cuando la situación cambia</span></li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <div class="colhead"><span class="zh">企业级运营真正需要的</span><span class="en">What enterprise-scale operations need instead</span><span class="ja">エンタープライズ規模のオペレーションに本当に必要なもの</span><span class="es">Lo que las operaciones a escala empresarial realmente necesitan</span></div>
+        <div class="quad">
+          <div class="q"><span class="qn c-cyan">01</span><b><span class="zh">观察</span><span class="en">Observe</span><span class="ja">観察</span><span class="es">Observar</span></b><p><span class="zh">跨工厂、仓储、堆场、运输与供应商网络的实时可视化。</span><span class="en">Real-time visibility across factory, warehouse, yard, transport and supplier networks.</span><span class="ja">工場・倉庫・ヤード・輸送・サプライヤーネットワークを横断するリアルタイムの可視化。</span><span class="es">Visibilidad en tiempo real en fábricas, almacenes, patios, transporte y redes de proveedores.</span></p></div>
+          <div class="q"><span class="qn c-cyan">02</span><b><span class="zh">预测</span><span class="en">Predict</span><span class="ja">予測</span><span class="es">Predecir</span></b><p><span class="zh">在运营断裂之前预测风险、产能、需求、延误与短缺。</span><span class="en">Forecast risk, capacity, demand, delay and shortage before operations break.</span><span class="ja">オペレーションが壊れる前に、リスク・能力・需要・遅延・欠品を予測。</span><span class="es">Anticipe riesgos, capacidad, demanda, retrasos y faltantes antes de que la operación se rompa.</span></p></div>
+          <div class="q"><span class="qn c-cyan">03</span><b><span class="zh">决策</span><span class="en">Decide</span><span class="ja">決定</span><span class="es">Decidir</span></b><p><span class="zh">基于约束、规则、成本与服务目标，推荐最优的下一步动作。</span><span class="en">Recommend the best next action using constraints, rules, cost and service goals.</span><span class="ja">制約・ルール・コスト・サービス目標に基づき、最適な次のアクションを推奨。</span><span class="es">Recomiende la mejor acción siguiente según restricciones, reglas, costos y metas de servicio.</span></p></div>
+          <div class="q"><span class="qn c-cyan">04</span><b><span class="zh">执行</span><span class="en">Execute</span><span class="ja">実行</span><span class="es">Ejecutar</span></b><p><span class="zh">带审计、控制与回滚地触发工作流、智能体与系统。</span><span class="en">Trigger workflows, agents and systems with audit, control and rollback.</span><span class="ja">監査・統制・ロールバックを備えて、ワークフロー・エージェント・システムを起動。</span><span class="es">Active flujos, agentes y sistemas con auditoría, control y reversión.</span></p></div>
+        </div>
+      </div>
+    </div>
+    <div class="punch reveal"><span class="zh">传统软件「记录」运营。<b>ITEM AI「运行」运营。</b></span><span class="en">Traditional software records operations. <b>ITEM AI runs them — and drives outcomes.</b></span><span class="ja">従来のソフトウェアはオペレーションを「記録」します。<b>ITEM AI はオペレーションを「動かし」ます。</b></span><span class="es">El software tradicional registra las operaciones. <b>ITEM AI las ejecuta.</b></span></div>
+  </div>
+</section>
+
+<!-- ============ 03 ARCHITECTURE ============ -->
+<section id="arch">
+  <div class="wrap">
+    <div class="eyebrow reveal"><span class="dot" style="background:var(--blue)"></span>03 · <span class="zh">平台架构</span><span class="en">The Architecture</span><span class="ja">アーキテクチャ</span><span class="es">La arquitectura</span></div>
+    <h2 class="reveal"><span class="zh">ITEM AI 架构</span><span class="en">The ITEM AI Architecture</span><span class="ja">ITEM AI アーキテクチャ</span><span class="es">La arquitectura de ITEM AI</span></h2>
+    <p class="lede reveal"><span class="zh">把语义、数据、智能、行动与交付清晰分层——让企业 AI 安全、有用、可执行。</span><span class="en">A clean separation of meaning, data, intelligence, action and delivery — designed to make enterprise AI safe, useful and executable.</span><span class="ja">意味・データ・インテリジェンス・アクション・デリバリーを明確に分離——エンタープライズ AI を安全で、有用で、実行可能にする設計。</span><span class="es">Una separación clara entre significado, datos, inteligencia, acción y entrega — diseñada para que la IA empresarial sea segura, útil y ejecutable.</span></p>
+    <div class="arch reveal">
+      <div class="sysc" style="--ac:var(--purple)"><span class="sn">1 · <span class="zh">语义系统</span><span class="en">System of Meaning</span><span class="ja">意味のシステム</span><span class="es">Sistema de significado</span></span><h3>Ontology</h3><p><span class="zh">定义业务对象、关系、规则与动作。</span><span class="en">Define business objects, relationships, rules and actions.</span><span class="ja">ビジネスオブジェクト・関係・ルール・アクションを定義。</span><span class="es">Defina objetos de negocio, relaciones, reglas y acciones.</span></p><span class="tagchip">DDD Modelling</span></div>
+      <div class="sysc" style="--ac:var(--green)"><span class="sn">2 · <span class="zh">数据系统</span><span class="en">System of Data</span><span class="ja">データのシステム</span><span class="es">Sistema de datos</span></span><h3>Foundry</h3><p><span class="zh">连接、治理并统一运营数据。</span><span class="en">Connect, govern and unify operational data.</span><span class="ja">運営データを接続・ガバナンス・統合。</span><span class="es">Conecte, gobierne y unifique los datos operativos.</span></p><span class="tagchip">Data Platform</span></div>
+      <div class="sysc" style="--ac:var(--cyan)"><span class="sn">3 · <span class="zh">智能系统</span><span class="en">System of Intelligence</span><span class="ja">インテリジェンスのシステム</span><span class="es">Sistema de inteligencia</span></span><h3>AI OS</h3><p><span class="zh">观察、预测、决策并优化运营。</span><span class="en">Observe, predict, decide and optimize operations.</span><span class="ja">オペレーションを観察・予測・決定・最適化。</span><span class="es">Observe, prediga, decida y optimice las operaciones.</span></p><span class="tagchip">Agent Runtime</span></div>
+      <div class="sysc" style="--ac:var(--orange)"><span class="sn">4 · <span class="zh">行动系统</span><span class="en">System of Action</span><span class="ja">アクションのシステム</span><span class="es">Sistema de acción</span></span><h3>AIP</h3><p><span class="zh">规模化部署智能体、工作流与自动化。</span><span class="en">Deploy agents, workflows and automation.</span><span class="ja">エージェント・ワークフロー・自動化をデプロイ。</span><span class="es">Despliegue agentes, flujos de trabajo y automatización.</span></p><span class="tagchip">Multi-Agent</span></div>
+      <div class="sysc" style="--ac:var(--teal)"><span class="sn">5 · <span class="zh">交付系统</span><span class="en">System of Delivery</span><span class="ja">デリバリーのシステム</span><span class="es">Sistema de entrega</span></span><h3>Harness</h3><p><span class="zh">在任何环境构建、部署、保护并运营 AI。</span><span class="en">Build, deploy, secure and operate AI anywhere.</span><span class="ja">あらゆる環境で AI を構築・デプロイ・保護・運用。</span><span class="es">Construya, despliegue, proteja y opere IA en cualquier entorno.</span></p><span class="tagchip">Agent IDE</span></div>
+    </div>
+    <div class="flowstrip reveal"><span class="zh"><b>语义</b> → <b>数据</b> → <b>智能</b> → <b>行动</b> → <b>交付</b></span><span class="en"><b>Meaning</b> → <b>Data</b> → <b>Intelligence</b> → <b>Action</b> → <b>Delivery</b></span><span class="ja"><b>意味</b> → <b>データ</b> → <b>インテリジェンス</b> → <b>アクション</b> → <b>デリバリー</b></span><span class="es"><b>Significado</b> → <b>Datos</b> → <b>Inteligencia</b> → <b>Acción</b> → <b>Entrega</b></span></div>
+  </div>
+</section>
+
+<!-- ============ 04 ONTOLOGY ============ -->
+<section id="systems" class="alt">
+  <div class="wrap">
+    <div class="eyebrow reveal"><span class="dot" style="background:var(--purple)"></span>04 · <span class="zh">语义系统</span><span class="en">System of Meaning</span><span class="ja">意味のシステム</span><span class="es">Sistema de significado</span></div>
+    <h2 class="reveal">Ontology — <span class="zh">语义系统</span><span class="en">System of Meaning</span><span class="ja">意味のシステム</span><span class="es">Sistema de significado</span></h2>
+    <p class="lede reveal"><span class="zh">受治理的语义层，让企业运营对人、软件与 AI 智能体同样「可理解」。</span><span class="en">The governed semantic layer that makes enterprise operations understandable to humans, software and AI agents.</span><span class="ja">エンタープライズのオペレーションを、人・ソフトウェア・AI エージェントの誰にとっても「理解可能」にする、ガバナンスされたセマンティック層。</span><span class="es">La capa semántica gobernada que hace que las operaciones de la empresa sean comprensibles para personas, software y agentes de IA.</span></p>
+    <div class="grid g2">
+      <div>
+        <div class="card reveal" style="border-left:3px solid var(--purple);margin-bottom:14px">
+          <h3>ITEM.Ontology Studio</h3>
+          <p class="c-purple" style="font-family:var(--mono);font-size:11.5px;margin-bottom:8px"><span class="zh">面向运营的 DDD 建模</span><span class="en">DDD Modelling for Operations</span><span class="ja">オペレーションのための DDD モデリング</span><span class="es">Modelado DDD para operaciones</span></p>
+          <ul class="tick">
+            <li><span class="zh">建模业务域：订单、库存、堆场、月台、货件、产品、供应商、工厂</span><span class="en">Model domains: order, inventory, yard, dock, shipment, product, supplier, factory</span><span class="ja">ドメインをモデリング：受注・在庫・ヤード・ドック・出荷・製品・サプライヤー・工場</span><span class="es">Modele dominios: pedidos, inventario, patio, muelle, envíos, producto, proveedor, fábrica</span></li>
+            <li><span class="zh">定义关系、约束、规则、权限与允许的动作</span><span class="en">Define relationships, constraints, rules, permissions and allowed actions</span><span class="ja">関係・制約・ルール・権限・許可されたアクションを定義</span><span class="es">Defina relaciones, restricciones, reglas, permisos y acciones permitidas</span></li>
+            <li><span class="zh">构建业务与工程共享的 AI 就绪数字孪生</span><span class="en">Create an AI-ready digital twin shared by business and engineering</span><span class="ja">ビジネスとエンジニアリングが共有する AI レディなデジタルツインを構築</span><span class="es">Cree un gemelo digital listo para IA, compartido por negocio e ingeniería</span></li>
+          </ul>
+        </div>
+        <div class="card reveal" style="border-left:3px solid var(--purple)">
+          <h3>ITEM.Ontology Executor</h3>
+          <p class="c-purple" style="font-family:var(--mono);font-size:11.5px;margin-bottom:8px"><span class="zh">知识图谱 + 检索</span><span class="en">Knowledge Graph + Retrieval</span><span class="ja">ナレッジグラフ + 検索</span><span class="es">Grafo de conocimiento + recuperación</span></p>
+          <ul class="tick">
+            <li><span class="zh">实体、事件、策略与运营历史的实时图谱</span><span class="en">Live graph of entities, events, policies and operational history</span><span class="ja">エンティティ・イベント・ポリシー・運営履歴のライブグラフ</span><span class="es">Grafo en vivo de entidades, eventos, políticas e historial operativo</span></li>
+            <li><span class="zh">语义检索让智能体锚定在正确的业务上下文</span><span class="en">Semantic retrieval grounds agents in correct business context</span><span class="ja">セマンティック検索がエージェントを正しいビジネスコンテキストにグラウンディング</span><span class="es">La recuperación semántica ancla a los agentes en el contexto de negocio correcto</span></li>
+            <li><span class="zh">血缘与审计链，支撑可解释的 AI 行动</span><span class="en">Lineage and audit trail for explainable AI actions</span><span class="ja">リネージと監査証跡が、説明可能な AI アクションを支える</span><span class="es">Linaje y trazabilidad de auditoría para acciones de IA explicables</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="ontograph" id="ograph">
+          <span class="glabel"><span class="zh">运营本体示例</span><span class="en">Example Operations Ontology</span><span class="ja">オペレーション・オントロジーの例</span><span class="es">Ejemplo de ontología de operaciones</span></span>
+          <svg class="wires" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <line x1="18" y1="28" x2="42" y2="22"/><line x1="42" y1="22" x2="68" y2="28"/>
+            <line x1="68" y1="28" x2="50" y2="50"/><line x1="18" y1="28" x2="30" y2="55"/>
+            <line x1="30" y1="55" x2="50" y2="50"/><line x1="50" y1="50" x2="72" y2="58"/>
+            <line x1="50" y1="50" x2="40" y2="80"/><line x1="72" y1="58" x2="84" y2="80"/>
+            <line x1="40" y1="80" x2="62" y2="84"/><line x1="62" y1="84" x2="84" y2="80"/>
+            <line x1="30" y1="55" x2="40" y2="80"/>
+          </svg>
+          <span class="node" style="left:18%;top:28%"><span class="zh">供应商</span><span class="en">Supplier</span><span class="ja">サプライヤー</span><span class="es">Proveedor</span></span>
+          <span class="node" style="left:42%;top:22%"><span class="zh">工厂</span><span class="en">Factory</span><span class="ja">工場</span><span class="es">Fábrica</span></span>
+          <span class="node" style="left:68%;top:28%"><span class="zh">产品</span><span class="en">Product</span><span class="ja">製品</span><span class="es">Producto</span></span>
+          <span class="node hot" style="left:50%;top:50%"><span class="zh">订单</span><span class="en">Order</span><span class="ja">受注</span><span class="es">Pedido</span></span>
+          <span class="node" style="left:30%;top:55%"><span class="zh">库存</span><span class="en">Inventory</span><span class="ja">在庫</span><span class="es">Inventario</span></span>
+          <span class="node" style="left:72%;top:58%"><span class="zh">货件</span><span class="en">Shipment</span><span class="ja">出荷</span><span class="es">Envío</span></span>
+          <span class="node" style="left:40%;top:80%"><span class="zh">仓库</span><span class="en">Warehouse</span><span class="ja">倉庫</span><span class="es">Almacén</span></span>
+          <span class="node" style="left:62%;top:84%"><span class="zh">月台</span><span class="en">Dock</span><span class="ja">ドック</span><span class="es">Muelle</span></span>
+          <span class="node" style="left:84%;top:80%"><span class="zh">客户</span><span class="en">Customer</span><span class="ja">顧客</span><span class="es">Cliente</span></span>
+        </div>
+        <p class="note"><span class="zh">目的：让每个 AI 智能体共享同一套业务语言、约束与动作模型。</span><span class="en">Purpose: give every AI agent the same business language, constraints and action model.</span><span class="ja">目的：すべての AI エージェントに、同一のビジネス言語・制約・アクションモデルを共有させること。</span><span class="es">Propósito: dar a cada agente de IA el mismo lenguaje de negocio, las mismas restricciones y el mismo modelo de acción.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 FOUNDRY ============ -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow reveal"><span class="dot" style="background:var(--green)"></span>05 · <span class="zh">数据系统</span><span class="en">System of Data</span><span class="ja">データのシステム</span><span class="es">Sistema de datos</span></div>
+    <h2 class="reveal">Foundry — <span class="zh">数据系统</span><span class="en">System of Data</span><span class="ja">データのシステム</span><span class="es">Sistema de datos</span></h2>
+    <p class="lede reveal"><span class="zh">企业数据底座：在让 AI 行动之前，先连接、治理并统一运营数据。</span><span class="en">The enterprise data foundation: connect, govern and unify operational data before asking AI to act on it.</span><span class="ja">エンタープライズデータ基盤：AI に行動させる前に、運営データを接続・ガバナンス・統合する。</span><span class="es">La base de datos empresarial: conecte, gobierne y unifique los datos operativos antes de pedirle a la IA que actúe sobre ellos.</span></p>
+    <div class="foundry reveal">
+      <div class="card">
+        <div class="colhead"><span class="zh">数据源</span><span class="en">Data Sources</span><span class="ja">データソース</span><span class="es">Fuentes de datos</span></div>
+        <div class="srcs">
+          <span>ERP / SAP</span><span>MES / <span class="zh">工厂</span><span class="en">Factory</span><span class="ja">工場</span><span class="es">Fábrica</span></span><span>WMS / WES</span><span>TMS / <span class="zh">承运商</span><span class="en">Carrier</span><span class="ja">キャリア</span><span class="es">Transportista</span></span><span>IoT / PLC / <span class="zh">视觉</span><span class="en">Vision</span><span class="ja">ビジョン</span><span class="es">Visión</span></span><span>Excel / Email</span><span><span class="zh">供应商 / 客户</span><span class="en">Supplier / Customer</span><span class="ja">サプライヤー / 顧客</span><span class="es">Proveedor / Cliente</span></span>
+        </div>
+      </div>
+      <div class="card" style="background:var(--tint)">
+        <div class="colhead c-green">ITEM Foundry Core</div>
+        <div class="mini2">
+          <div class="m"><b>ITEM.BI</b><span><span class="zh">数据平台</span><span class="en">Data Platform</span><span class="ja">データプラットフォーム</span><span class="es">Plataforma de datos</span></span></div>
+          <div class="m"><b>ITEM.DI</b><span><span class="zh">数据集成</span><span class="en">Data Integration</span><span class="ja">データ統合</span><span class="es">Integración de datos</span></span></div>
+        </div>
+        <div class="pipe">
+          <span><span class="zh">接入</span><span class="en">Ingest</span><span class="ja">取込</span><span class="es">Ingerir</span></span><i>›</i><span><span class="zh">校验</span><span class="en">Validate</span><span class="ja">検証</span><span class="es">Validar</span></span><i>›</i><span><span class="zh">转换</span><span class="en">Transform</span><span class="ja">変換</span><span class="es">Transformar</span></span><i>›</i><span><span class="zh">治理</span><span class="en">Govern</span><span class="ja">統制</span><span class="es">Gobernar</span></span><i>›</i><span><span class="zh">服务</span><span class="en">Serve</span><span class="ja">提供</span><span class="es">Servir</span></span>
+        </div>
+        <ul class="tick">
+          <li><span class="zh">实时与批量数据集成</span><span class="en">Real-time and batch data integration</span><span class="ja">リアルタイム + バッチのデータ統合</span><span class="es">Integración de datos en tiempo real y por lotes</span></li>
+          <li><span class="zh">血缘、归属、安全与治理</span><span class="en">Lineage, ownership, security and governance</span><span class="ja">リネージ・オーナーシップ・セキュリティ・ガバナンス</span><span class="es">Linaje, propiedad, seguridad y gobernanza</span></li>
+          <li><span class="zh">运营指标、仪表盘与告警</span><span class="en">Operational metrics, dashboards and alerting</span><span class="ja">運営メトリクス・ダッシュボード・アラート</span><span class="es">Métricas operativas, tableros y alertas</span></li>
+          <li><span class="zh">可复用的数据集，供智能体与应用调用</span><span class="en">Reusable datasets for agents and apps</span><span class="ja">エージェントとアプリのための再利用可能なデータセット</span><span class="es">Conjuntos de datos reutilizables para agentes y aplicaciones</span></li>
+        </ul>
+      </div>
+      <div class="card outbox">
+        <div class="colhead"><span class="zh">输出</span><span class="en">Output</span><span class="ja">アウトプット</span><span class="es">Resultado</span></div>
+        <h3 style="margin-bottom:10px"><span class="zh">单一运营事实来源</span><span class="en">Single Source of Operational Truth</span><span class="ja">運営の単一の信頼できる情報源</span><span class="es">Una sola fuente de verdad operativa</span></h3>
+        <div class="o"><span class="ck">✓</span><div><b><span class="zh">统一</span><span class="en">Unified</span><span class="ja">統合</span><span class="es">Unificado</span></b><span><span class="zh">数据模型</span><span class="en">Data model</span><span class="ja">データモデル</span><span class="es">Modelo de datos</span></span></div></div>
+        <div class="o"><span class="ck">✓</span><div><b><span class="zh">可信</span><span class="en">Trusted</span><span class="ja">信頼できる</span><span class="es">Confiable</span></b><span><span class="zh">AI 上下文</span><span class="en">AI context</span><span class="ja">AI コンテキスト</span><span class="es">Contexto de IA</span></span></div></div>
+        <div class="o"><span class="ck">✓</span><div><b><span class="zh">可审计</span><span class="en">Auditable</span><span class="ja">監査可能</span><span class="es">Auditable</span></b><span><span class="zh">决策</span><span class="en">Decisions</span><span class="ja">意思決定</span><span class="es">Decisiones</span></span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 AI OS ============ -->
+<section class="alt">
+  <div class="wrap">
+    <div class="eyebrow reveal"><span class="dot" style="background:var(--cyan)"></span>06 · <span class="zh">智能系统</span><span class="en">System of Intelligence</span><span class="ja">インテリジェンスのシステム</span><span class="es">Sistema de inteligencia</span></div>
+    <h2 class="reveal">AI OS — <span class="zh">智能系统</span><span class="en">System of Intelligence</span><span class="ja">インテリジェンスのシステム</span><span class="es">Sistema de inteligencia</span></h2>
+    <p class="lede reveal"><span class="zh">实体运营的大脑：在 ITEM 运营应用与 AI 智能体之间进行实时决策。</span><span class="en">The brain of physical operations: real-time decisioning across ITEM operational applications and AI agents.</span><span class="ja">フィジカルオペレーションの頭脳：ITEM の運営アプリケーションと AI エージェントを横断するリアルタイムの意思決定。</span><span class="es">El cerebro de las operaciones físicas: decisiones en tiempo real entre las aplicaciones operativas de ITEM y los agentes de IA.</span></p>
+    <div class="grid g2">
+      <div class="card reveal loop">
+        <div class="colhead c-cyan"><span class="zh">决策闭环</span><span class="en">Decision Loop</span><span class="ja">意思決定ループ</span><span class="es">Ciclo de decisión</span></div>
+        <div class="st"><span class="n">1</span><div><b><span class="zh">观察</span><span class="en">Observe</span><span class="ja">観察</span><span class="es">Observar</span></b><span><span class="zh">实时数据、事件与异常</span><span class="en">Live data, events, exceptions</span><span class="ja">ライブデータ・イベント・例外</span><span class="es">Datos en vivo, eventos, excepciones</span></span></div></div>
+        <div class="st"><span class="n">2</span><div><b><span class="zh">预测</span><span class="en">Predict</span><span class="ja">予測</span><span class="es">Predecir</span></b><span><span class="zh">需求、延误、产能、风险</span><span class="en">Demand, delay, capacity, risk</span><span class="ja">需要・遅延・能力・リスク</span><span class="es">Demanda, retrasos, capacidad, riesgo</span></span></div></div>
+        <div class="st"><span class="n">3</span><div><b><span class="zh">决策</span><span class="en">Decide</span><span class="ja">決定</span><span class="es">Decidir</span></b><span><span class="zh">约束之下的最优动作</span><span class="en">Best action under constraints</span><span class="ja">制約下での最適アクション</span><span class="es">La mejor acción bajo restricciones</span></span></div></div>
+        <div class="st"><span class="n">4</span><div><b><span class="zh">优化</span><span class="en">Optimize</span><span class="ja">最適化</span><span class="es">Optimizar</span></b><span><span class="zh">成本、服务水平、利用率</span><span class="en">Cost, service level, utilization</span><span class="ja">コスト・サービスレベル・稼働率</span><span class="es">Costo, nivel de servicio, utilización</span></span></div></div>
+      </div>
+      <div class="card reveal">
+        <div class="colhead c-cyan"><span class="zh">AI OS 运营模块</span><span class="en">AI OS Operating Modules</span><span class="ja">AI OS オペレーティングモジュール</span><span class="es">Módulos operativos de AI OS</span></div>
+        <div class="rt">Agent Runtime<small><span class="zh">智能体运行时</span><span class="en">the agent execution layer</span><span class="ja">エージェント実行レイヤー</span><span class="es">la capa de ejecución de agentes</span></small></div>
+        <div class="modgrid">
+          <div class="md"><b>ITEM.Predict</b><span><span class="zh">预测</span><span class="en">Forecast</span><span class="ja">予測</span><span class="es">Pronóstico</span></span></div>
+          <div class="md"><b>ITEM.WMS</b><span><span class="zh">仓储</span><span class="en">Warehouse</span><span class="ja">倉庫</span><span class="es">Almacén</span></span></div>
+          <div class="md"><b>ITEM.WES</b><span><span class="zh">仓储执行</span><span class="en">Execution</span><span class="ja">倉庫実行</span><span class="es">Ejecución</span></span></div>
+          <div class="md"><b>ITEM.OMS</b><span><span class="zh">订单管理</span><span class="en">Order Mgmt</span><span class="ja">受注管理</span><span class="es">Pedidos</span></span></div>
+          <div class="md"><b>ITEM.APS</b><span><span class="zh">计划排程</span><span class="en">Planning</span><span class="ja">計画</span><span class="es">Planificación</span></span></div>
+          <div class="md"><b>ITEM.TMS</b><span><span class="zh">运输</span><span class="en">Transport</span><span class="ja">輸送</span><span class="es">Transporte</span></span></div>
+          <div class="md"><b>ITEM.YMS</b><span><span class="zh">堆场</span><span class="en">Yard</span><span class="ja">ヤード</span><span class="es">Patio</span></span></div>
+          <div class="md"><b>ITEM.Dock</b><span><span class="zh">月台作业</span><span class="en">Dock Ops</span><span class="ja">ドック作業</span><span class="es">Muelle</span></span></div>
+        </div>
+        <p class="note" style="text-align:center"><span class="zh">一个横跨所有模块的实时运营大脑</span><span class="en">One real-time operational brain across all modules</span><span class="ja">すべてのモジュールを横断するひとつのリアルタイム運営頭脳</span><span class="es">Un solo cerebro operativo en tiempo real para todos los módulos</span></p>
+      </div>
+    </div>
+    <div class="punch reveal"><span class="zh">目的：在同一个实时运营大脑中协同人、AI 智能体、系统与机器。</span><span class="en">Purpose: coordinate humans, AI agents, systems and machines in one real-time operational brain.</span><span class="ja">目的：人・AI エージェント・システム・機械を、ひとつのリアルタイム運営頭脳の中で協調させること。</span><span class="es">Propósito: coordinar personas, agentes de IA, sistemas y máquinas en un solo cerebro operativo en tiempo real.</span></div>
+  </div>
+</section>
+
+<!-- ============ 07 AIP ============ -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow reveal"><span class="dot" style="background:var(--orange)"></span>07 · <span class="zh">行动系统</span><span class="en">System of Action</span><span class="ja">アクションのシステム</span><span class="es">Sistema de acción</span></div>
+    <h2 class="reveal">AIP — <span class="zh">行动系统</span><span class="en">System of Action</span><span class="ja">アクションのシステム</span><span class="es">Sistema de acción</span></h2>
+    <p class="lede reveal"><span class="zh">智能体执行平台：把决策转化为受控、可审计的企业级工作流。</span><span class="en">The agent execution platform that converts decisions into controlled, auditable workflows across the enterprise.</span><span class="ja">意思決定を、統制され監査可能なエンタープライズワークフローへと変換する、エージェント実行プラットフォーム。</span><span class="es">La plataforma de ejecución de agentes que convierte decisiones en flujos de trabajo controlados y auditables en toda la empresa.</span></p>
+    <div class="grid g3" style="margin-bottom:26px">
+      <div class="card reveal" style="border-left:3px solid var(--orange)"><h3>ITEM.GPT</h3><p><span class="zh">多智能体平台——任务规划、执行、工具调用与人工复核。</span><span class="en">Multi-agent platform for task planning, execution, tool use and human review.</span><span class="ja">マルチエージェントプラットフォーム——タスク計画・実行・ツール使用・人によるレビュー。</span><span class="es">Plataforma multiagente para planificación de tareas, ejecución, uso de herramientas y revisión humana.</span></p></div>
+      <div class="card reveal" style="border-left:3px solid var(--orange)"><h3>ITEM.Flow</h3><p><span class="zh">工作流——审批、路由、升级与异常处理的自动化。</span><span class="en">Workflow — automation for approvals, routing, escalation and exception handling.</span><span class="ja">ワークフロー——承認・ルーティング・エスカレーション・例外処理の自動化。</span><span class="es">Flujos de trabajo — automatización de aprobaciones, enrutamiento, escalamiento y manejo de excepciones.</span></p></div>
+      <div class="card reveal" style="border-left:3px solid var(--orange)"><h3>ITEM.Vision</h3><p><span class="zh">IoT、GIS 与视觉模型——为物理世界提供上下文感知。</span><span class="en">IoT, GIS and vision models — context awareness for the physical world.</span><span class="ja">IoT・GIS・ビジョンモデル——物理世界のコンテキスト認識。</span><span class="es">Modelos de IoT, GIS y visión — conciencia de contexto para el mundo físico.</span></p></div>
+    </div>
+    <div class="colhead reveal"><span class="zh">自主工作流示例 · 入库延误</span><span class="en">Autonomous workflow example · Inbound delay</span><span class="ja">自律ワークフローの例 · 入荷遅延</span><span class="es">Ejemplo de flujo autónomo · Retraso de entrada</span></div>
+    <div class="wf reveal">
+      <div class="w"><span class="n">01 · <span class="zh">发现</span><span class="en">Detect</span><span class="ja">検知</span><span class="es">Detectar</span></span><b><span class="zh">实时识别</span><span class="en">Real-time signal</span><span class="ja">リアルタイム検知</span><span class="es">Señal en tiempo real</span></b><p><span class="zh">实时发现晚到船班 / 预约冲突</span><span class="en">Late vessel / appointment conflict identified in real time</span><span class="ja">本船遅延 / アポイントメント競合をリアルタイムで特定</span><span class="es">Buque retrasado / conflicto de citas identificado en tiempo real</span></p></div>
+      <div class="w"><span class="n">02 · <span class="zh">分析</span><span class="en">Analyze</span><span class="ja">分析</span><span class="es">Analizar</span></span><b><span class="zh">影响评估</span><span class="en">Impact assessment</span><span class="ja">影響評価</span><span class="es">Evaluación de impacto</span></b><p><span class="zh">评估受影响的订单、库存与月台产能</span><span class="en">Impacted orders, inventory and dock capacity assessed</span><span class="ja">影響を受ける受注・在庫・ドック能力を評価</span><span class="es">Se evalúan pedidos, inventario y capacidad de muelle afectados</span></p></div>
+      <div class="w"><span class="n">03 · <span class="zh">决策</span><span class="en">Decide</span><span class="ja">決定</span><span class="es">Decidir</span></span><b><span class="zh">最优方案</span><span class="en">Best plan</span><span class="ja">最適プラン</span><span class="es">Mejor plan</span></b><p><span class="zh">优先收货、重排堆场、再平衡劳动力</span><span class="en">Prioritize receiving, re-slot yard, rebalance labor</span><span class="ja">入荷を優先し、ヤードを再配置し、労働力を再配分</span><span class="es">Priorizar recepción, reubicar patio, rebalancear mano de obra</span></p></div>
+      <div class="w"><span class="n">04 · <span class="zh">执行</span><span class="en">Execute</span><span class="ja">実行</span><span class="es">Ejecutar</span></span><b><span class="zh">系统联动</span><span class="en">Systems updated</span><span class="ja">システム連動</span><span class="es">Sistemas actualizados</span></b><p><span class="zh">更新月台排程、劳动力计划、承运商与客户</span><span class="en">Update dock schedule, labor plan, carrier and customer</span><span class="ja">ドックスケジュール・労務計画・キャリア・顧客を更新</span><span class="es">Actualizar agenda de muelle, plan laboral, transportista y cliente</span></p></div>
+      <div class="w"><span class="n">05 · <span class="zh">审计</span><span class="en">Audit</span><span class="ja">監査</span><span class="es">Auditar</span></span><b><span class="zh">证据留存</span><span class="en">Evidence logged</span><span class="ja">証跡を記録</span><span class="es">Evidencia registrada</span></b><p><span class="zh">全程留痕，保留人工干预入口</span><span class="en">Evidence logged with human override available</span><span class="ja">証跡を記録し、人によるオーバーライドも可能</span><span class="es">Evidencia registrada, con anulación humana disponible</span></p></div>
+    </div>
+    <div class="punch reveal"><span class="zh">受控的自主性：每个动作都有<b>身份、权限、护栏、证据与回滚</b>。</span><span class="en">Controlled autonomy: every action has <b>identity, permission, guardrail, evidence and rollback</b>.</span><span class="ja">統制された自律性：すべてのアクションに<b>アイデンティティ・権限・ガードレール・証跡・ロールバック</b>があります。</span><span class="es">Autonomía controlada: cada acción tiene <b>identidad, permisos, salvaguardas, evidencia y reversión</b>.</span></div>
+  </div>
+</section>
+
+<!-- ============ 08 HARNESS ============ -->
+<section class="alt">
+  <div class="wrap">
+    <div class="eyebrow reveal"><span class="dot" style="background:var(--teal)"></span>08 · <span class="zh">交付系统</span><span class="en">System of Delivery</span><span class="ja">デリバリーのシステム</span><span class="es">Sistema de entrega</span></div>
+    <h2 class="reveal">Harness — <span class="zh">交付系统</span><span class="en">System of Delivery</span><span class="ja">デリバリーのシステム</span><span class="es">Sistema de entrega</span></h2>
+    <p class="lede reveal"><span class="zh">企业级的智能体开发、身份、治理与多租户部署——覆盖云、本地与边缘。</span><span class="en">Enterprise-grade agent development, identity, governance and multi-tenant deployment across cloud, on-prem and edge.</span><span class="ja">クラウド・オンプレ・エッジを横断する、エンタープライズ級のエージェント開発・アイデンティティ・ガバナンス・マルチテナントデプロイメント。</span><span class="es">Desarrollo de agentes, identidad, gobernanza y despliegue multiinquilino de nivel empresarial, en la nube, on-premise y en el borde.</span></p>
+    <div class="grid g2">
+      <div class="reveal">
+        <div class="colhead c-teal"><span class="zh">构建 + 治理</span><span class="en">Build + Govern</span><span class="ja">構築 + ガバナンス</span><span class="es">Construir + Gobernar</span></div>
+        <div class="card" style="border-left:3px solid var(--teal);margin-bottom:12px"><h3>Agent IDE</h3><p><span class="zh">带版本控制与评测框架地设计、测试与发布智能体。</span><span class="en">Design, test and publish agents with version control and evaluation harnesses.</span><span class="ja">バージョン管理と評価ハーネスを備えて、エージェントを設計・テスト・公開。</span><span class="es">Diseñe, pruebe y publique agentes con control de versiones y marcos de evaluación.</span></p></div>
+        <div class="card" style="border-left:3px solid var(--teal);margin-bottom:12px"><h3>IAM</h3><p><span class="zh">人 + 智能体身份、RBAC、租户隔离、策略与审计。</span><span class="en">Human + agent identity, RBAC, tenant isolation, policy and audit.</span><span class="ja">人 + エージェントのアイデンティティ、RBAC、テナント分離、ポリシー、監査。</span><span class="es">Identidad de personas + agentes, RBAC, aislamiento de inquilinos, políticas y auditoría.</span></p></div>
+        <div class="card" style="border-left:3px solid var(--teal)"><h3>Multi-Tenant Deployment Platform</h3><p><span class="zh">安全地部署客户专属 AI，而无需复制整套架构。</span><span class="en">Deploy customer-specific AI safely without duplicating architecture.</span><span class="ja">アーキテクチャを複製することなく、顧客専用の AI を安全にデプロイ。</span><span class="es">Despliegue IA específica para cada cliente de forma segura, sin duplicar la arquitectura.</span></p></div>
+      </div>
+      <div class="card reveal envs">
+        <div class="colhead c-teal"><span class="zh">在任何地方运行 AI</span><span class="en">Run AI Anywhere</span><span class="ja">AI をどこでも実行</span><span class="es">Ejecute IA en cualquier lugar</span></div>
+        <div class="e"><b><span class="zh">云</span><span class="en">Cloud</span><span class="ja">クラウド</span><span class="es">Nube</span></b><span><span class="zh">快速扩展 + 集中化服务</span><span class="en">Fast scale + centralized services</span><span class="ja">高速スケール + 中央集約サービス</span><span class="es">Escalado rápido + servicios centralizados</span></span></div>
+        <div class="e"><b><span class="zh">私有云</span><span class="en">Private Cloud</span><span class="ja">プライベートクラウド</span><span class="es">Nube privada</span></b><span><span class="zh">客户自控环境</span><span class="en">Customer-controlled environment</span><span class="ja">顧客が管理する環境</span><span class="es">Entorno controlado por el cliente</span></span></div>
+        <div class="e"><b><span class="zh">本地</span><span class="en">On-Prem</span><span class="ja">オンプレミス</span><span class="es">On-premise</span></b><span><span class="zh">工厂 / 配送中心网络</span><span class="en">Factory / DC network</span><span class="ja">工場 / DC ネットワーク</span><span class="es">Red de fábricas / centros de distribución</span></span></div>
+        <div class="e"><b><span class="zh">边缘</span><span class="en">Edge</span><span class="ja">エッジ</span><span class="es">Borde</span></b><span><span class="zh">低延迟 / 设备侧</span><span class="en">Low latency / device side</span><span class="ja">低レイテンシ / デバイスサイド</span><span class="es">Baja latencia / lado del dispositivo</span></span></div>
+        <div class="e"><b><span class="zh">气隙</span><span class="en">Air-Gapped</span><span class="ja">エアギャップ</span><span class="es">Aislado (air-gapped)</span></b><span><span class="zh">受限网络环境</span><span class="en">Restricted network environments</span><span class="ja">制限されたネットワーク環境</span><span class="es">Entornos de red restringidos</span></span></div>
+      </div>
+    </div>
+    <div class="punch reveal"><span class="zh">从第一天起的部署纪律：<b>CI/CD、监控、回滚、访问控制与合规</b>。</span><span class="en">Deployment discipline from day one: <b>CI/CD, monitoring, rollback, access control and compliance</b>.</span><span class="ja">初日からのデプロイ規律：<b>CI/CD・監視・ロールバック・アクセス制御・コンプライアンス</b>。</span><span class="es">Disciplina de despliegue desde el primer día: <b>CI/CD, monitoreo, reversión, control de acceso y cumplimiento</b>.</span></div>
+  </div>
+</section>
+
+<!-- ============ 09 IMPACT ============ -->
+<section id="impact">
+  <div class="wrap">
+    <div class="eyebrow reveal"><span class="dot" style="background:var(--blue)"></span>09 · <span class="zh">落地与商业</span><span class="en">Impact & Commercial</span><span class="ja">導入と商業モデル</span><span class="es">Implementación y modelo comercial</span></div>
+    <h2 class="reveal"><span class="zh">企业级影响模型</span><span class="en">Enterprise Impact Model</span><span class="ja">エンタープライズ・インパクトモデル</span><span class="es">Modelo de impacto empresarial</span></h2>
+    <p class="lede reveal"><span class="zh">从高价值的控制塔用例切入，再扩张到覆盖全球价值链的自主运营。<b style="color:var(--blue)">8–12 周首个试点 · 3–6 个月铺开。</b></span><span class="en">Start with high-value control-tower use cases, then expand into autonomous operations across the global value chain. <b style="color:var(--blue)">8–12 weeks to first pilot · 3–6 months rollout.</b></span><span class="ja">価値の高いコントロールタワーのユースケースから始め、グローバルバリューチェーン全体の自律オペレーションへ拡張。<b style="color:var(--blue)">最初のパイロットまで 8〜12 週間 · 展開は 3〜6 ヶ月。</b></span><span class="es">Comience con casos de torre de control de alto valor y expanda hacia operaciones autónomas en toda la cadena de valor global. <b style="color:var(--blue)">8–12 semanas al primer piloto · despliegue en 3–6 meses.</b></span></p>
+    <div class="colhead reveal"><span class="zh">案例 / 试点</span><span class="en">Case Studies / Pilots</span><span class="ja">ケーススタディ / パイロット</span><span class="es">Casos de estudio / pilotos</span></div>
+    <div class="grid g3 reveal" style="margin-bottom:30px">
+      <div class="card"><h3><span class="zh">消费电子供应链</span><span class="en">Consumer Electronics Supply Chain</span><span class="ja">コンシューマーエレクトロニクスのサプライチェーン</span><span class="es">Cadena de suministro de electrónica de consumo</span></h3><p><span class="zh">全球工厂 + 仓储 + 运输可视化；短缺预测；订单承诺优化。</span><span class="en">Global factory + warehouse + transport visibility; shortage prediction; order promise optimization.</span><span class="ja">グローバルな工場 + 倉庫 + 輸送の可視化、欠品予測、受注確約の最適化。</span><span class="es">Visibilidad global de fábricas + almacenes + transporte; predicción de faltantes; optimización de compromisos de pedido.</span></p></div>
+      <div class="card"><h3><span class="zh">3PL 多仓控制塔</span><span class="en">3PL Multi-Warehouse Control Tower</span><span class="ja">3PL マルチ倉庫コントロールタワー</span><span class="es">Torre de control multialmacén para 3PL</span></h3><p><span class="zh">网络级异常管理；劳动力、库存与发运决策；面向客户的可视化。</span><span class="en">Network-wide exception management; labor, inventory and shipping decisions; client visibility.</span><span class="ja">ネットワーク全体の例外管理、労働力・在庫・出荷の意思決定、顧客向け可視化。</span><span class="es">Gestión de excepciones en toda la red; decisiones de mano de obra, inventario y envíos; visibilidad para el cliente.</span></p></div>
+      <div class="card"><h3><span class="zh">堆场 + 月台智能</span><span class="en">Yard + Dock Intelligence</span><span class="ja">ヤード + ドックインテリジェンス</span><span class="es">Inteligencia de patio + muelle</span></h3><p><span class="zh">预约调度、月台分配、拖车追踪与滞留时间压缩。</span><span class="en">Appointment scheduling, dock assignment, trailer tracking, dwell-time reduction.</span><span class="ja">アポイントメントスケジューリング、ドック割当、トレーラー追跡、滞留時間の削減。</span><span class="es">Programación de citas, asignación de muelles, seguimiento de remolques y reducción del tiempo de permanencia.</span></p></div>
+    </div>
+    <div class="colhead reveal"><span class="zh">实施路线图</span><span class="en">Implementation Roadmap</span><span class="ja">導入ロードマップ</span><span class="es">Hoja de ruta de implementación</span></div>
+    <div class="road reveal" style="margin-bottom:30px">
+      <div class="r"><span class="n">0</span><b><span class="zh">发现</span><span class="en">Discovery</span><span class="ja">ディスカバリー</span><span class="es">Descubrimiento</span></b><span>2 <span class="zh">周</span><span class="en">weeks</span><span class="ja">週間</span><span class="es">semanas</span></span></div>
+      <div class="r"><span class="n">1</span><b><span class="zh">本体 + 数据</span><span class="en">Ontology + Data</span><span class="ja">オントロジー + データ</span><span class="es">Ontología + datos</span></b><span>4–6 <span class="zh">周</span><span class="en">weeks</span><span class="ja">週間</span><span class="es">semanas</span></span></div>
+      <div class="r"><span class="n">2</span><b><span class="zh">试点智能体</span><span class="en">Pilot Agents</span><span class="ja">パイロットエージェント</span><span class="es">Agentes piloto</span></b><span>6–8 <span class="zh">周</span><span class="en">weeks</span><span class="ja">週間</span><span class="es">semanas</span></span></div>
+      <div class="r"><span class="n">3</span><b><span class="zh">规模化应用</span><span class="en">Scale Apps</span><span class="ja">アプリのスケール</span><span class="es">Escalar aplicaciones</span></b><span>8–12 <span class="zh">周</span><span class="en">weeks</span><span class="ja">週間</span><span class="es">semanas</span></span></div>
+      <div class="r"><span class="n">4</span><b><span class="zh">自主运营</span><span class="en">Autonomous Ops</span><span class="ja">自律オペレーション</span><span class="es">Operaciones autónomas</span></b><span>6–12 <span class="zh">个月</span><span class="en">months</span><span class="ja">ヶ月</span><span class="es">meses</span></span></div>
+    </div>
+    <div class="colhead reveal"><span class="zh">商业模型</span><span class="en">Commercial Model</span><span class="ja">商業モデル</span><span class="es">Modelo comercial</span></div>
+    <div class="grid g3 tiers reveal">
+      <div class="card t"><h3><span class="zh">启动试点</span><span class="en">Starter Pilot</span><span class="ja">スターターパイロット</span><span class="es">Piloto inicial</span></h3><div class="price c-blue">$100k–250k</div><p><span class="zh">1–2 个用例、有限数据域、高管仪表盘 + 智能体。</span><span class="en">1–2 use cases, limited data domains, executive dashboard + agents.</span><span class="ja">1〜2 ユースケース、限定データドメイン、エグゼクティブダッシュボード + エージェント。</span><span class="es">1–2 casos de uso, dominios de datos limitados, tablero ejecutivo + agentes.</span></p></div>
+      <div class="card t" style="border-color:var(--blue)"><h3><span class="zh">企业铺开</span><span class="en">Enterprise Rollout</span><span class="ja">エンタープライズロールアウト</span><span class="es">Despliegue empresarial</span></h3><div class="price c-blue">$300k–1M</div><p><span class="zh">多站点部署、应用、集成、治理与支持。</span><span class="en">Multi-site deployment, apps, integration, governance and support.</span><span class="ja">マルチサイト展開、アプリ、統合、ガバナンス、サポート。</span><span class="es">Despliegue multisitio, aplicaciones, integración, gobernanza y soporte.</span></p></div>
+      <div class="card t"><h3><span class="zh">全球 AI OS</span><span class="en">Global AI OS</span><span class="ja">グローバル AI OS</span><span class="es">AI OS global</span></h3><div class="price c-blue">$1M+ / <span class="zh">年</span><span class="en">yr</span><span class="ja">年</span><span class="es">año</span></div><p><span class="zh">全球网络、高级自主、SLA、本地 / 边缘部署、专属客户成功。</span><span class="en">Global network, advanced autonomy, SLA, on-prem / edge, dedicated success.</span><span class="ja">グローバルネットワーク、高度な自律性、SLA、オンプレ / エッジ、専任カスタマーサクセス。</span><span class="es">Red global, autonomía avanzada, SLA, on-premise / borde, éxito del cliente dedicado.</span></p></div>
+    </div>
+    <p class="note reveal"><span class="zh">定价为指导性区间，依范围、站点数、集成、部署模式与 SLA 浮动。</span><span class="en">Pricing is directional and depends on scope, number of sites, integrations, deployment model and SLA.</span><span class="ja">価格は目安であり、スコープ、サイト数、統合、デプロイ形態、SLA により変動します。</span><span class="es">Los precios son orientativos y dependen del alcance, número de sitios, integraciones, modelo de despliegue y SLA.</span></p>
+  </div>
+</section>
+
+<!-- ============ 10 WHY ITEM ============ -->
+<section id="why-item" class="alt">
+  <div class="wrap">
+    <div class="eyebrow reveal"><span class="dot" style="background:var(--gold)"></span>10 · <span class="zh">为什么是 ITEM</span><span class="en">Why ITEM</span><span class="ja">ITEM の優位性</span><span class="es">Por qué ITEM</span></div>
+    <h2 class="reveal"><span class="zh">为什么 ITEM AI 能赢下实体运营</span><span class="en">Why ITEM AI Wins for Physical Operations</span><span class="ja">フィジカルオペレーションで ITEM AI が勝つ理由</span><span class="es">Por qué ITEM AI gana en operaciones físicas</span></h2>
+    <p class="lede reveal"><span class="zh">ITEM 把 AI 基础设施与原生运营应用结合在一起——不只是数据、不只是对话、也不只是 DevOps。</span><span class="en">ITEM combines AI infrastructure with native operational applications — not just data, not just chat, not just DevOps.</span><span class="ja">ITEM は AI インフラとネイティブな運営アプリケーションを組み合わせます——データだけでも、チャットだけでも、DevOps だけでもありません。</span><span class="es">ITEM combina infraestructura de IA con aplicaciones operativas nativas — no solo datos, no solo chat, no solo DevOps.</span></p>
+    <div class="grid g2" style="margin-bottom:28px">
+      <div class="card reveal">
+        <div class="colhead"><span class="zh">最佳契合客户</span><span class="en">Best-Fit Customers</span><span class="ja">ベストフィット顧客</span><span class="es">Clientes ideales</span></div>
+        <ul class="tick">
+          <li><span class="zh">拥有多基地生产、仓储与全球分销的制造商</span><span class="en">Manufacturers with multi-site production, warehouses and global distribution</span><span class="ja">マルチサイトの生産・倉庫・グローバル流通を持つ製造業</span><span class="es">Fabricantes con producción multisitio, almacenes y distribución global</span></li>
+          <li><span class="zh">运营 WMS、TMS、堆场与月台网络的 3PL</span><span class="en">3PLs operating WMS, TMS, yard and dock networks</span><span class="ja">WMS・TMS・ヤード・ドックネットワークを運営する 3PL</span><span class="es">3PL que operan redes de WMS, TMS, patios y muelles</span></li>
+          <li><span class="zh">需要需求、库存与履约智能的零售与供应商</span><span class="en">Retail and suppliers needing demand, inventory and fulfillment intelligence</span><span class="ja">需要・在庫・フルフィルメントのインテリジェンスを必要とする小売とサプライヤー</span><span class="es">Retail y proveedores que necesitan inteligencia de demanda, inventario y cumplimiento</span></li>
+          <li><span class="zh">港口、码头、设施与不动产运营方</span><span class="en">Port, terminal, facility and real-estate operators</span><span class="ja">港湾・ターミナル・施設・不動産の運営者</span><span class="es">Operadores de puertos, terminales, instalaciones y bienes raíces</span></li>
+          <li><span class="zh">需要把 AI 架在真实运营之上的企业——而不是再加一个报表工具</span><span class="en">Enterprises that need AI on top of real operations — not another reporting tool</span><span class="ja">「もうひとつのレポートツール」ではなく、実際のオペレーションの上に AI を必要とする企業</span><span class="es">Empresas que necesitan IA sobre operaciones reales — no otra herramienta de reportes</span></li>
+        </ul>
+        <p class="note"><span class="zh">原生 WMS / TMS / OMS / 堆场 / 月台</span><span class="en">Native WMS / TMS / OMS / Yard / Dock</span><span class="ja">ネイティブ WMS / TMS / OMS / ヤード / ドック</span><span class="es">WMS / TMS / OMS / patio / muelle nativos</span></p>
+      </div>
+      <div class="reveal tablewrap">
+        <div class="colhead"><span class="zh">竞争定位</span><span class="en">Competitive Positioning</span><span class="ja">競争ポジショニング</span><span class="es">Posicionamiento competitivo</span></div>
+        <table class="cmp">
+          <tr><th><span class="zh">能力</span><span class="en">Capability</span><span class="ja">能力</span><span class="es">Capacidad</span></th><th style="color:var(--blue)">ITEM AI</th><th>Palantir</th><th>Databricks</th><th>Microsoft</th></tr>
+          <tr><td><span class="zh">本体 / 语义层</span><span class="en">Ontology / semantic layer</span><span class="ja">オントロジー / セマンティック層</span><span class="es">Ontología / capa semántica</span></td><td class="pos"><span class="zh">强</span><span class="en">Strong</span><span class="ja">強い</span><span class="es">Fuerte</span></td><td class="pos"><span class="zh">强</span><span class="en">Strong</span><span class="ja">強い</span><span class="es">Fuerte</span></td><td class="neg"><span class="zh">有限</span><span class="en">Limited</span><span class="ja">限定的</span><span class="es">Limitada</span></td><td class="neg"><span class="zh">有限</span><span class="en">Limited</span><span class="ja">限定的</span><span class="es">Limitada</span></td></tr>
+          <tr><td><span class="zh">供应链应用</span><span class="en">Supply chain apps</span><span class="ja">サプライチェーンアプリ</span><span class="es">Aplicaciones de cadena de suministro</span></td><td class="pos"><span class="zh">原生</span><span class="en">Native</span><span class="ja">ネイティブ</span><span class="es">Nativas</span></td><td class="mid"><span class="zh">定制</span><span class="en">Custom</span><span class="ja">カスタム</span><span class="es">A medida</span></td><td class="neg"><span class="zh">合作伙伴</span><span class="en">Partner</span><span class="ja">パートナー</span><span class="es">Vía socios</span></td><td class="neg"><span class="zh">合作伙伴</span><span class="en">Partner</span><span class="ja">パートナー</span><span class="es">Vía socios</span></td></tr>
+          <tr><td><span class="zh">WMS / TMS / YMS 原生</span><span class="en">WMS / TMS / YMS native</span><span class="ja">WMS / TMS / YMS ネイティブ</span><span class="es">WMS / TMS / YMS nativos</span></td><td class="pos"><span class="zh">强</span><span class="en">Strong</span><span class="ja">強い</span><span class="es">Fuerte</span></td><td class="neg"><span class="zh">有限</span><span class="en">Limited</span><span class="ja">限定的</span><span class="es">Limitado</span></td><td class="neg"><span class="zh">无</span><span class="en">No</span><span class="ja">なし</span><span class="es">No</span></td><td class="neg"><span class="zh">无</span><span class="en">No</span><span class="ja">なし</span><span class="es">No</span></td></tr>
+          <tr><td><span class="zh">数据平台</span><span class="en">Data platform</span><span class="ja">データプラットフォーム</span><span class="es">Plataforma de datos</span></td><td class="pos"><span class="zh">强</span><span class="en">Strong</span><span class="ja">強い</span><span class="es">Fuerte</span></td><td class="pos"><span class="zh">强</span><span class="en">Strong</span><span class="ja">強い</span><span class="es">Fuerte</span></td><td class="pos"><span class="zh">强</span><span class="en">Strong</span><span class="ja">強い</span><span class="es">Fuerte</span></td><td class="pos"><span class="zh">强</span><span class="en">Strong</span><span class="ja">強い</span><span class="es">Fuerte</span></td></tr>
+          <tr><td><span class="zh">多智能体平台</span><span class="en">Multi-agent platform</span><span class="ja">マルチエージェントプラットフォーム</span><span class="es">Plataforma multiagente</span></td><td class="pos"><span class="zh">强</span><span class="en">Strong</span><span class="ja">強い</span><span class="es">Fuerte</span></td><td class="pos"><span class="zh">强</span><span class="en">Strong</span><span class="ja">強い</span><span class="es">Fuerte</span></td><td class="pos"><span class="zh">强</span><span class="en">Strong</span><span class="ja">強い</span><span class="es">Fuerte</span></td><td class="pos"><span class="zh">强</span><span class="en">Strong</span><span class="ja">強い</span><span class="es">Fuerte</span></td></tr>
+          <tr><td><span class="zh">实体运营聚焦</span><span class="en">Physical operations focus</span><span class="ja">フィジカルオペレーション特化</span><span class="es">Enfoque en operaciones físicas</span></td><td class="pos"><span class="zh">核心</span><span class="en">Core</span><span class="ja">コア</span><span class="es">Núcleo</span></td><td class="mid"><span class="zh">广义</span><span class="en">Broad</span><span class="ja">広範</span><span class="es">Amplio</span></td><td class="neg"><span class="zh">数据/AI</span><span class="en">Data/AI</span><span class="ja">データ/AI</span><span class="es">Datos/IA</span></td><td class="neg"><span class="zh">生产力/数据</span><span class="en">Prod./data</span><span class="ja">生産性/データ</span><span class="es">Productividad/datos</span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card reveal" style="background:var(--tint)">
+      <div class="colhead c-blue"><span class="zh">下一步</span><span class="en">Next Step</span><span class="ja">次のステップ</span><span class="es">Siguiente paso</span></div>
+      <h3 style="font-size:20px;margin-bottom:14px"><span class="zh">选择一个具有跨系统影响的高价值试点。</span><span class="en">Select one high-value pilot with cross-system impact.</span><span class="ja">クロスシステムのインパクトを持つ、価値の高いパイロットをひとつ選びましょう。</span><span class="es">Seleccione un piloto de alto valor con impacto entre sistemas.</span></h3>
+      <div class="next">
+        <div><div class="colhead"><span class="zh">用例</span><span class="en">Use Case</span><span class="ja">ユースケース</span><span class="es">Caso de uso</span></div><b style="color:var(--head)"><span class="zh">全球供应链控制塔</span><span class="en">Global Supply Chain Control Tower</span><span class="ja">グローバルサプライチェーン・コントロールタワー</span><span class="es">Torre de control de la cadena de suministro global</span></b></div>
+        <div><div class="colhead"><span class="zh">范围</span><span class="en">Scope</span><span class="ja">スコープ</span><span class="es">Alcance</span></div><b style="color:var(--head)"><span class="zh">2–3 个系统 + 1 个区域 / 事业部</span><span class="en">2–3 systems + 1 region / BU</span><span class="ja">2〜3 システム + 1 地域 / 事業部</span><span class="es">2–3 sistemas + 1 región / unidad de negocio</span></b></div>
+        <div><div class="colhead"><span class="zh">成功指标</span><span class="en">Success Metric</span><span class="ja">成功指標</span><span class="es">Métrica de éxito</span></div><b style="color:var(--head)"><span class="zh">成本、服务水平、异常自动化</span><span class="en">Cost, service level, exception automation</span><span class="ja">コスト・サービスレベル・例外自動化</span><span class="es">Costo, nivel de servicio, automatización de excepciones</span></b></div>
+      </div>
+      <a class="cta" href="#"><span class="zh">预约工作坊 →</span><span class="en">Request Workshop →</span><span class="ja">ワークショップを予約 →</span><span class="es">Solicitar un taller →</span></a>
+    </div>
+    <p class="note reveal"><span class="zh">竞争定位基于 Palantir AIP/Ontology、Databricks Data Intelligence Platform 与 Microsoft Fabric / Copilot Studio 的公开产品描述。</span><span class="en">Competitive positioning based on public product descriptions from Palantir AIP/Ontology, Databricks Data Intelligence Platform and Microsoft Fabric / Copilot Studio.</span><span class="ja">競争ポジショニングは、Palantir AIP/Ontology、Databricks Data Intelligence Platform、Microsoft Fabric / Copilot Studio の公開されている製品説明に基づきます。</span><span class="es">Posicionamiento competitivo basado en las descripciones públicas de producto de Palantir AIP/Ontology, Databricks Data Intelligence Platform y Microsoft Fabric / Copilot Studio.</span></p>
+  </div>
+</section>
+
+<footer><div class="wrap">ITEM AI · <span class="zh">机密讨论稿 · 仅供企业评估使用 · 2026</span><span class="en">Confidential discussion draft · For enterprise evaluation only · 2026</span><span class="ja">機密討議用ドラフト · エンタープライズ評価専用 · 2026</span><span class="es">Borrador de discusión confidencial · Solo para evaluación empresarial · 2026</span></div></footer>
+
+<script>
+function setLang(l){
+  document.documentElement.classList.remove('zh','en','ja','es');
+  document.documentElement.classList.add(l);
+  document.documentElement.lang = l;
+  ['zh','en','ja','es'].forEach(k=>document.getElementById('btn-'+k).classList.toggle('active', l===k));
+  try{localStorage.setItem('item_cust_lang',l)}catch(e){}
+}
+function applyTheme(t){
+  document.documentElement.classList.toggle('dark', t==='dark');
+  document.getElementById('themeBtn').textContent = t==='dark' ? '☀' : '☾';
+  try{localStorage.setItem('item_cust_theme',t)}catch(e){}
+}
+function toggleTheme(){
+  applyTheme(document.documentElement.classList.contains('dark') ? 'day' : 'dark');
+}
+try{
+  const sl=localStorage.getItem('item_cust_lang');
+  if(['zh','en','ja','es'].includes(sl)) setLang(sl);
+  else{
+    const nl=(navigator.language||'').toLowerCase();
+    if(nl.startsWith('zh')) setLang('zh');
+    else if(nl.startsWith('ja')) setLang('ja');
+    else if(nl.startsWith('es')) setLang('es');
+    else setLang('en');
+  }
+  const st=localStorage.getItem('item_cust_theme');
+  applyTheme(st==='dark' ? 'dark' : 'day');
+}catch(e){}
+(function(){
+  const els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion:reduce)').matches){
+    els.forEach(e=>e.classList.add('in'));return;
+  }
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(e=>io.observe(e));
+})();
+</script>
+</body>
+</html>

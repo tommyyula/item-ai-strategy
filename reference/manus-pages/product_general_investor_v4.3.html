@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>ITEM AI — General Enterprise AI Operating System · product_general_v4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A1628; --bg2:#0D1E36; --card:#122543; --card2:#16294A; --line:#1E3A5F;
+  --blue:#2E75B6; --cyan:#38BDF8; --cyan-dim:#1E5C8A;
+  --gold:#F5B942; --gold-dim:#8A6A1E; --green:#34D399;
+  --text:#E8EEF7; --muted:#8FA3BF; --faint:#5A6E8C;
+  --display:'Space Grotesk','Noto Sans SC',sans-serif;
+  --body:'Inter','Noto Sans SC',-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;
+  --mono:'IBM Plex Mono','Noto Sans SC',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--body)}
+::selection{background:var(--cyan);color:#04101F}
+
+/* ---------- i18n toggle ---------- */
+body.en .l-zh{display:none!important}
+body:not(.en) .l-en{display:none!important}
+
+/* ---------- deck chrome ---------- */
+.deck{position:relative;width:100%;height:100%}
+.slide{
+  position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-start;
+  padding:6.5vh 7vw;opacity:0;transform:translateX(60px);pointer-events:none;
+  transition:opacity .55s ease,transform .55s ease;overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+}
+/* 安全垂直居中：内容不溢出时居中，溢出时自动顶对齐、顶部始终可滚动到 */
+.slide::before{content:"";margin-top:auto;flex-shrink:0}
+.slide::after{content:"";margin-bottom:auto;flex-shrink:0}
+.slide.active{opacity:1;transform:translateX(0);pointer-events:auto}
+.slide.prev{transform:translateX(-60px)}
+@media (prefers-reduced-motion:reduce){.slide{transition:none}}
+
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:14px 28px;
+  background:linear-gradient(180deg,rgba(10,22,40,.92),rgba(10,22,40,0));
+  pointer-events:none;
+}
+.topbar>*{pointer-events:auto}
+.brand{font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:.14em;color:var(--text)}
+.brand b{color:var(--cyan)}
+.doc-tag{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.08em}
+.top-right{display:flex;align-items:center;gap:14px}
+.counter{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.counter b{color:var(--cyan)}
+.langbtn{
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;cursor:pointer;
+  color:var(--cyan);background:rgba(56,189,248,.08);
+  border:1px solid var(--cyan-dim);border-radius:99px;padding:5px 14px;
+  transition:all .2s;
+}
+.langbtn:hover{background:rgba(56,189,248,.16);border-color:var(--cyan)}
+.langbtn:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+
+.navbtn{
+  position:fixed;top:50%;transform:translateY(-50%);z-index:60;
+  width:44px;height:44px;border-radius:50%;
+  border:1px solid var(--line);background:rgba(18,37,67,.75);
+  color:var(--muted);font-size:18px;cursor:pointer;backdrop-filter:blur(6px);
+  transition:all .2s;display:flex;align-items:center;justify-content:center;
+}
+.navbtn:hover{border-color:var(--cyan);color:var(--cyan)}
+.navbtn:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+#prevBtn{left:18px}#nextBtn{right:18px}
+.progress{position:fixed;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--cyan));z-index:60;transition:width .4s ease}
+.dots{position:fixed;right:22px;bottom:22px;z-index:55;display:flex;gap:6px;flex-wrap:wrap;max-width:220px;justify-content:flex-end}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--line);cursor:pointer;transition:all .2s;border:none;padding:0}
+.dot.on{background:var(--cyan);transform:scale(1.35)}
+.dot:focus-visible{outline:1px solid var(--cyan);outline-offset:2px}
+
+/* ---------- shared type ---------- */
+.eyebrow{
+  font-family:var(--mono);font-size:12px;letter-spacing:.28em;color:var(--cyan);
+  text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:12px;
+}
+.eyebrow::before{content:"";width:34px;height:1px;background:var(--cyan)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,4.6vw,62px);line-height:1.14;letter-spacing:-.01em}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(25px,3vw,40px);line-height:1.2;margin-bottom:14px}
+.lede{font-size:clamp(14px,1.2vw,16.5px);color:var(--muted);line-height:1.75;max-width:900px}
+.hl{color:var(--cyan);font-weight:600}
+.hl-g{color:var(--gold);font-weight:600}
+.hl-w{color:var(--text);font-weight:600}
+.src{font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-top:auto;padding-top:20px;line-height:1.7}
+
+/* ---------- cards & grids ---------- */
+.grid{display:grid;gap:14px;margin-top:24px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g5{grid-template-columns:repeat(5,1fr)}
+.card{
+  background:linear-gradient(160deg,var(--card),rgba(18,37,67,.55));
+  border:1px solid var(--line);border-radius:12px;padding:20px 22px;
+  transition:border-color .25s, transform .25s;
+}
+.card:hover{border-color:var(--cyan-dim);transform:translateY(-2px)}
+.card h3{font-family:var(--display);font-size:16px;font-weight:700;margin-bottom:8px;color:var(--text)}
+.card p{font-size:13px;color:var(--muted);line-height:1.7}
+.kpi{font-family:var(--display);font-weight:700;font-size:clamp(26px,2.6vw,40px);color:var(--cyan);line-height:1.05}
+.kpi.gold{color:var(--gold)}
+.kpi-sub{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.06em;margin-top:6px;line-height:1.6}
+.kpi-lbl{font-size:13px;color:var(--muted);margin-top:10px;line-height:1.65}
+
+.tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;
+  padding:3px 9px;border-radius:99px;border:1px solid;white-space:nowrap}
+.tag.blue{color:var(--cyan);border-color:var(--cyan-dim);background:rgba(56,189,248,.07)}
+.tag.gold{color:var(--gold);border-color:var(--gold-dim);background:rgba(245,185,66,.07)}
+.tag.grey{color:var(--faint);border-color:var(--line);background:rgba(90,110,140,.08)}
+.tag.green{color:var(--green);border-color:rgba(52,211,153,.35);background:rgba(52,211,153,.07)}
+
+/* ---------- cover ---------- */
+.cover{background:
+  radial-gradient(1100px 620px at 78% 18%,rgba(46,117,182,.22),transparent 60%),
+  radial-gradient(800px 500px at 12% 88%,rgba(56,189,248,.10),transparent 60%),
+  var(--bg)}
+.cover-tag{font-family:var(--mono);font-size:12px;color:var(--cyan);letter-spacing:.3em;margin-bottom:26px}
+.cover h1 .en-sub{display:block;font-size:.5em;color:var(--muted);font-weight:500;letter-spacing:.02em;margin-top:14px}
+.cover-sub{margin-top:28px;font-size:clamp(14px,1.3vw,18px);color:var(--muted);line-height:1.8;max-width:820px}
+.cover-industries{display:flex;flex-wrap:wrap;gap:10px;margin-top:32px}
+.cover-industries .tag{font-size:11.5px;padding:6px 14px}
+.cover-meta{margin-top:44px;font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.12em;line-height:2}
+
+/* ---------- 7-layer stack (signature) ---------- */
+.stack{display:flex;flex-direction:column;gap:6px;margin-top:16px;max-width:1080px}
+.layer{
+  display:grid;grid-template-columns:130px 1fr 300px;gap:18px;align-items:center;
+  border-radius:10px;padding:10px 20px;transition:all .25s;
+}
+.layer .lnum{font-family:var(--mono);font-size:11px;letter-spacing:.1em}
+.layer .lname{font-family:var(--display);font-weight:700;font-size:15px}
+.layer .lname small{display:block;font-family:var(--body);font-weight:400;font-size:11.5px;color:var(--muted);margin-top:3px;letter-spacing:0}
+.layer .lprod{font-family:var(--mono);font-size:10.5px;line-height:1.65;text-align:right}
+.layer.core{background:linear-gradient(90deg,rgba(46,117,182,.28),rgba(56,189,248,.10));border:1px solid var(--cyan-dim)}
+.layer.core:hover{border-color:var(--cyan);box-shadow:0 0 26px rgba(56,189,248,.18);transform:translateX(4px)}
+.layer.core .lnum{color:var(--cyan)}
+.layer.core .lprod{color:#A9D4F5}
+.layer.integ{background:rgba(18,37,67,.28);border:1px dashed var(--faint);opacity:.72}
+.layer.integ .lnum{color:var(--faint)}
+.layer.integ .lname{color:var(--muted)}
+.layer.integ .lprod{color:var(--faint)}
+.layer.integ:hover{opacity:.95}
+.stack-legend{display:flex;gap:26px;margin-top:12px;flex-wrap:wrap}
+.leg{display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--muted)}
+.leg .sw{width:26px;height:13px;border-radius:4px}
+.leg .sw.core{background:linear-gradient(90deg,rgba(46,117,182,.5),rgba(56,189,248,.25));border:1px solid var(--cyan-dim)}
+.leg .sw.integ{background:rgba(18,37,67,.3);border:1px dashed var(--faint)}
+.brace{font-family:var(--mono);font-size:10.5px;color:var(--cyan);letter-spacing:.15em;padding-left:12px;border-left:2px solid var(--cyan);margin:2px 0 2px 6px}
+
+/* ---------- layer detail slides ---------- */
+.ldetail-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+.lbadge{font-family:var(--mono);font-size:13px;color:#04101F;background:linear-gradient(90deg,var(--blue),var(--cyan));
+  padding:5px 14px;border-radius:7px;font-weight:500;letter-spacing:.1em}
+.mini-stack{display:flex;gap:4px;margin-bottom:20px}
+.mini-stack span{height:7px;flex:1;border-radius:3px;background:var(--line)}
+.mini-stack span.on{background:linear-gradient(90deg,var(--blue),var(--cyan))}
+.mini-stack span.integ{background:repeating-linear-gradient(45deg,var(--line),var(--line) 4px,transparent 4px,transparent 8px);border:1px dashed var(--faint);height:5px}
+
+/* ---------- product catalog ---------- */
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
+.pcard{border-radius:10px;padding:13px 15px;border:1px solid var(--line);background:rgba(18,37,67,.5);transition:all .2s}
+.pcard:hover{transform:translateY(-2px)}
+.pcard.blue{border-left:3px solid var(--cyan)}
+.pcard.blue:hover{border-color:var(--cyan-dim);border-left-color:var(--cyan)}
+.pcard.gold{border-left:3px solid var(--gold)}
+.pcard.gold:hover{border-color:var(--gold-dim);border-left-color:var(--gold)}
+.pcard .pname{font-family:var(--display);font-weight:700;font-size:14px}
+.pcard .ptag{font-family:var(--mono);font-size:9.5px;color:var(--faint);letter-spacing:.04em;margin-top:2px}
+.pcard .pdesc{font-size:11.5px;color:var(--muted);margin-top:7px;line-height:1.6}
+.cat-head{display:flex;align-items:center;gap:12px;margin-top:24px;margin-bottom:4px}
+.cat-head .cat-title{font-family:var(--display);font-weight:700;font-size:16px}
+.cat-head .cat-line{flex:1;height:1px;background:var(--line)}
+.cat-head .cat-count{font-family:var(--mono);font-size:11px;color:var(--faint)}
+
+/* ---------- tables ---------- */
+table{width:100%;border-collapse:collapse;margin-top:18px;font-size:12.5px}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--cyan);text-align:left;
+  padding:10px 14px;border-bottom:1px solid var(--cyan-dim);text-transform:uppercase}
+td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--muted);line-height:1.6;vertical-align:top}
+td:first-child{color:var(--text);font-weight:600}
+tr:hover td{background:rgba(56,189,248,.03)}
+
+/* ---------- flow ---------- */
+.flow{display:flex;align-items:stretch;gap:0;margin-top:26px;flex-wrap:wrap}
+.fstep{flex:1;min-width:200px;position:relative;padding:22px 26px 22px 34px;background:var(--card);border:1px solid var(--line)}
+.fstep:first-child{border-radius:12px 0 0 12px}
+.fstep:last-child{border-radius:0 12px 12px 0}
+.fstep+.fstep{border-left:none}
+.fstep::after{content:"";position:absolute;right:-11px;top:50%;transform:translateY(-50%) rotate(45deg);
+  width:20px;height:20px;background:var(--card);border-top:1px solid var(--line);border-right:1px solid var(--line);z-index:2}
+.fstep:last-child::after{display:none}
+.fstep .fphase{font-family:var(--mono);font-size:10px;color:var(--cyan);letter-spacing:.2em;margin-bottom:8px}
+.fstep h3{font-family:var(--display);font-size:17px;margin-bottom:8px}
+.fstep p{font-size:12px;color:var(--muted);line-height:1.7}
+
+/* ---------- callout ---------- */
+.callout{margin-top:24px;border-left:3px solid var(--cyan);background:rgba(56,189,248,.05);
+  border-radius:0 12px 12px 0;padding:18px 24px;max-width:1000px}
+.callout p{font-size:14px;line-height:1.8;color:var(--text)}
+.callout p+p{margin-top:8px}
+.callout .q{color:var(--cyan)}
+.callout.gold{border-left-color:var(--gold);background:rgba(245,185,66,.05)}
+
+
+/* ---------- finance chart ---------- */
+.fin-chart{margin-top:12px;max-width:1080px}
+.fc-bars{display:flex;gap:18px;align-items:flex-start;height:132px;position:relative;padding-top:4px}
+.fc-axis{position:absolute;left:0;right:0;top:46px;height:1px;background:var(--faint);opacity:.6}
+.fc-col{flex:1;display:flex;flex-direction:column;align-items:center;position:relative;height:100%}
+.fc-bar{width:56%;border-radius:5px 5px 0 0;position:absolute}
+.fc-bar.neg{top:47px;border-radius:0 0 5px 5px;background:linear-gradient(180deg,rgba(245,185,66,.75),rgba(245,185,66,.28));border:1px solid var(--gold-dim);border-top:none}
+.fc-bar.pos{bottom:calc(100% - 46px);background:linear-gradient(180deg,rgba(52,211,153,.85),rgba(52,211,153,.3));border:1px solid rgba(52,211,153,.5);border-bottom:none}
+.fc-val{position:absolute;font-family:var(--mono);font-size:11px;white-space:nowrap}
+.fc-val.neg{color:var(--gold)}
+.fc-val.pos{color:var(--green)}
+.fc-year{position:absolute;top:26px;font-family:var(--mono);font-size:10px;color:var(--faint);letter-spacing:.1em}
+.fc-cash{display:flex;gap:18px;margin-top:10px}
+.fc-cash div{flex:1;text-align:center;font-family:var(--mono);font-size:10.5px;color:var(--muted);line-height:1.7}
+.fc-cash b{color:var(--cyan);font-weight:500;display:block}
+.fc-note{font-family:var(--mono);font-size:10px;color:var(--faint);margin-top:6px;letter-spacing:.04em}
+.round{display:flex;gap:14px;margin-top:22px;flex-wrap:wrap}
+.round .card{flex:1;min-width:260px}
+.round .rname{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--cyan);margin-bottom:6px}
+.round .ramt{font-family:var(--display);font-weight:700;font-size:32px;line-height:1}
+.round .rwhen{font-family:var(--mono);font-size:10.5px;color:var(--faint);margin:8px 0 10px}
+.ubar{display:flex;height:10px;border-radius:5px;overflow:hidden;margin:10px 0 8px}
+.ubar span{height:100%}
+.ulegend{font-size:11px;color:var(--muted);line-height:1.9}
+.ulegend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.be-flag{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:8px 16px;border-radius:99px;
+  border:1px solid rgba(52,211,153,.45);background:rgba(52,211,153,.08);color:var(--green);
+  font-family:var(--mono);font-size:12px;letter-spacing:.08em}
+table.fin td{font-family:var(--mono);font-size:12px;text-align:right;color:var(--muted);padding:7px 12px}
+table.fin td:first-child{font-family:var(--body);text-align:left;font-weight:600;color:var(--text)}
+table.fin th{text-align:right}
+table.fin th:first-child{text-align:left}
+table.fin tr.hi td{color:var(--text);background:rgba(56,189,248,.05)}
+table.fin tr.ebit td{color:var(--gold);font-weight:500}
+table.fin tr.ebit td.pos{color:var(--green)}
+
+
+/* ---------- competitive quadrant ---------- */
+.comp-wrap{display:grid;grid-template-columns:440px 1fr;gap:26px;margin-top:20px;align-items:start}
+.quad{position:relative;height:340px;border:1px solid var(--line);border-radius:12px;
+  background:
+    linear-gradient(var(--line),var(--line)) center/1px 100% no-repeat,
+    linear-gradient(var(--line),var(--line)) center/100% 1px no-repeat,
+    radial-gradient(420px 260px at 88% 12%,rgba(56,189,248,.10),transparent 65%),
+    rgba(18,37,67,.35)}
+.quad .ax{position:absolute;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;color:var(--faint);line-height:1.5}
+.quad .ax.x1{bottom:8px;left:12px}.quad .ax.x2{bottom:8px;right:12px;text-align:right}
+.quad .ax.y1{top:8px;left:12px}.quad .ax.y2{top:8px;right:12px;text-align:right}
+.qdot{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center}
+.qdot .qb{width:15px;height:15px;border-radius:50%}
+.qdot .qn{font-family:var(--display);font-weight:700;font-size:12px;line-height:1.3;white-space:nowrap}
+.qdot .qs{font-family:var(--mono);font-size:9px;color:var(--faint);line-height:1.4}
+.qdot.item .qb{background:var(--cyan);box-shadow:0 0 18px rgba(56,189,248,.8)}
+.qdot.item .qn{color:var(--cyan)}
+.qdot.glean .qb{background:var(--gold)}
+.qdot.glean .qn{color:var(--gold)}
+.qdot.aa .qb{background:#C084FC}
+.qdot.aa .qn{color:#C084FC}
+.qdot.ghost .qb{background:transparent;border:1.5px dashed var(--faint);width:13px;height:13px}
+.qdot.ghost .qn{color:var(--faint);font-weight:500;font-size:11px}
+table.comp td{font-size:11.5px;padding:8px 10px;line-height:1.55}
+table.comp th{padding:8px 10px}
+table.comp td:first-child{white-space:nowrap}
+@media(max-width:960px){.comp-wrap{grid-template-columns:1fr}.quad{height:300px}}
+
+/* ---------- responsive ---------- */
+@media(max-width:960px){
+  .slide{padding:max(9vh,76px) 6vw 12vh}
+  .g3,.g4,.g5{grid-template-columns:repeat(2,1fr)}
+  .pgrid{grid-template-columns:repeat(2,1fr)}
+  .layer{grid-template-columns:80px 1fr;gap:10px}
+  .layer .lprod{display:none}
+  .flow{flex-direction:column}
+  .fstep{border-radius:12px!important;border-left:1px solid var(--line)!important;margin-bottom:10px}
+  .fstep::after{display:none}
+  .navbtn{width:38px;height:38px}
+  .dots{display:none}
+  .doc-tag{display:none}
+  .fc-bars{gap:8px}
+  table.fin{font-size:10.5px}
+}
+@media(max-width:600px){
+  .g2,.g3,.g4,.g5,.pgrid{grid-template-columns:1fr}
+  h1{font-size:30px}
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="brand">ITEM <b>AI</b></div>
+  <div class="doc-tag">product_general_v4</div>
+  <div class="top-right">
+    <button class="langbtn" id="langBtn" aria-label="Switch language / 切换语言"><span class="l-zh">EN</span><span class="l-en">中文</span></button>
+    <div class="counter"><b id="cur">1</b> / <span id="tot">16</span></div>
+  </div>
+</div>
+<button class="navbtn" id="prevBtn" aria-label="Previous / 上一页">‹</button>
+<button class="navbtn" id="nextBtn" aria-label="Next / 下一页">›</button>
+<div class="progress" id="progress"></div>
+<div class="dots" id="dots"></div>
+
+<div class="deck" id="deck">
+
+<!-- ============ SLIDE 1 · COVER ============ -->
+<section class="slide cover active">
+  <div class="cover-tag">GENERAL ENTERPRISE EDITION · V4</div>
+  <h1>
+    <span class="l-zh">ITEM AI<br>通用企业 AI 操作系统<span class="en-sub">The Enterprise AI Operating System — for Every Industry</span></span>
+    <span class="l-en">ITEM AI<br>The General Enterprise<br>AI Operating System<span class="en-sub">One Platform · Every Industry · 通用企业 AI 操作系统</span></span>
+  </h1>
+  <p class="cover-sub">
+    <span class="l-zh">一套<span class="hl">已在供应链行业验证并生产运行</span>的 AI 操作系统架构，现以<span class="hl-w">「平台 + 行业模板」</span>的方式向所有行业开放。同一个本体、同一个 AI 运行时、同一个运营平台——只需更换行业模板，即可落地到任何一个垂直领域。</span>
+    <span class="l-en">An AI operating system architecture <span class="hl">already validated and running in production in supply chain</span> — now open to every industry as <span class="hl-w">"one platform + pluggable industry templates."</span> Same ontology, same AI runtime, same operations platform: swap the industry template and deploy into any vertical.</span>
+  </p>
+  <div class="cover-industries">
+    <span class="tag green"><span class="l-zh">✓ 供应链与物流 · 已验证运行</span><span class="l-en">✓ Supply Chain &amp; Logistics · Proven in Production</span></span>
+    <span class="tag gold"><span class="l-zh">财务咨询</span><span class="l-en">Financial Advisory</span></span>
+    <span class="tag gold"><span class="l-zh">餐馆运营</span><span class="l-en">Restaurant Operations</span></span>
+    <span class="tag gold"><span class="l-zh">房产管理</span><span class="l-en">Property Management</span></span>
+    <span class="tag gold"><span class="l-zh">地产开发</span><span class="l-en">Real Estate Development</span></span>
+    <span class="tag gold"><span class="l-zh">医疗健康</span><span class="l-en">Healthcare</span></span>
+    <span class="tag gold"><span class="l-zh">制造与汽车</span><span class="l-en">Manufacturing &amp; Auto</span></span>
+    <span class="tag gold"><span class="l-zh">零售电商</span><span class="l-en">Retail &amp; Commerce</span></span>
+    <span class="tag grey"><span class="l-zh">+ 更多行业模板</span><span class="l-en">+ More Templates</span></span>
+  </div>
+  <div class="cover-meta">FROM DIGITAL TO PHYSICAL AI · ONE PLATFORM · EVERY INDUSTRY<br>
+    <span class="l-zh">← → 方向键或两侧按钮翻页 · 右上角切换 EN</span>
+    <span class="l-en">← → Arrow keys or side buttons to navigate · Toggle 中文 at top right</span>
+  </div>
+</section>
+
+<!-- ============ SLIDE 2 · TRANSFORMATION ============ -->
+<section class="slide">
+  <div class="eyebrow">01 · The Repositioning</div>
+  <h2><span class="l-zh">从「供应链 AI」到「通用 AI 操作系统」</span><span class="l-en">From "Supply-Chain AI" to a General AI Operating System</span></h2>
+  <p class="lede">
+    <span class="l-zh">ITEM AI 不是一个供应链软件公司。供应链只是我们的<span class="hl-w">第一个行业模板</span>——一个从数据接入、本体建模、智能体编排到物理设备控制的<span class="hl">完整闭环，已经在真实企业客户的生产环境中运行</span>。这套架构中 <span class="hl-w">80% 以上的能力是行业无关的</span>：换掉业务对象和行业规则，同一个平台即可运营一家财务咨询公司、一个连锁餐饮集团、或一家地产开发商。</span>
+    <span class="l-en">ITEM AI is not a supply-chain software company. Supply chain is simply our <span class="hl-w">first industry template</span> — a complete loop from data ingestion, ontology modeling, and agent orchestration to physical device control, <span class="hl">already running in real enterprise production</span>. Over <span class="hl-w">80% of the architecture is industry-agnostic</span>: swap the business objects and industry rules, and the same platform runs a financial advisory firm, a restaurant chain, or a real estate developer.</span>
+  </p>
+  <div class="grid g3">
+    <div class="card">
+      <h3><span class="l-zh">已被证明，而非承诺</span><span class="l-en">Proven, Not Promised</span></h3>
+      <p><span class="l-zh">Gartner 预测超过 <span class="hl-w">40% 的智能体 AI 项目将在 2027 年前被取消</span>；目前只有 23% 的企业真正把智能体系统规模化投产。市场缺的不是 AI 概念，而是<span class="hl">被验证能运行的完整模板</span>。ITEM 的供应链部署正是那个证明。</span>
+      <span class="l-en">Gartner forecasts <span class="hl-w">over 40% of agentic AI projects will be canceled by 2027</span>; only 23% of organizations have actually scaled agentic systems into production. The market isn't short on AI concepts — it's short on <span class="hl">complete templates proven to run</span>. ITEM's supply-chain deployment is that proof.</span></p>
+    </div>
+    <div class="card">
+      <h3><span class="l-zh">行业 = 模板，不是重写</span><span class="l-en">An Industry = a Template, Not a Rewrite</span></h3>
+      <p><span class="l-zh">平台的本体层、AI 运行时、运营平台与通用应用完全复用。进入一个新行业 = 加载一套新的<span class="hl-g">业务对象 + 工作流 + 合规规则 + 行业智能体</span>，交付周期从「数年开发」压缩到「数周配置」。</span>
+      <span class="l-en">The ontology layer, AI runtime, operations platform, and general apps are fully reused. Entering a new industry = loading a new set of <span class="hl-g">business objects + workflows + compliance rules + industry agents</span> — compressing delivery from years of development to weeks of configuration.</span></p>
+    </div>
+    <div class="card">
+      <h3><span class="l-zh">垂直 AI 是增长最快的方向</span><span class="l-en">Vertical AI Is the Fastest-Growing Segment</span></h3>
+      <p><span class="l-zh">在整个 AI 智能体市场中，<span class="hl-w">垂直行业智能体是增长最快的细分（约 62.7% CAGR）</span>。拥有「一个平台 × N 个行业模板」结构的厂商，能以横向平台的成本获得垂直 AI 的溢价。</span>
+      <span class="l-en">Across the AI-agent market, <span class="hl-w">vertical industry agents are the fastest-growing segment (~62.7% CAGR)</span>. A vendor structured as "one platform × N industry templates" earns vertical-AI premiums at horizontal-platform cost.</span></p>
+    </div>
+  </div>
+  <div class="callout">
+    <p><span class="q"><span class="l-zh">定位一句话：</span><span class="l-en">Positioning in one line: </span></span>
+    <span class="l-zh">ITEM AI = 一个通用的企业 AI 操作系统，加上一组可插拔的行业模板。供应链是第一个、也是已经验证的那一个。</span>
+    <span class="l-en">ITEM AI = a general enterprise AI operating system, plus a library of pluggable industry templates. Supply chain is the first — and the one already proven.</span></p>
+  </div>
+  <p class="src"><span class="l-zh">来源：Gartner（智能体项目取消率预测 / 企业投产率）；MarketsandMarkets《AI Agents Market 2025–2030》（垂直智能体 CAGR）。</span><span class="l-en">Sources: Gartner (agentic project cancellation forecast / production adoption rate); MarketsandMarkets, AI Agents Market 2025–2030 (vertical-agent CAGR).</span></p>
+</section>
+
+<!-- ============ SLIDE 3 · PROBLEM ============ -->
+<section class="slide">
+  <div class="eyebrow">02 · The Universal Problem</div>
+  <h2><span class="l-zh">每个行业，都在交同样的三种「隐藏税」</span><span class="l-en">Every Industry Pays the Same Three Hidden Taxes</span></h2>
+  <p class="lede">
+    <span class="l-zh">不论是物流企业、财务咨询公司、餐饮集团还是地产商，运营的低效都来自同一个根源：<span class="hl-w">碎片化的系统 + 割裂的数据 + 人工驱动的工作流</span>。行业不同，税单相同。</span>
+    <span class="l-en">Whether it's a logistics operator, an advisory firm, a restaurant group, or a developer, operational inefficiency comes from the same root: <span class="hl-w">fragmented systems + siloed data + manually driven workflows</span>. Different industries, identical tax bill.</span>
+  </p>
+  <div class="grid g3">
+    <div class="card">
+      <h3><span class="l-zh">① 合规税 Compliance Tax</span><span class="l-en">① The Compliance Tax</span></h3>
+      <p><span class="l-zh">罚款、审计、索赔、监管申报、SLA 违约、许可维护。<br><br>供应链的 OTIF 罚款、财务行业的监管报送、餐饮的食安检查、地产的合规审批——形式不同，成本机制完全一样。</span>
+      <span class="l-en">Fines, audits, claims, regulatory filings, SLA breaches, license upkeep.<br><br>OTIF penalties in supply chain, regulatory reporting in finance, food-safety inspections in restaurants, permitting in real estate — different forms, identical cost mechanics.</span></p>
+    </div>
+    <div class="card">
+      <h3><span class="l-zh">② 数据税 Data Tax</span><span class="l-en">② The Data Tax</span></h3>
+      <p><span class="l-zh">预测不准、系统割裂、可视化缺失、决策延迟。<br><br>每个部门一套系统、每套系统一个数据孤岛。企业为「把数据拼起来」支付的隐性成本，往往超过软件本身的许可费。</span>
+      <span class="l-en">Bad forecasts, disconnected systems, no visibility, delayed decisions.<br><br>One system per department, one silo per system. The hidden cost of "stitching the data together" often exceeds the software licenses themselves.</span></p>
+    </div>
+    <div class="card">
+      <h3><span class="l-zh">③ 运营税 Operations Tax</span><span class="l-en">③ The Operations Tax</span></h3>
+      <p><span class="l-zh">手工流程、重复劳动、昂贵的协调与编排。<br><br>知识工作者的多步骤任务中，<span class="hl">高达 86% 的人工耗时可以被智能体消除</span>（Google Cloud 早期采用者数据）；88% 的早期采用者已实现正回报。</span>
+      <span class="l-en">Manual processes, repeated work, expensive coordination.<br><br>In multi-step knowledge work, <span class="hl">up to 86% of human task time can be eliminated by agents</span> (Google Cloud early-adopter data); 88% of early adopters report positive ROI.</span></p>
+    </div>
+  </div>
+  <div class="grid g3">
+    <div class="card"><div class="kpi">-50%</div><div class="kpi-lbl"><span class="l-zh">AI 智能体带来的客户服务成本下降（企业级智能体部署实测）</span><span class="l-en">Customer-service cost reduction from AI agents (measured in enterprise deployments)</span></div></div>
+    <div class="card"><div class="kpi">-90%</div><div class="kpi-lbl"><span class="l-zh">采购/后台运营支出的最大压缩幅度（企业智能体 AI 部署案例）</span><span class="l-en">Peak reduction in procurement / back-office operating spend (enterprise agentic AI cases)</span></div></div>
+    <div class="card"><div class="kpi">5.4×</div><div class="kpi-lbl"><span class="l-zh">具备治理、数据与集成基础能力的企业，自主工作流成功率的倍数（IBM）——这正是「平台 + 模板」要替客户补齐的能力</span><span class="l-en">Higher success rate for autonomous workflows at organizations with governance, data, and integration foundations (IBM) — exactly the capabilities "platform + template" delivers out of the box</span></div></div>
+  </div>
+  <p class="src"><span class="l-zh">来源：Google Cloud 智能体 ROI 数据；MarketsandMarkets《Enterprise Agentic AI Market》；IBM 自主工作流就绪度研究。</span><span class="l-en">Sources: Google Cloud agent ROI data; MarketsandMarkets, Enterprise Agentic AI Market; IBM autonomous-workflow readiness research.</span></p>
+</section>
+
+<!-- ============ SLIDE 4 · WHY NOW ============ -->
+<section class="slide">
+  <div class="eyebrow">03 · Why Now</div>
+  <h2><span class="l-zh">市场正在从「软件」切换到「智能体」——窗口就是现在</span><span class="l-en">The Market Is Switching from Software to Agents — the Window Is Now</span></h2>
+  <div class="grid g4">
+    <div class="card"><div class="kpi">$601.9B</div><div class="kpi-sub">→ $3.64T (2033) · 29.3% CAGR</div><div class="kpi-lbl"><span class="l-zh">全球 AI 市场规模（2026），七年内接近 6 倍</span><span class="l-en">Global AI market (2026) — nearly 6× in seven years</span></div></div>
+    <div class="card"><div class="kpi">$9.1B</div><div class="kpi-sub">→ $139.2B (2034) · 40.5% CAGR</div><div class="kpi-lbl"><span class="l-zh">全球智能体 AI（Agentic AI）市场（2026）</span><span class="l-en">Global agentic AI market (2026)</span></div></div>
+    <div class="card"><div class="kpi">30%</div><div class="kpi-sub">≈ $450B · GARTNER 2035</div><div class="kpi-lbl"><span class="l-zh">2035 年智能体 AI 占企业软件收入的比例——2025 年仅为 2%</span><span class="l-en">Share of enterprise software revenue from agentic AI by 2035 — up from just 2% in 2025</span></div></div>
+    <div class="card"><div class="kpi">40%</div><div class="kpi-sub"><span class="l-zh">2026 年底 · vs 2025 年 &lt;5%</span><span class="l-en">END-2026 · vs &lt;5% IN 2025</span></div><div class="kpi-lbl"><span class="l-zh">将嵌入任务型 AI 智能体的企业应用比例，一年内约 8 倍增长</span><span class="l-en">Enterprise apps embedding task-specific agents — ~8× growth in a single year</span></div></div>
+  </div>
+  <div class="grid g4">
+    <div class="card"><div class="kpi">$1.3T</div><div class="kpi-sub">IDC · 2029</div><div class="kpi-lbl"><span class="l-zh">全球 AI 支出，将超过全部 IT 支出的 26%</span><span class="l-en">Global AI spend — exceeding 26% of all IT spending</span></div></div>
+    <div class="card"><div class="kpi"><span class="l-zh">10 亿+</span><span class="l-en">1B+</span></div><div class="kpi-sub">IDC · 2029</div><div class="kpi-lbl"><span class="l-zh">全球在用 AI 智能体数量，约为 2025 年的 40 倍</span><span class="l-en">AI agents in use worldwide — ~40× the 2025 count</span></div></div>
+    <div class="card"><div class="kpi">61%</div><div class="kpi-sub"><span class="l-zh">CEO 调研</span><span class="l-en">CEO SURVEY</span></div><div class="kpi-lbl"><span class="l-zh">已在核心运营中集成智能体的 CEO 比例——超越了当年 RPA 的采用速度</span><span class="l-en">CEOs already integrating agents into core operations — faster uptake than the RPA wave</span></div></div>
+    <div class="card"><div class="kpi gold">23%</div><div class="kpi-sub"><span class="l-zh">规模化投产率</span><span class="l-en">SCALED-TO-PRODUCTION RATE</span></div><div class="kpi-lbl"><span class="l-zh">真正把智能体系统规模化投产的企业比例——<span class="hl-g">巨大的「落地缺口」正是已验证模板的机会</span></span><span class="l-en">Organizations that have actually scaled agentic systems — <span class="hl-g">a massive deployment gap, and the opening for proven templates</span></span></div></div>
+  </div>
+  <div class="callout">
+    <p><span class="q"><span class="l-zh">结论：</span><span class="l-en">The takeaway: </span></span>
+    <span class="l-zh">需求爆炸（40% CAGR）与落地失败（23% 投产率、40% 项目将被取消）同时存在。市场付费意愿从「买 AI 能力」转向「买<span class="hl-w">被验证能跑通的行业化 AI 运营模板</span>」——这正是 ITEM 的产品形态。</span>
+    <span class="l-en">Exploding demand (40% CAGR) coexists with failed deployment (23% production rate, 40% of projects headed for cancellation). Buying behavior is shifting from "AI capability" to "<span class="hl-w">a proven, industry-shaped AI operations template</span>" — which is exactly ITEM's product form.</span></p>
+  </div>
+  <p class="src"><span class="l-zh">来源：MarketsandMarkets《Artificial Intelligence Market 2026–2033》；Fortune Business Insights《Agentic AI Market》；Gartner；IDC；Mordor Intelligence。</span><span class="l-en">Sources: MarketsandMarkets, Artificial Intelligence Market 2026–2033; Fortune Business Insights, Agentic AI Market; Gartner; IDC; Mordor Intelligence.</span></p>
+</section>
+
+<!-- ============ SLIDE 5 · 7-LAYER STACK (SIGNATURE) ============ -->
+<section class="slide">
+  <div class="eyebrow">04 · Platform Architecture</div>
+  <h2><span class="l-zh">七层平台架构：五层核心产品 + 两层开放集成</span><span class="l-en">The 7-Layer Architecture: 5 Core Product Layers + 2 Open Integration Layers</span></h2>
+  <p class="lede">
+    <span class="l-zh">第 1 层与第 7 层<span class="hl-w">不是 ITEM 的产品</span>——它们是客户已有的基础设施与终端系统，ITEM 通过开放协议与其集成。<span class="hl">ITEM 的产品与价值集中在第 2 至第 6 层</span>：从语义智能到行业模板的完整 AI 运营内核。</span>
+    <span class="l-en">Layers 1 and 7 are <span class="hl-w">not ITEM products</span> — they are the customer's existing infrastructure and endpoint systems, integrated through open protocols. <span class="hl">ITEM's products and value concentrate in Layers 2–6</span>: the complete AI operations core, from semantic intelligence to industry templates.</span>
+  </p>
+  <div class="stack">
+    <div class="layer integ">
+      <div class="lnum"><span class="l-zh">LAYER 7 · 集成</span><span class="l-en">LAYER 7 · INTEG.</span></div>
+      <div class="lname"><span class="l-zh">终端与物理执行层</span><span class="l-en">Endpoint &amp; Physical Execution</span> <small><span class="l-zh">客户已有的终端应用、设备、机器人、POS、门店/现场系统——非 ITEM 产品，开放对接</span><span class="l-en">Customer's existing apps, devices, robots, POS, store/field systems — not ITEM products; open integration</span></small></div>
+      <div class="lprod"><span class="l-zh">任意品牌机器人 / IoT / POS / 移动端</span><span class="l-en">Any-brand robots / IoT / POS / mobile</span><br>via MCP · A2A · API · PLC</div>
+    </div>
+    <div class="brace"><span class="l-zh">▼ ITEM 核心产品区 · LAYERS 2–6</span><span class="l-en">▼ ITEM CORE PRODUCT ZONE · LAYERS 2–6</span></div>
+    <div class="layer core">
+      <div class="lnum">LAYER 6</div>
+      <div class="lname"><span class="l-zh">行业模板层</span><span class="l-en">Industry Template Layer</span> <small><span class="l-zh">可插拔的垂直行业解决方案 · 供应链已验证，其余行业按模板复制</span><span class="l-en">Pluggable vertical solutions · supply chain proven; other industries replicate the template mechanism</span></small></div>
+      <div class="lprod">ItemChain✓ · ItemFin · ItemDine<br>ItemEstate · ItemBuild · +5</div>
+    </div>
+    <div class="layer core">
+      <div class="lnum">LAYER 5</div>
+      <div class="lname"><span class="l-zh">通用 AI 应用层</span><span class="l-en">General AI Application Layer</span> <small><span class="l-zh">跨行业复用的 12 个命名应用产品 · 决策、执行、预测、支持、增长</span><span class="l-en">12 named apps reused across industries · decide, execute, predict, support, grow</span></small></div>
+      <div class="lprod">ItemGPT · ItemClaw · ItemFlow<br>ItemSense · ItemPredict · +7</div>
+    </div>
+    <div class="layer core">
+      <div class="lnum">LAYER 4</div>
+      <div class="lname"><span class="l-zh">企业运营平台层</span><span class="l-en">Enterprise Operations Platform</span> <small><span class="l-zh">Foundry + AI OS · 应用构建、工作流编排、人机协同工作区</span><span class="l-en">Foundry + AI OS · app building, workflow orchestration, human+AI workspace</span></small></div>
+      <div class="lprod">Item Foundry · Item AI OS</div>
+    </div>
+    <div class="layer core">
+      <div class="lnum">LAYER 3</div>
+      <div class="lname"><span class="l-zh">AI 运行时层</span><span class="l-en">AI Runtime Layer</span> <small><span class="l-zh">AIP · 多模型编排、智能体运行时、治理与合规审计、自主部署</span><span class="l-en">AIP · multi-model orchestration, agent runtime, governance &amp; audit, autonomous deployment</span></small></div>
+      <div class="lprod">Item AIP · Blackbox Router · Harness</div>
+    </div>
+    <div class="layer core">
+      <div class="lnum">LAYER 2</div>
+      <div class="lname"><span class="l-zh">数据与语义智能层</span><span class="l-en">Data &amp; Semantic Intelligence</span> <small><span class="l-zh">本体 + 知识图谱 + 数字孪生 · 平台的「单一事实来源」与核心护城河</span><span class="l-en">Ontology + knowledge graph + digital twin · the single source of truth and core moat</span></small></div>
+      <div class="lprod">Item Ontology · GraphRAG · Digital Twin</div>
+    </div>
+    <div class="layer integ">
+      <div class="lnum"><span class="l-zh">LAYER 1 · 集成</span><span class="l-en">LAYER 1 · INTEG.</span></div>
+      <div class="lname"><span class="l-zh">基础设施层</span><span class="l-en">Infrastructure Layer</span> <small><span class="l-zh">客户已有的云 / 本地 / 边缘算力与存储——非 ITEM 产品，全环境适配部署</span><span class="l-en">Customer's existing cloud / on-prem / edge compute &amp; storage — not ITEM products; deploys to any environment</span></small></div>
+      <div class="lprod"><span class="l-zh">AWS · Azure · GCP · 私有云 · 本地 · 边缘</span><span class="l-en">AWS · Azure · GCP · private cloud · on-prem · edge</span></div>
+    </div>
+  </div>
+  <div class="stack-legend">
+    <div class="leg"><span class="sw core"></span><span class="l-zh">ITEM 核心产品（Layer 2–6）——本页之后逐层展开</span><span class="l-en">ITEM core products (Layers 2–6) — expanded layer by layer on the following slides</span></div>
+    <div class="leg"><span class="sw integ"></span><span class="l-zh">开放集成层（Layer 1 &amp; 7）——与客户已有系统对接，不重复建设</span><span class="l-en">Open integration layers (Layers 1 &amp; 7) — connect to what the customer already has; never rebuilt</span></div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 6 · LAYER 2 ============ -->
+<section class="slide">
+  <div class="mini-stack"><span class="integ"></span><span class="on"></span><span></span><span></span><span></span><span></span><span class="integ"></span></div>
+  <div class="ldetail-head"><span class="lbadge">LAYER 2</span><h2><span class="l-zh">数据与语义智能层 —— 平台的护城河</span><span class="l-en">Data &amp; Semantic Intelligence — the Platform's Moat</span></h2></div>
+  <p class="lede">
+    <span class="l-zh">这一层回答一个问题：<span class="hl-w">AI 如何理解你的业务？</span>不论行业，企业的运营都由「对象 + 关系 + 规则 + 状态」构成。ITEM 把它们建模为一个受治理的、实时的语义层——<span class="hl">所有上层应用共享同一份业务真相</span>，这是任何点状 AI 工具无法复制的结构性优势。</span>
+    <span class="l-en">This layer answers one question: <span class="hl-w">how does AI understand your business?</span> In any industry, operations consist of objects + relationships + rules + state. ITEM models them as a governed, real-time semantic layer — <span class="hl">every upper-layer application shares one business truth</span>, a structural advantage no point AI tool can replicate.</span>
+  </p>
+  <div class="grid g3">
+    <div class="card">
+      <h3>Item Ontology</h3>
+      <p><span class="l-zh">受治理的知识图谱：业务对象、实体关系、规则引擎、状态管理。<br><br><span class="hl-w">行业无关的引擎，行业相关的对象。</span>供应链里的对象是订单/货件/仓库；财务咨询里是客户/组合/合规规则；餐饮里是门店/菜单/班次；地产里是楼盘/租约/工单。引擎不变，模板切换。</span>
+      <span class="l-en">A governed knowledge graph: business objects, entity relationships, rules engine, state management.<br><br><span class="hl-w">Industry-agnostic engine, industry-specific objects.</span> In supply chain the objects are orders/shipments/warehouses; in advisory, clients/portfolios/compliance rules; in restaurants, stores/menus/shifts; in real estate, properties/leases/work orders. The engine never changes — the template does.</span></p>
+    </div>
+    <div class="card">
+      <h3>Item GraphRAG</h3>
+      <p><span class="l-zh">基于知识图谱的上下文检索层。让每一次 AI 推理都锚定在企业的真实数据与业务关系上，而不是通用语料——从根本上压制幻觉，让智能体的每个动作可解释、可审计。</span>
+      <span class="l-en">Graph-based contextual retrieval. Every AI inference is anchored to the enterprise's real data and business relationships rather than generic corpora — suppressing hallucination at the root and making every agent action explainable and auditable.</span></p>
+    </div>
+    <div class="card">
+      <h3>Item Digital Twin</h3>
+      <p><span class="l-zh">业务的实时镜像：每个对象的当前状态、历史轨迹与预测走向。供应链里孪生一张物流网络，餐饮里孪生门店运营，地产里孪生楼宇资产组合——<span class="hl">同一套孪生基础设施</span>。</span>
+      <span class="l-en">A live mirror of the business: each object's current state, history, and predicted trajectory. Twin a logistics network in supply chain, store operations in restaurants, a building portfolio in real estate — <span class="hl">one twin infrastructure</span>.</span></p>
+    </div>
+  </div>
+  <div class="callout">
+    <p><span class="q"><span class="l-zh">为什么这层是护城河：</span><span class="l-en">Why this layer is the moat: </span></span>
+    <span class="l-zh">每一个运营决策都会沉淀回本体。运行越久，业务图谱越深，切换成本越高。竞争对手可以复制功能，无法复制客户在本体中积累的运营知识。</span>
+    <span class="l-en">Every operational decision settles back into the ontology. The longer it runs, the deeper the business graph, the higher the switching cost. Competitors can copy features — they cannot copy the operational knowledge a customer has accumulated in the ontology.</span></p>
+  </div>
+</section>
+
+<!-- ============ SLIDE 7 · LAYER 3 ============ -->
+<section class="slide">
+  <div class="mini-stack"><span class="integ"></span><span></span><span class="on"></span><span></span><span></span><span></span><span class="integ"></span></div>
+  <div class="ldetail-head"><span class="lbadge">LAYER 3</span><h2><span class="l-zh">AI 运行时层 —— 安全、治理、多模型</span><span class="l-en">AI Runtime — Secure, Governed, Multi-Model</span></h2></div>
+  <p class="lede">
+    <span class="l-zh">这一层回答：<span class="hl-w">AI 如何安全地在企业里执行？</span>大模型每季度都在更迭，企业不应绑定任何单一模型。ITEM 的运行时把「模型选择」变成一个可路由、可治理、可审计的基础设施决策。</span>
+    <span class="l-en">This layer answers: <span class="hl-w">how does AI execute safely inside the enterprise?</span> Foundation models turn over every quarter — no enterprise should be locked to one. ITEM's runtime turns model choice into a routable, governed, auditable infrastructure decision.</span>
+  </p>
+  <div class="grid g3">
+    <div class="card">
+      <h3>Item AIP</h3>
+      <p><span class="l-zh">企业级 AI 运行时：多模型编排、智能体运行时、自主工作流、人在回路治理、提示与版本管理、权限与合规审计、工具调用框架、记忆与推理系统。<br><br>面向监管行业（金融、医疗）尤其关键：<span class="hl">每一个智能体动作都有完整审计链</span>。</span>
+      <span class="l-en">The enterprise AI runtime: multi-model orchestration, agent runtime, autonomous workflows, human-in-the-loop governance, prompt/version management, permissions &amp; compliance auditing, tool-calling framework, memory &amp; reasoning.<br><br>Critical for regulated industries (finance, healthcare): <span class="hl">every agent action carries a full audit trail</span>.</span></p>
+    </div>
+    <div class="card">
+      <h3>Item Blackbox Router</h3>
+      <p><span class="l-zh">LLM 路由与优化：按任务类型、成本、延迟与合规要求，在 OpenAI、Claude、Gemini、开源模型与客户私有模型之间自动仲裁。<br><br>客户获得<span class="hl-w">模型层的永久中立</span>——新模型发布即接入，无迁移成本。</span>
+      <span class="l-en">LLM routing and arbitration: automatically selects among OpenAI, Claude, Gemini, open-source, and the customer's private models by task type, cost, latency, and compliance.<br><br>Customers get <span class="hl-w">permanent neutrality at the model layer</span> — new models plug in on release, zero migration cost.</span></p>
+    </div>
+    <div class="card">
+      <h3>Item Harness</h3>
+      <p><span class="l-zh">在云、本地、气隙、边缘任何环境中自主部署、监控、更新与回滚，内置合规监控与金丝雀发布。<br><br>这是把同一套平台交付给「云原生初创」和「监管银行」都能通过安全审查的原因。</span>
+      <span class="l-en">Autonomous deploy, monitor, update, and rollback across cloud, on-prem, air-gapped, and edge — with built-in compliance monitoring and canary releases.<br><br>This is why the same platform passes security review at a cloud-native startup and a regulated bank alike.</span></p>
+    </div>
+  </div>
+  <div class="grid g3">
+    <div class="card"><div class="kpi">12+</div><div class="kpi-lbl"><span class="l-zh">可路由的基础模型（OpenAI · Claude · Gemini · Grok · DeepSeek · Qwen + 私有模型）</span><span class="l-en">Routable foundation models (OpenAI · Claude · Gemini · Grok · DeepSeek · Qwen + private models)</span></div></div>
+    <div class="card"><div class="kpi"><span class="l-zh">4 类</span><span class="l-en">4</span></div><div class="kpi-lbl"><span class="l-zh">部署环境全覆盖：公有云 · 私有云 · 本地 · 边缘/气隙</span><span class="l-en">Deployment environments covered: public cloud · private cloud · on-prem · edge/air-gapped</span></div></div>
+    <div class="card"><div class="kpi">100%</div><div class="kpi-lbl"><span class="l-zh">智能体动作审计覆盖率——治理不是附加项，而是运行时默认行为</span><span class="l-en">Agent-action audit coverage — governance is runtime default, not an add-on</span></div></div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 8 · LAYER 4 ============ -->
+<section class="slide">
+  <div class="mini-stack"><span class="integ"></span><span></span><span></span><span class="on"></span><span></span><span></span><span class="integ"></span></div>
+  <div class="ldetail-head"><span class="lbadge">LAYER 4</span><h2><span class="l-zh">企业运营平台层 —— 人 + AI 共同工作的地方</span><span class="l-en">Enterprise Operations Platform — Where Humans + AI Work Together</span></h2></div>
+  <p class="lede">
+    <span class="l-zh">这一层回答：<span class="hl-w">业务团队如何真正用起来？</span>模型和本体都是后台；企业需要一个前台——构建应用、编排流程、让人类与智能体在同一个工作区协作。</span>
+    <span class="l-en">This layer answers: <span class="hl-w">how do business teams actually use it?</span> Models and ontology are the back office; the enterprise needs a front office — to build applications, orchestrate processes, and let humans and agents collaborate in one workspace.</span>
+  </p>
+  <div class="grid g2">
+    <div class="card">
+      <h3>Item Foundry</h3>
+      <p><span class="l-zh">本体驱动的应用与流程工厂：数据集成、低代码/无代码应用构建器、工作流编排、实时事件处理、人机协作。<br><br><span class="hl">行业模板正是在 Foundry 上构建的</span>——供应链模板、财务咨询模板、餐饮模板，本质上都是 Foundry 应用 + 本体对象 + 智能体配置的打包。这意味着客户和合作伙伴也能用同样的工具构建自己的扩展。</span>
+      <span class="l-en">The ontology-powered app &amp; process factory: data integration, low-code/no-code app builder, workflow orchestration, real-time event processing, human+AI collaboration.<br><br><span class="hl">Industry templates are built on Foundry</span> — the supply-chain, advisory, and restaurant templates are essentially packaged Foundry apps + ontology objects + agent configurations. Which means customers and partners can build their own extensions with the same tools.</span></p>
+    </div>
+    <div class="card">
+      <h3>Item AI OS</h3>
+      <p><span class="l-zh">统一运营工作区：跨职能工作流、决策智能、企业搜索、实时分析、嵌入式 Copilot、运营仪表盘、通知与工作管理。<br><br>对一线员工，它是每天打开的那个界面；对管理层，它是全业务的实时驾驶舱；对智能体，它是与人类交接任务的场所。<span class="hl-w">人在回路不是弹窗，而是操作系统级设计。</span></span>
+      <span class="l-en">The unified operations workspace: cross-functional workflows, decision intelligence, enterprise search, real-time analytics, embedded copilots, dashboards, notifications, work management.<br><br>For frontline staff, it's the screen they open every day; for leadership, a real-time cockpit; for agents, the place where tasks are handed to humans. <span class="hl-w">Human-in-the-loop is OS-level design, not a pop-up.</span></span></p>
+    </div>
+  </div>
+  <div class="callout">
+    <p><span class="q"><span class="l-zh">交付模式的含义：</span><span class="l-en">What this means for delivery: </span></span>
+    <span class="l-zh">新行业模板 ≈ Foundry 上的一组预置应用与流程。这就是「进入新行业 = 数周配置而非数年开发」在工程上成立的原因。</span>
+    <span class="l-en">A new industry template ≈ a set of prebuilt Foundry apps and processes. This is why "new industry = weeks of configuration, not years of development" holds at the engineering level.</span></p>
+  </div>
+</section>
+
+<!-- ============ SLIDE 9 · LAYER 5 · GENERAL APPS ============ -->
+<section class="slide">
+  <div class="mini-stack"><span class="integ"></span><span></span><span></span><span></span><span class="on"></span><span></span><span class="integ"></span></div>
+  <div class="ldetail-head"><span class="lbadge">LAYER 5</span><h2><span class="l-zh">通用 AI 应用层 —— 12 个跨行业复用的命名产品</span><span class="l-en">General AI Applications — 12 Named Products Reused Across Industries</span></h2></div>
+  <p class="lede">
+    <span class="l-zh">这 12 个产品<span class="hl">不属于任何一个行业</span>。决策、执行、预测、看见、听见、支持、增长——每个行业都需要。它们在供应链客户的生产环境中打磨成熟，切换行业时<span class="hl-w">零改造复用</span>。</span>
+    <span class="l-en">These 12 products <span class="hl">belong to no single industry</span>. Deciding, executing, predicting, seeing, hearing, supporting, growing — every industry needs them. Hardened in supply-chain production, they are <span class="hl-w">reused with zero rework</span> when switching verticals.</span>
+  </p>
+  <div class="pgrid">
+    <div class="pcard blue"><div class="pname">ItemGPT</div><div class="ptag">AI FOR EVERY DECISION</div><div class="pdesc"><span class="l-zh">自然语言运营接口——用一句话调度整个平台</span><span class="l-en">Natural-language ops interface — command the whole platform in one sentence</span></div></div>
+    <div class="pcard blue"><div class="pname">ItemClaw</div><div class="ptag">EXECUTION WITHOUT FRICTION</div><div class="pdesc"><span class="l-zh">多智能体工作流执行器——从建议到执行</span><span class="l-en">Multi-agent workflow executor — from suggestion to execution</span></div></div>
+    <div class="pcard blue"><div class="pname">ItemFlow</div><div class="ptag">DESIGN. AUTOMATE. SCALE.</div><div class="pdesc"><span class="l-zh">可视化 AI 工作流构建器</span><span class="l-en">Visual AI workflow builder</span></div></div>
+    <div class="pcard blue"><div class="pname">ItemSense</div><div class="ptag">SEE EVERYTHING. INSTANTLY.</div><div class="pdesc"><span class="l-zh">实时可视化 + 数字孪生驾驶舱</span><span class="l-en">Real-time visibility + digital-twin cockpit</span></div></div>
+    <div class="pcard blue"><div class="pname">ItemPredict</div><div class="ptag">PREDICT WHAT'S NEXT</div><div class="pdesc"><span class="l-zh">需求 / 现金流 / 客流 / 资源的通用预测引擎</span><span class="l-en">General forecasting engine — demand / cash flow / footfall / resources</span></div></div>
+    <div class="pcard blue"><div class="pname">ItemOps AI</div><div class="ptag">OPERATIONS THAT RUN THEMSELVES</div><div class="pdesc"><span class="l-zh">自主运营与持续优化</span><span class="l-en">Autonomous operations and continuous optimization</span></div></div>
+    <div class="pcard blue"><div class="pname">ItemAudit</div><div class="ptag">FIND WHAT YOU'RE LOSING</div><div class="pdesc"><span class="l-zh">计费纠错、合规稽核、成本回收</span><span class="l-en">Billing-error detection, compliance audit, cost recovery</span></div></div>
+    <div class="pcard blue"><div class="pname">ItemVision</div><div class="ptag">SEE WHAT OTHERS MISS</div><div class="pdesc"><span class="l-zh">计算机视觉——安防、质检、现场监控</span><span class="l-en">Computer vision — security, quality inspection, site monitoring</span></div></div>
+    <div class="pcard blue"><div class="pname">ItemVoice</div><div class="ptag">OPERATE HANDS-FREE</div><div class="pdesc"><span class="l-zh">语音 AI——一线作业与来电的免提交互</span><span class="l-en">Voice AI — hands-free frontline work and inbound calls</span></div></div>
+    <div class="pcard blue"><div class="pname">ItemSupport</div><div class="ptag">EVERY CHANNEL. ONE THREAD.</div><div class="pdesc"><span class="l-zh">全渠道工单：邮件 · 消息 · 短信 · 电话</span><span class="l-en">Omnichannel ticketing: email · messaging · SMS · phone</span></div></div>
+    <div class="pcard blue"><div class="pname">ItemGrow</div><div class="ptag">PIPELINE THAT NEVER SLEEPS</div><div class="pdesc"><span class="l-zh">SDR/BDR · SEO/AEO/GEO · 内容生成的 GTM AI</span><span class="l-en">GTM AI — SDR/BDR · SEO/AEO/GEO · content generation</span></div></div>
+    <div class="pcard blue"><div class="pname">ItemDoc</div><div class="ptag">DOCUMENTS THAT PROCESS THEMSELVES</div><div class="pdesc"><span class="l-zh">文档自动化——合同、发票、报告的读取与生成</span><span class="l-en">Document automation — reading and generating contracts, invoices, reports</span></div></div>
+  </div>
+  <div class="callout">
+    <p><span class="q"><span class="l-zh">通用性的证据：</span><span class="l-en">Proof of generality: </span></span>
+    <span class="l-zh">ItemSupport 处理的可以是延误货件工单，也可以是租户报修或客户咨询；ItemPredict 预测的可以是库存，也可以是门店客流或楼盘去化。<span class="hl-w">对象来自本体，能力来自产品。</span></span>
+    <span class="l-en">ItemSupport can handle a delayed-shipment ticket, a tenant repair request, or a client inquiry; ItemPredict can forecast inventory, restaurant footfall, or property absorption. <span class="hl-w">Objects come from the ontology; capability comes from the product.</span></span></p>
+  </div>
+</section>
+
+<!-- ============ SLIDE 10 · LAYER 6 · TEMPLATES ============ -->
+<section class="slide">
+  <div class="mini-stack"><span class="integ"></span><span></span><span></span><span></span><span></span><span class="on"></span><span class="integ"></span></div>
+  <div class="ldetail-head"><span class="lbadge">LAYER 6</span><h2><span class="l-zh">行业模板层 —— 10 个可插拔的垂直方案</span><span class="l-en">Industry Templates — 10 Pluggable Vertical Solutions</span></h2></div>
+  <p class="lede">
+    <span class="l-zh">每个行业模板 = <span class="hl-w">行业本体对象 + 预置工作流 + 合规规则包 + 行业智能体 + 系统连接器</span>。<span class="hl">供应链模板已在生产环境验证</span>——它证明了整个模板机制可以跑通；其余行业按同一机制复制。</span>
+    <span class="l-en">Each template = <span class="hl-w">industry ontology objects + prebuilt workflows + compliance rule pack + industry agents + system connectors</span>. <span class="hl">The supply-chain template is proven in production</span> — it validates the entire template mechanism; other industries replicate it.</span>
+  </p>
+  <div class="pgrid">
+    <div class="pcard gold"><div class="pname">ItemChain <span class="tag green" style="font-size:9px;padding:2px 7px"><span class="l-zh">✓ 已验证运行</span><span class="l-en">✓ PROVEN</span></span></div><div class="ptag">SUPPLY CHAIN &amp; LOGISTICS</div><div class="pdesc"><span class="l-zh">订单/运输/仓储/堆场全套执行系统——旗舰模板，生产运行中</span><span class="l-en">Full order/transport/warehouse/yard execution — flagship template, live in production</span></div></div>
+    <div class="pcard gold"><div class="pname">ItemDock</div><div class="ptag">PORTS &amp; DRAYAGE</div><div class="pdesc"><span class="l-zh">港口、拖车、集装箱运营（供应链子模板）</span><span class="l-en">Port, drayage &amp; container operations (supply-chain sub-template)</span></div></div>
+    <div class="pcard gold"><div class="pname">ItemTrade</div><div class="ptag">GLOBAL TRADE</div><div class="pdesc"><span class="l-zh">关税归类、跨境合规、贸易智能</span><span class="l-en">Tariff classification, cross-border compliance, trade intelligence</span></div></div>
+    <div class="pcard gold"><div class="pname">ItemFin</div><div class="ptag">FINANCIAL ADVISORY</div><div class="pdesc"><span class="l-zh">财务咨询与财富管理：客户画像、组合分析、合规报送、投顾 Copilot</span><span class="l-en">Advisory &amp; wealth: client profiling, portfolio analytics, regulatory filings, advisor copilot</span></div></div>
+    <div class="pcard gold"><div class="pname">ItemDine</div><div class="ptag">RESTAURANT OPERATIONS</div><div class="pdesc"><span class="l-zh">餐馆运营：排班、备货预测、损耗控制、多门店驾驶舱</span><span class="l-en">Restaurant ops: scheduling, prep forecasting, waste control, multi-store cockpit</span></div></div>
+    <div class="pcard gold"><div class="pname">ItemEstate</div><div class="ptag">PROPERTY MANAGEMENT</div><div class="pdesc"><span class="l-zh">房产管理：租约、租户服务、报修工单、能耗与资产运营</span><span class="l-en">Property mgmt: leases, tenant services, repair tickets, energy &amp; asset operations</span></div></div>
+    <div class="pcard gold"><div class="pname">ItemBuild</div><div class="ptag">REAL ESTATE DEVELOPMENT</div><div class="pdesc"><span class="l-zh">地产开发：项目进度、供应商、成本与销售去化管理</span><span class="l-en">Development: project schedules, vendors, cost control, sales absorption</span></div></div>
+    <div class="pcard gold"><div class="pname">ItemHealth</div><div class="ptag">HEALTHCARE OPS</div><div class="pdesc"><span class="l-zh">医疗运营与供应链：冷链、效期、合规追溯</span><span class="l-en">Healthcare ops &amp; supply: cold chain, expiry, compliance traceability</span></div></div>
+    <div class="pcard gold"><div class="pname">ItemAuto</div><div class="ptag">MANUFACTURING &amp; AUTO</div><div class="pdesc"><span class="l-zh">制造与汽车：JIT 排序、供应商风险、产线协同</span><span class="l-en">Manufacturing &amp; auto: JIT sequencing, supplier risk, line coordination</span></div></div>
+    <div class="pcard gold"><div class="pname">ItemRetail</div><div class="ptag">RETAIL &amp; COMMERCE</div><div class="pdesc"><span class="l-zh">零售电商：全渠道订单、库存、退货与会员运营</span><span class="l-en">Retail &amp; commerce: omnichannel orders, inventory, returns, membership ops</span></div></div>
+  </div>
+  <div class="callout gold">
+    <p><span class="hl-g"><span class="l-zh">模板的商业含义：</span><span class="l-en">The business meaning of templates: </span></span>
+    <span class="l-zh">横向平台竞争靠功能，垂直模板竞争靠行业知识。ITEM 用一套平台承载 N 个模板——每新增一个行业，边际成本递减，而垂直 AI 恰是整个智能体市场中增速最快的细分（≈62.7% CAGR）。</span>
+    <span class="l-en">Horizontal platforms compete on features; vertical templates compete on industry knowledge. ITEM carries N templates on one platform — each new industry at declining marginal cost, in the fastest-growing segment of the entire agent market (~62.7% CAGR).</span></p>
+  </div>
+</section>
+
+<!-- ============ SLIDE 11 · 22 PRODUCTS OVERVIEW ============ -->
+<section class="slide">
+  <div class="eyebrow">05 · Product Catalog</div>
+  <h2><span class="l-zh">22 个命名产品全景：12 个通用应用 × 10 个行业模板</span><span class="l-en">All 22 Named Products: 12 General Apps × 10 Industry Templates</span></h2>
+  <div class="cat-head"><span class="tag blue"><span class="l-zh">通用应用 GENERAL</span><span class="l-en">GENERAL APPS</span></span><span class="cat-title"><span class="l-zh">跨行业复用 · Layer 5</span><span class="l-en">Reused across industries · Layer 5</span></span><span class="cat-line"></span><span class="cat-count">12 PRODUCTS</span></div>
+  <p class="lede" style="font-size:13px">
+    <span class="l-zh">ItemGPT · ItemClaw · ItemFlow · ItemSense · ItemPredict · ItemOps AI · ItemAudit · ItemVision · ItemVoice · ItemSupport · ItemGrow · ItemDoc —— 每个行业都需要，切换行业零改造。</span>
+    <span class="l-en">ItemGPT · ItemClaw · ItemFlow · ItemSense · ItemPredict · ItemOps AI · ItemAudit · ItemVision · ItemVoice · ItemSupport · ItemGrow · ItemDoc — needed by every industry, zero rework when switching verticals.</span>
+  </p>
+  <div class="cat-head"><span class="tag gold"><span class="l-zh">行业模板 VERTICAL</span><span class="l-en">INDUSTRY TEMPLATES</span></span><span class="cat-title"><span class="l-zh">可插拔垂直方案 · Layer 6</span><span class="l-en">Pluggable vertical solutions · Layer 6</span></span><span class="cat-line"></span><span class="cat-count">10 TEMPLATES</span></div>
+  <p class="lede" style="font-size:13px">
+    <span class="l-zh">ItemChain <span class="hl" style="color:var(--green)">（✓ 已验证）</span> · ItemDock · ItemTrade · ItemFin · ItemDine · ItemEstate · ItemBuild · ItemHealth · ItemAuto · ItemRetail —— 行业对象 + 流程 + 合规 + 智能体的打包。</span>
+    <span class="l-en">ItemChain <span class="hl" style="color:var(--green)">(✓ proven)</span> · ItemDock · ItemTrade · ItemFin · ItemDine · ItemEstate · ItemBuild · ItemHealth · ItemAuto · ItemRetail — packaged industry objects + workflows + compliance + agents.</span>
+  </p>
+  <table>
+    <tr>
+      <th style="width:22%"><span class="l-zh">维度</span><span class="l-en">Dimension</span></th>
+      <th style="width:39%"><span class="l-zh">通用应用（12）</span><span class="l-en">General Apps (12)</span></th>
+      <th style="width:39%"><span class="l-zh">行业模板（10）</span><span class="l-en">Industry Templates (10)</span></th>
+    </tr>
+    <tr><td><span class="l-zh">回答的问题</span><span class="l-en">Question answered</span></td>
+        <td><span class="l-zh">「企业运营需要哪些 AI 能力？」</span><span class="l-en">"What AI capabilities does enterprise operation need?"</span></td>
+        <td><span class="l-zh">「这些能力如何长成某个行业的样子？」</span><span class="l-en">"How do those capabilities take an industry's shape?"</span></td></tr>
+    <tr><td><span class="l-zh">复用方式</span><span class="l-en">Reuse model</span></td>
+        <td><span class="l-zh">跨行业 100% 复用，随平台交付</span><span class="l-en">100% cross-industry reuse, ships with the platform</span></td>
+        <td><span class="l-zh">按行业加载，可组合、可定制、可由伙伴共建</span><span class="l-en">Loaded per industry; composable, customizable, partner-buildable</span></td></tr>
+    <tr><td><span class="l-zh">研发经济学</span><span class="l-en">R&amp;D economics</span></td>
+        <td><span class="l-zh">一次构建，所有行业摊薄成本</span><span class="l-en">Built once, cost amortized across all industries</span></td>
+        <td><span class="l-zh">首个模板（供应链）最贵，其后每个模板边际成本递减</span><span class="l-en">First template (supply chain) costs the most; each subsequent one costs less</span></td></tr>
+    <tr><td><span class="l-zh">销售角色</span><span class="l-en">Sales role</span></td>
+        <td><span class="l-zh">平台订阅的核心价值构成</span><span class="l-en">Core value of the platform subscription</span></td>
+        <td><span class="l-zh">行业化的切入点（wedge）与溢价来源</span><span class="l-en">The industry wedge and the source of pricing premium</span></td></tr>
+    <tr><td><span class="l-zh">验证状态</span><span class="l-en">Validation status</span></td>
+        <td><span class="l-zh">已在供应链生产环境全量运行</span><span class="l-en">Fully running in supply-chain production</span></td>
+        <td><span class="l-zh">ItemChain 已验证；其余按已验证机制复制</span><span class="l-en">ItemChain proven; the rest replicate the proven mechanism</span></td></tr>
+  </table>
+</section>
+
+<!-- ============ SLIDE 12 · VERTICAL DEEP DIVE ============ -->
+<section class="slide">
+  <div class="eyebrow">06 · Vertical Markets</div>
+  <h2><span class="l-zh">五个重点行业：市场规模与已验证的价值锚点</span><span class="l-en">Five Priority Verticals: Market Size and Proven Value Anchors</span></h2>
+  <div class="grid g5">
+    <div class="card" style="border-top:3px solid var(--green)">
+      <span class="tag green"><span class="l-zh">✓ 已验证</span><span class="l-en">✓ PROVEN</span></span>
+      <h3 style="margin-top:10px"><span class="l-zh">供应链与物流</span><span class="l-en">Supply Chain &amp; Logistics</span></h3>
+      <div class="kpi" style="font-size:26px">$196.6B</div>
+      <div class="kpi-sub"><span class="l-zh">物流 AI 市场 · 2030s<br>$20.1B 起步 · 25.9% CAGR</span><span class="l-en">AI-in-logistics market · 2030s<br>from $20.1B · 25.9% CAGR</span></div>
+      <p style="margin-top:10px"><span class="l-zh">早期采用者已实现约 <span class="hl-w">-15% 成本、+35% 库存周转</span>。ITEM 旗舰模板的诞生地。</span><span class="l-en">Early adopters already see <span class="hl-w">~-15% cost, +35% inventory turns</span>. Birthplace of ITEM's flagship template.</span></p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--gold)">
+      <span class="tag gold">ItemFin</span>
+      <h3 style="margin-top:10px"><span class="l-zh">财务咨询</span><span class="l-en">Financial Advisory</span></h3>
+      <div class="kpi gold" style="font-size:26px">$5.9T</div>
+      <div class="kpi-sub"><span class="l-zh">智能投顾管理资产 · 2027（PwC）<br>2022 年为 $2.5T</span><span class="l-en">Robo-advisory AUM · 2027 (PwC)<br>vs $2.5T in 2022</span></div>
+      <p style="margin-top:10px"><span class="l-zh">BCG 2026：AI-first 已是财富管理行业的<span class="hl-w">强制项而非选择题</span>；AI 正在起草财务方案、自动化合规文档。</span><span class="l-en">BCG 2026: AI-first is now a <span class="hl-w">mandate, not an option</span> in wealth management; AI already drafts financial plans and automates compliance docs.</span></p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--gold)">
+      <span class="tag gold">ItemDine</span>
+      <h3 style="margin-top:10px"><span class="l-zh">餐馆运营</span><span class="l-en">Restaurant Operations</span></h3>
+      <div class="kpi gold" style="font-size:26px">$82.7B</div>
+      <div class="kpi-sub"><span class="l-zh">餐饮 AI 市场 · 2034<br>2025 年 $13.2B · 22.6% CAGR</span><span class="l-en">AI-in-restaurants market · 2034<br>from $13.2B in 2025 · 22.6% CAGR</span></div>
+      <p style="margin-top:10px"><span class="l-zh">AI 库存与预测：食材成本 <span class="hl-w">-8~14%</span>、损耗 <span class="hl-w">-25~40%</span>、缺货 <span class="hl-w">-60%</span>，单店年净节省 $1.5–6.5 万。</span><span class="l-en">AI inventory &amp; forecasting: food cost <span class="hl-w">-8–14%</span>, waste <span class="hl-w">-25–40%</span>, stockouts <span class="hl-w">-60%</span> — net savings of $15K–65K per location per year.</span></p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--gold)">
+      <span class="tag gold">ItemEstate</span>
+      <h3 style="margin-top:10px"><span class="l-zh">房产管理</span><span class="l-en">Property Management</span></h3>
+      <div class="kpi gold" style="font-size:26px">$34B</div>
+      <div class="kpi-sub"><span class="l-zh">地产行业 AI 效率收益 · 2030<br>（Morgan Stanley）</span><span class="l-en">AI efficiency gains in real estate · 2030<br>(Morgan Stanley)</span></div>
+      <p style="margin-top:10px"><span class="l-zh">物业与商业地产 <span class="hl-w">37% 的任务可被自动化</span>——集中在管理、销售、行政支持与维保四大板块。</span><span class="l-en"><span class="hl-w">37% of REIT/CRE tasks are automatable</span> — concentrated in management, sales, admin support, and maintenance.</span></p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--gold)">
+      <span class="tag gold">ItemBuild</span>
+      <h3 style="margin-top:10px"><span class="l-zh">地产开发</span><span class="l-en">Real Estate Development</span></h3>
+      <div class="kpi gold" style="font-size:26px">$989B</div>
+      <div class="kpi-sub"><span class="l-zh">地产 AI 市场 · 2029<br>2025 年 $303B · 34.4% CAGR</span><span class="l-en">AI-in-real-estate market · 2029<br>from $303B in 2025 · 34.4% CAGR</span></div>
+      <p style="margin-top:10px"><span class="l-zh">McKinsey 估计 AI 每年可为地产行业创造 <span class="hl-w">$180B+ 价值</span>；估值模型误差率已从 10–15% 降至 2.8%。</span><span class="l-en">McKinsey estimates AI can add <span class="hl-w">$180B+ per year</span> to real estate; valuation-model error is down from 10–15% to 2.8%.</span></p>
+    </div>
+  </div>
+  <div class="callout">
+    <p><span class="q"><span class="l-zh">同一个平台的五张面孔：</span><span class="l-en">Five faces of one platform: </span></span>
+    <span class="l-zh">本体换对象、Foundry 换流程、Layer 6 换模板——第 2 至第 5 层原封不动。这就是「行业只是模板」的字面含义。</span>
+    <span class="l-en">Swap the ontology objects, swap the Foundry processes, swap the Layer-6 template — Layers 2–5 stay untouched. That is the literal meaning of "an industry is just a template."</span></p>
+  </div>
+  <p class="src"><span class="l-zh">来源：物流 AI（行业市场研究，前期分析沿用）；PwC 智能投顾 AUM 预测；BCG《2026 Global Wealth Report》；DataIntelo《AI in Restaurants Market 2025–2034》；Morgan Stanley Research；Research and Markets《AI in Real Estate》；McKinsey。</span><span class="l-en">Sources: AI-in-logistics (industry research, carried from prior analysis); PwC robo-advisory AUM forecast; BCG 2026 Global Wealth Report; DataIntelo, AI in Restaurants Market 2025–2034; Morgan Stanley Research; Research and Markets, AI in Real Estate; McKinsey.</span></p>
+</section>
+
+<!-- ============ SLIDE EXP · EXPANSION MAP ============ -->
+<section class="slide">
+  <div class="eyebrow">07 · Expansion Map</div>
+  <h2><span class="l-zh">扩张地图：一个内核 × 四大超集群 × 三个阶段</span><span class="l-en">The Expansion Map: One Kernel × Four Superclusters × Three Phases</span></h2>
+  <p class="lede">
+    <span class="l-zh">我们按美国 BLS 官方行业分类逐一评估了 ITEM 架构的适配度：<span class="hl-w">54 个行业得分高于 8.0/10</span>。这不意味着 54 个产品——所有高分行业归入<span class="hl">四个共享同一交易内核的超集群</span>，按纪律分阶段进入。蓝图是全面的，步子是克制的。</span>
+    <span class="l-en">We scored ITEM's architectural fit against the official U.S. BLS industry taxonomy, industry by industry: <span class="hl-w">54 industries score above 8.0/10</span>. That does not mean 54 products — every qualifying industry rolls up into <span class="hl">four superclusters sharing one transaction kernel</span>, entered in disciplined phases. The blueprint is comprehensive; the steps are restrained.</span>
+  </p>
+  <div class="grid g4">
+    <div class="card" style="border-top:3px solid var(--cyan)">
+      <h3><span class="l-zh">Ⓐ 物的移动</span><span class="l-en">Ⓐ Movement of Things</span></h3>
+      <p><span class="l-zh">货运 · 港口 · 铁路 · 冷链 · 批发<br><span class="hl-w">今天已在：</span>ItemChain ✓ · ItemDock · ItemTrade</span>
+      <span class="l-en">Freight · ports · rail · cold chain · wholesale<br><span class="hl-w">Live today:</span> ItemChain ✓ · ItemDock · ItemTrade</span></p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--blue)">
+      <h3><span class="l-zh">Ⓑ 物的作业</span><span class="l-en">Ⓑ Work on Things</span></h3>
+      <p><span class="l-zh">数据中心 · 建造 · 设施 · 现场服务 · 公用事业<br><span class="hl-w">模板对应：</span>ItemBuild · ItemEstate</span>
+      <span class="l-en">Data centers · construction · facilities · field service · utilities<br><span class="hl-w">Mapped templates:</span> ItemBuild · ItemEstate</span></p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--gold)">
+      <h3><span class="l-zh">Ⓒ 物的转化</span><span class="l-en">Ⓒ Transformation of Things</span></h3>
+      <p><span class="l-zh">矿产 · 材料 · 制造 · 回收与循环<br><span class="hl-w">模板对应：</span>ItemAuto + 后续扩展</span>
+      <span class="l-en">Mining · materials · manufacturing · recycling &amp; circularity<br><span class="hl-w">Mapped templates:</span> ItemAuto + future expansion</span></p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--green)">
+      <h3><span class="l-zh">Ⓓ 物的风险</span><span class="l-en">Ⓓ Risk on Things</span></h3>
+      <p><span class="l-zh">保险 · 质保 · 索赔 · 资本——经济层<br><span class="hl-w">优势：</span>索赔发生前就握有物理证据</span>
+      <span class="l-en">Insurance · warranty · claims · capital — the economic layer<br><span class="hl-w">Edge:</span> holding the physical evidence before the claim occurs</span></p>
+    </div>
+  </div>
+  <div class="flow">
+    <div class="fstep">
+      <div class="fphase">PHASE 1 · <span class="l-zh">现在 → Y2</span><span class="l-en">NOW → Y2</span></div>
+      <h3><span class="l-zh">先多式联运，再多行业</span><span class="l-en">Multimodal Before Multi-Industry</span></h3>
+      <p><span class="l-zh">在已验证的货运核心上补齐网络：港口与运输支持（适配 9.8）、海运（9.8）、铁路联运（9.7）。<br><br>纪律信号：不追新行业，先把 Ⓐ 集群做成完整网络。</span>
+      <span class="l-en">Complete the network on the proven freight core: ports &amp; transport support (fit 9.8), maritime (9.8), rail &amp; intermodal (9.7).<br><br>The discipline signal: no new industries until Cluster Ⓐ is a complete network.</span></p>
+    </div>
+    <div class="fstep">
+      <div class="fphase">PHASE 2 · Y2 → Y3</div>
+      <h3><span class="l-zh">首个相邻操作系统：ItemInfra</span><span class="l-en">First Adjacent OS: ItemInfra</span></h3>
+      <p><span class="l-zh">以 <span class="hl-w">AI 数据中心建设潮为锚</span>（适配 9.7）——美国能源部预计数据中心将占全美用电量 11.8%。一个数据中心项目 = 高价值供应链 + 建造 + 现场服务 + 安防的组合，全部落在 Ⓑ 集群同一内核上。</span>
+      <span class="l-en">Anchored by the <span class="hl-w">AI data-center buildout</span> (fit 9.7) — the U.S. DOE projects data centers at 11.8% of national electricity use. One data-center project = high-value supply chain + construction + field service + security, all on Cluster Ⓑ's shared kernel.</span></p>
+    </div>
+    <div class="fstep">
+      <div class="fphase">PHASE 3 · Y3 → Y5</div>
+      <h3><span class="l-zh">物理材料网络：ItemMaterials</span><span class="l-en">The Materials Network: ItemMaterials</span></h3>
+      <p><span class="l-zh">矿产（9.6）、化工（9.3）、电池与回收（9.2–9.4）——Ⓒ 集群，由监管顺风驱动：欧盟电池护照 2027 年 2 月强制、FDA 食品追溯 2028 年执法。</span>
+      <span class="l-en">Mining (9.6), chemicals (9.3), batteries &amp; recycling (9.2–9.4) — Cluster Ⓒ, driven by regulatory tailwinds: the EU battery passport becomes mandatory in Feb 2027, FDA food traceability enforcement in 2028.</span></p>
+    </div>
+  </div>
+  <div class="callout">
+    <p><span class="q"><span class="l-zh">给投资人的一句话：</span><span class="l-en">The one-liner for investors: </span></span>
+    <span class="l-zh">最大的扩张机会不是「更多软件垂直」，而是<span class="hl-w">一个交易内核，治理物理经济中「物」的移动、作业、转化与风险</span>——论点从「货到了吗」升级为「物理世界是否按合同发生了改变、能否证明、价值是否应当转移」。</span>
+    <span class="l-en">The biggest expansion opportunity is not "more software verticals" — it is <span class="hl-w">one transaction kernel governing the movement, work, transformation, and risk of physical things</span>. The thesis upgrades from "did the freight arrive?" to "did the physical world change as contracted, can we prove it, and should value move?"</span></p>
+  </div>
+</section>
+
+<!-- ============ SLIDE 13 · PHYSICAL INTEGRATION (LIGHT) ============ -->
+<section class="slide">
+  <div class="eyebrow">08 · Physical World</div>
+  <h2><span class="l-zh">物理世界对接：开放的设备与机器人集成层</span><span class="l-en">Connecting the Physical World: an Open Device &amp; Robot Integration Layer</span></h2>
+  <p class="lede">
+    <span class="l-zh">对需要物理执行的行业（仓储、餐饮后厨、楼宇巡检、工地），ITEM 通过 <span class="hl">Layer 7 的开放协议</span>对接客户已有或选购的任意设备——<span class="hl-w">我们不绑定任何硬件品牌，也不做硬件</span>。硬件是客户的资产，智能与编排是 ITEM 的产品。</span>
+    <span class="l-en">For industries that need physical execution (warehouses, restaurant kitchens, building patrols, construction sites), ITEM connects to any device the customer owns or buys through <span class="hl">Layer 7's open protocols</span> — <span class="hl-w">we bind to no hardware brand and build no hardware</span>. Hardware is the customer's asset; intelligence and orchestration are ITEM's product.</span>
+  </p>
+  <div class="grid g4">
+    <div class="card"><h3><span class="l-zh">任意机器人类型</span><span class="l-en">Any Robot Type</span></h3><p><span class="l-zh">AGV/AMR · 机械臂 · 人形 · 四足 · 无人机 · 送餐机器人 · 清洁与巡检机器人——经异构自主层统一调度，多品牌同场协同。</span><span class="l-en">AGV/AMR · robotic arms · humanoids · quadrupeds · drones · food-service robots · cleaning &amp; inspection robots — unified by the heterogeneous-autonomy layer; multiple brands coordinated in one site.</span></p></div>
+    <div class="card"><h3><span class="l-zh">开放协议栈</span><span class="l-en">Open Protocol Stack</span></h3><p><span class="l-zh">MCP · A2A · REST API · EDI · 事件流 · RTLS · PLC 工业协议——新设备接入是配置动作，不是开发项目。</span><span class="l-en">MCP · A2A · REST API · EDI · event streams · RTLS · industrial PLC — onboarding a new device is a configuration step, not a development project.</span></p></div>
+    <div class="card"><h3><span class="l-zh">行业化的物理场景</span><span class="l-en">Industry-Shaped Physical Scenarios</span></h3><p><span class="l-zh">仓库的叉车与分拣、餐厅的送餐与后厨、楼宇的巡检与安防、工地的监控与测绘——由对应行业模板定义任务语义。</span><span class="l-en">Forklifts and sortation in warehouses; delivery and kitchen in restaurants; patrol and security in buildings; monitoring and surveying on sites — task semantics defined by each industry template.</span></p></div>
+    <div class="card"><h3><span class="l-zh">验证于最难的场景</span><span class="l-en">Proven in the Hardest Setting</span></h3><p><span class="l-zh">物流仓储是物理 AI 最复杂的环境（多设备、高吞吐、强实时）。<span class="hl-w">在那里跑通的对接层，迁移到其他行业只会更简单。</span></span><span class="l-en">Warehousing is physical AI's most demanding environment (many devices, high throughput, hard real-time). <span class="hl-w">An integration layer proven there only gets easier in other industries.</span></span></p></div>
+  </div>
+  <div class="callout">
+    <p><span class="q"><span class="l-zh">一句话：</span><span class="l-en">In one line: </span></span>
+    <span class="l-zh">ITEM 让每台设备更聪明，并为这份智能持续收费——但设备本身，永远是开放生态。</span>
+    <span class="l-en">ITEM makes every device smarter and charges for that intelligence continuously — while the devices themselves remain an open ecosystem, forever.</span></p>
+  </div>
+</section>
+
+<!-- ============ SLIDE COMP · COMPETITIVE POSITIONING ============ -->
+<section class="slide">
+  <div class="eyebrow">09 · Competitive Positioning</div>
+  <h2><span class="l-zh">竞争定位：知识层 · 流程层 · 运营层</span><span class="l-en">Competitive Positioning: Knowledge Layer · Process Layer · Operations Layer</span></h2>
+  <p class="lede">
+    <span class="l-zh">Glean 让企业「更懂自己知道什么」（知识层）；Automation Anywhere 让「现有流程自己跑」（流程层）。两者都是<span class="hl-w">客户现有系统之上的增强层</span>。ITEM 在第三个位置：<span class="hl">让运营本身运行在 AI 操作系统上</span>——拥有运营数据模型，并延伸到物理世界。他们增强栈，我们成为栈。</span>
+    <span class="l-en">Glean helps an enterprise "know what it knows" (the knowledge layer); Automation Anywhere makes "existing processes run themselves" (the process layer). Both are <span class="hl-w">augmentation layers on top of the customer's existing systems</span>. ITEM occupies a third position: <span class="hl">the operation itself runs on an AI operating system</span> — owning the operational data model and extending into the physical world. They augment the stack; we become the stack.</span>
+  </p>
+  <div class="comp-wrap">
+    <div class="quad">
+      <div class="ax y1"><span class="l-zh">数字 + 物理<br>DIGITAL + PHYSICAL</span><span class="l-en">DIGITAL + PHYSICAL</span></div>
+      <div class="ax y2"></div>
+      <div class="ax x1"><span class="l-zh">增强现有系统<br>AUGMENT THE STACK</span><span class="l-en">AUGMENT<br>THE STACK</span></div>
+      <div class="ax x2"><span class="l-zh">成为运营系统<br>OWN THE OPERATION</span><span class="l-en">OWN THE<br>OPERATION</span></div>
+      <div class="qdot ghost" style="left:16%;top:82%">
+        <div class="qb"></div><div class="qn">Copilot · Agentforce</div>
+        <div class="qs"><span class="l-zh">大厂对左下象限的挤压</span><span class="l-en">Big-tech pressure on this quadrant</span></div>
+      </div>
+      <div class="qdot glean" style="left:26%;top:60%">
+        <div class="qb"></div><div class="qn">Glean</div>
+        <div class="qs"><span class="l-zh">Work AI · 知识层</span><span class="l-en">Work AI · knowledge layer</span></div>
+      </div>
+      <div class="qdot aa" style="left:44%;top:70%">
+        <div class="qb"></div><div class="qn">Automation Anywhere</div>
+        <div class="qs"><span class="l-zh">APA · 流程层（软件 bot）</span><span class="l-en">APA · process layer (software bots)</span></div>
+      </div>
+      <div class="qdot item" style="left:79%;top:22%">
+        <div class="qb"></div><div class="qn">ITEM AI</div>
+        <div class="qs"><span class="l-zh">运营操作系统 · L2 本体 + L6 模板 + L7 物理</span><span class="l-en">Operations OS · L2 ontology + L6 templates + L7 physical</span></div>
+      </div>
+    </div>
+    <table class="comp">
+      <tr><th><span class="l-zh">维度</span><span class="l-en">Dimension</span></th><th>Glean</th><th>Automation Anywhere</th><th style="color:var(--cyan)">ITEM AI</th></tr>
+      <tr>
+        <td><span class="l-zh">数据模型</span><span class="l-en">Data model</span></td>
+        <td><span class="l-zh">文档/人员上下文图谱</span><span class="l-en">Document &amp; people context graph</span></td>
+        <td><span class="l-zh">流程定义，无业务数据模型</span><span class="l-en">Process definitions; no business data model</span></td>
+        <td><span class="l-zh"><span class="hl-w">业务对象的运营本体 + 数字孪生</span></span><span class="l-en"><span class="hl-w">Operational ontology of business objects + digital twin</span></span></td>
+      </tr>
+      <tr>
+        <td><span class="l-zh">与客户系统的关系</span><span class="l-en">Relation to customer systems</span></td>
+        <td><span class="l-zh">坐在其上读取（250+ 连接器）</span><span class="l-en">Sits on top, reads (250+ connectors)</span></td>
+        <td><span class="l-zh">在其界面/API 上自动化</span><span class="l-en">Automates on top via UI / API</span></td>
+        <td><span class="l-zh"><span class="hl-w">成为运营记录系统</span>；L1 &amp; L7 开放集成其余</span><span class="l-en"><span class="hl-w">Becomes the operational system of record</span>; L1 &amp; L7 integrate the rest</span></td>
+      </tr>
+      <tr>
+        <td><span class="l-zh">物理世界</span><span class="l-en">Physical world</span></td>
+        <td><span class="l-zh">无</span><span class="l-en">None</span></td>
+        <td><span class="l-zh">仅软件「机器人」</span><span class="l-en">Software "bots" only</span></td>
+        <td><span class="l-zh"><span class="hl-w">真实机器人 + 设备 + PLC</span>（L7）</span><span class="l-en"><span class="hl-w">Real robots + devices + PLC</span> (L7)</span></td>
+      </tr>
+      <tr>
+        <td><span class="l-zh">行业化方式</span><span class="l-en">Verticalization</span></td>
+        <td><span class="l-zh">营销分段（同一横向产品）</span><span class="l-en">Marketing segments of one horizontal product</span></td>
+        <td><span class="l-zh">预置流程方案（AP、KYC、RCM）</span><span class="l-en">Prebuilt process solutions (AP, KYC, RCM)</span></td>
+        <td><span class="l-zh"><span class="hl-w">运营级行业模板</span>（对象+流程+合规+智能体）</span><span class="l-en"><span class="hl-w">Operations-grade industry templates</span> (objects + workflows + compliance + agents)</span></td>
+      </tr>
+      <tr>
+        <td><span class="l-zh">预算韧性</span><span class="l-en">Budget resilience</span></td>
+        <td><span class="l-zh">生产力预算，可削减</span><span class="l-en">Productivity budget — cuttable</span></td>
+        <td><span class="l-zh">流程预算，可替换</span><span class="l-en">Process budget — replaceable</span></td>
+        <td><span class="l-zh"><span class="hl-w">运营关键：关掉 = 停业</span>（NRR 118% 的底层逻辑）</span><span class="l-en"><span class="hl-w">Operations-critical: switching off = stopping the business</span> (the logic behind 118% NRR)</span></td>
+      </tr>
+    </table>
+  </div>
+  <div class="callout gold">
+    <p><span class="hl-g"><span class="l-zh">诚实的重叠与应对：</span><span class="l-en">The honest overlap, and the answer: </span></span>
+    <span class="l-zh">中间层（L3–L5 的智能体构建/编排/治理）三家会趋同——Glean 已有 "Agent Harness"，AA 刚发布 "EnterpriseClaw"（与 Item Harness / ItemClaw 命名撞车，商标核查中）。我们的防御核心在他们不重写 ERP 级软件就到不了的位置：<span class="hl-w">L2 运营本体 + L6 运营模板 + L7 物理执行</span>。竞合姿态：Glean 可作为上下文来源接入 ITEM，而非正面对抗。</span>
+    <span class="l-en">The middle layers (L3–L5 agent building / orchestration / governance) will converge across all three — Glean already ships an "Agent Harness," and AA just launched "EnterpriseClaw" (name collisions with Item Harness / ItemClaw; trademark review underway). Our defensible core sits where neither can go without rebuilding ERP-class software: <span class="hl-w">the L2 operational ontology + L6 operational templates + L7 physical execution</span>. Coopetition stance: Glean plugs into ITEM as a context source rather than a head-on rival.</span></p>
+  </div>
+</section>
+
+<!-- ============ SLIDE 14 · BUSINESS MODEL ============ -->
+<section class="slide">
+  <div class="eyebrow">10 · Business Model</div>
+  <h2><span class="l-zh">商业模型：平台订阅 × 模板溢价 × 用量增长</span><span class="l-en">Business Model: Platform Subscription × Template Premium × Usage Growth</span></h2>
+  <div class="grid g4">
+    <div class="card"><h3><span class="l-zh">平台订阅 SaaS/PaaS</span><span class="l-en">Platform Subscription (SaaS/PaaS)</span></h3><p><span class="l-zh">Layer 2–5 的核心平台与通用应用，按模块与席位订阅——收入的稳定基座。</span><span class="l-en">Layers 2–5 core platform and general apps, subscribed by module and seat — the stable revenue base.</span></p></div>
+    <div class="card"><h3><span class="l-zh">行业模板溢价</span><span class="l-en">Industry Template Premium</span></h3><p><span class="l-zh">Layer 6 模板按行业授权。垂直方案携带行业知识与合规包，<span class="hl-g">定价高于横向功能</span>。</span><span class="l-en">Layer-6 templates licensed per industry. Vertical solutions carry industry knowledge and compliance packs — <span class="hl-g">priced above horizontal features</span>.</span></p></div>
+    <div class="card"><h3><span class="l-zh">用量与执行 FaaS</span><span class="l-en">Usage &amp; Execution (FaaS)</span></h3><p><span class="l-zh">智能体执行、工作流运行、文档处理按量计费——随客户业务量自然增长。</span><span class="l-en">Agent execution, workflow runs, and document processing billed by usage — growing naturally with the customer's volume.</span></p></div>
+    <div class="card"><h3><span class="l-zh">设备智能订阅</span><span class="l-en">Device Intelligence Subscription</span></h3><p><span class="l-zh">接入平台的每台机器人/设备按月订阅智能层——硬件零风险，收入永续。</span><span class="l-en">Every connected robot/device subscribes monthly to the intelligence layer — zero hardware risk, perpetual revenue.</span></p></div>
+  </div>
+  <div class="grid g3">
+    <div class="card"><div class="kpi">$450B</div><div class="kpi-lbl"><span class="l-zh">Gartner：2035 年智能体 AI 贡献的企业软件收入（≈30%）——ITEM 的收入结构正对准这条曲线</span><span class="l-en">Gartner: agentic AI's contribution to enterprise software revenue by 2035 (~30%) — ITEM's revenue mix is aimed straight at this curve</span></div></div>
+    <div class="card"><div class="kpi">62.7%</div><div class="kpi-lbl"><span class="l-zh">垂直 AI 智能体细分的 CAGR——模板层是全市场增长最快的位置</span><span class="l-en">CAGR of the vertical AI-agent segment — the template layer sits in the market's fastest-growing position</span></div></div>
+    <div class="card"><div class="kpi gold"><span class="l-zh">N × 模板</span><span class="l-en">N × Templates</span></div><div class="kpi-lbl"><span class="l-zh">每新增一个行业模板：新 TAM、新买家、递减的边际成本——平台经济学的复利结构</span><span class="l-en">Each new industry template: new TAM, new buyers, declining marginal cost — the compounding structure of platform economics</span></div></div>
+  </div>
+  <div class="callout">
+    <p><span class="q"><span class="l-zh">扩张飞轮：</span><span class="l-en">The expansion flywheel: </span></span>
+    <span class="l-zh">通用应用降低进入行业的成本 → 行业模板打开垂直溢价 → 客户运营数据回流本体 → 模板越用越准 → 下一个行业更快。</span>
+    <span class="l-en">General apps lower the cost of entering an industry → templates unlock vertical premiums → customer operating data flows back into the ontology → templates get sharper with use → the next industry gets faster.</span></p>
+  </div>
+  <p class="src"><span class="l-zh">来源：Gartner（智能体 AI 企业软件收入占比）；MarketsandMarkets（垂直智能体 CAGR）。</span><span class="l-en">Sources: Gartner (agentic AI share of enterprise software revenue); MarketsandMarkets (vertical-agent CAGR).</span></p>
+</section>
+
+<!-- ============ SLIDE 15 · GTM ============ -->
+<section class="slide">
+  <div class="eyebrow">11 · Go-To-Market</div>
+  <h2><span class="l-zh">Land → Expand → Own：在每个行业复用同一套打法</span><span class="l-en">Land → Expand → Own: the Same Playbook, Reused in Every Industry</span></h2>
+  <div class="flow">
+    <div class="fstep">
+      <div class="fphase">PHASE 1 · LAND</div>
+      <h3><span class="l-zh">模板切入</span><span class="l-en">Land with the Template</span></h3>
+      <p><span class="l-zh">用行业模板 + ItemGPT 解决一个高痛点场景：物流的运输执行、餐饮的备货预测、物业的报修工单、投顾的合规文档。<br><br>数周上线，先赢一个可量化的 ROI。</span>
+      <span class="l-en">Use the industry template + ItemGPT on one high-pain scenario: transport execution in logistics, prep forecasting in restaurants, repair ticketing in property, compliance docs in advisory.<br><br>Live in weeks; win one quantifiable ROI first.</span></p>
+    </div>
+    <div class="fstep">
+      <div class="fphase">PHASE 2 · EXPAND</div>
+      <h3><span class="l-zh">通用应用扩张</span><span class="l-en">Expand with General Apps</span></h3>
+      <p><span class="l-zh">沿 12 个通用应用横向铺开：ItemSupport 接管全渠道服务、ItemPredict 覆盖更多预测、ItemAudit 追回损失、ItemGrow 驱动增长。<br><br>每个新模块都在同一本体上，扩张是架构性的。</span>
+      <span class="l-en">Roll out across the 12 general apps: ItemSupport takes over omnichannel service, ItemPredict covers more forecasts, ItemAudit recovers losses, ItemGrow drives pipeline.<br><br>Every new module sits on the same ontology — expansion is architectural.</span></p>
+    </div>
+    <div class="fstep">
+      <div class="fphase">PHASE 3 · OWN</div>
+      <h3><span class="l-zh">运营操作系统</span><span class="l-en">Own the Operating System</span></h3>
+      <p><span class="l-zh">Foundry 上沉淀客户自己的应用与流程，物理设备接入智能订阅，AI OS 成为全员每天打开的工作台。<br><br>此时 ITEM 不再是一个供应商，而是客户运营的操作系统。</span>
+      <span class="l-en">The customer's own apps and processes settle onto Foundry, physical devices join the intelligence subscription, and AI OS becomes the workspace everyone opens daily.<br><br>At that point ITEM is no longer a vendor — it is the customer's operating system.</span></p>
+    </div>
+  </div>
+  <div class="callout">
+    <p><span class="q"><span class="l-zh">与供应链版的差别只有一个词：</span><span class="l-en">Only one word differs from the supply-chain edition: </span></span>
+    <span class="l-zh">Phase 1 的切入模板从「TMS/WMS」变成了「所在行业的那一个」。打法、扩张路径与终局完全一致——因为平台完全一致。</span>
+    <span class="l-en">Phase 1's landing template changes from "TMS/WMS" to "the one for your industry." The playbook, expansion path, and endgame are identical — because the platform is identical.</span></p>
+  </div>
+</section>
+
+<!-- ============ SLIDE F1 · FINANCIAL ASSUMPTIONS ============ -->
+<section class="slide">
+  <div class="eyebrow">12 · Financial Model — Assumptions</div>
+  <h2><span class="l-zh">财务模型假设：收入引擎与成本引擎</span><span class="l-en">Model Assumptions: the Revenue Engine and the Cost Engine</span></h2>
+  <p class="lede">
+    <span class="l-zh">本模型仅计入<span class="hl-w">通用版新增行业的收入</span>，不含已在运行的供应链业务线；所有假设锚定 2026 年 SaaS/AI 行业基准，宁可保守。Y1 = 通用版 GTM 启动后的第一个 12 个月。</span>
+    <span class="l-en">This model counts <span class="hl-w">only new-vertical revenue from the General Edition</span> — the running supply-chain line is excluded. Every assumption is anchored to 2026 SaaS/AI benchmarks, erring conservative. Y1 = the first 12 months after General-Edition GTM launch.</span>
+  </p>
+  <div class="grid g3">
+    <div class="card">
+      <h3><span class="l-zh">客户与定价</span><span class="l-en">Customers &amp; Pricing</span></h3>
+      <p><span class="l-zh">混合 ACV 起步 <span class="hl-w">$26 万</span>（企业级 $50 万+ / 中型市场 $15 万），随模块扩张升至 Y5 的 $41 万。客户数：22 → 60 → 130 → 230 → 370。<br><br>NRR 假设 <span class="hl">118%</span>——正是 $10 万+ ACV 企业级 SaaS 的行业中位数，非激进假设。</span>
+      <span class="l-en">Blended ACV starts at <span class="hl-w">$260K</span> (enterprise $500K+ / mid-market $150K), rising to $410K by Y5 via module expansion. Customers: 22 → 60 → 130 → 230 → 370.<br><br>NRR assumed at <span class="hl">118%</span> — exactly the industry median for $100K+ ACV enterprise SaaS, not an aggressive bet.</span></p>
+    </div>
+    <div class="card">
+      <h3><span class="l-zh">毛利路径（诚实版）</span><span class="l-en">Gross-Margin Path (the Honest One)</span></h3>
+      <p><span class="l-zh">AI 原生公司的推理成本压低早期毛利（LLM 原生中位仅 ~52%，Bessemer 报告规模化 AI 公司均值 25%）。我们从 <span class="hl-w">62% 起步、Y5 到 76%</span>——改善的引擎正是 Blackbox Router 的模型路由与规模化。传统 SaaS 为 77–81%，我们向其收敛。</span>
+      <span class="l-en">Inference cost depresses early AI-native margins (LLM-native median ~52%; Bessemer reports scaling AI companies averaging 25%). We start at <span class="hl-w">62% and reach 76% by Y5</span> — the improvement engine is Blackbox Router's model routing plus scale. Traditional SaaS runs 77–81%; we converge toward it.</span></p>
+    </div>
+    <div class="card">
+      <h3><span class="l-zh">成本结构</span><span class="l-en">Cost Structure</span></h3>
+      <p><span class="l-zh">全负担人均成本 $18 万/年（薪酬 + 福利 + 设备）。员工数 78 → 310。研发前置（模板工厂），销售费用随收入爬坡。收入按<span class="hl-w">期初期末 ARR 均值</span>确认，避免用期末 ARR 虚增当年收入。</span>
+      <span class="l-en">Fully loaded cost per head: $180K/yr (comp + benefits + equipment). Headcount 78 → 310. R&amp;D front-loaded (the template factory); S&amp;M ramps with revenue. Revenue recognized as the <span class="hl-w">average of opening and closing ARR</span> — no inflating the year with exit ARR.</span></p>
+    </div>
+  </div>
+  <table class="fin">
+    <tr><th><span class="l-zh">收入引擎</span><span class="l-en">Revenue Engine</span></th><th>Y1</th><th>Y2</th><th>Y3</th><th>Y4</th><th>Y5</th></tr>
+    <tr><td><span class="l-zh">客户数（期末）</span><span class="l-en">Customers (exit)</span></td><td>22</td><td>60</td><td>130</td><td>230</td><td>370</td></tr>
+    <tr><td><span class="l-zh">混合 ACV（$K）</span><span class="l-en">Blended ACV ($K)</span></td><td>260</td><td>290</td><td>330</td><td>370</td><td>410</td></tr>
+    <tr class="hi"><td><span class="l-zh">期末 ARR（$M）</span><span class="l-en">Exit ARR ($M)</span></td><td>5.7</td><td>17.4</td><td>42.9</td><td>85.1</td><td>151.7</td></tr>
+    <tr><td><span class="l-zh">ARR 同比增速</span><span class="l-en">ARR YoY growth</span></td><td>—</td><td>204%</td><td>147%</td><td>98%</td><td>78%</td></tr>
+  </table>
+  <p class="src"><span class="l-zh">基准来源：Benchmarkit 2025 数据集（企业级 NRR 中位 118%、毛利 77–81%）；Bessemer《State of the Cloud 2026》（AI 公司毛利）；SaaS Capital / ChartMogul（增速分布）。</span><span class="l-en">Benchmark sources: Benchmarkit 2025 dataset (enterprise NRR median 118%, gross margin 77–81%); Bessemer State of the Cloud 2026 (AI-company margins); SaaS Capital / ChartMogul (growth distributions).</span></p>
+</section>
+
+<!-- ============ SLIDE F2 · 5-YEAR P&L ============ -->
+<section class="slide">
+  <div class="eyebrow">13 · Financial Model — P&amp;L</div>
+  <h2><span class="l-zh">五年损益：从 -$18M 到 +$16M EBITDA</span><span class="l-en">Five-Year P&amp;L: from –$18M to +$16M EBITDA</span></h2>
+  <table class="fin">
+    <tr><th>$M</th><th>Y1</th><th>Y2</th><th>Y3</th><th>Y4</th><th>Y5</th></tr>
+    <tr class="hi"><td><span class="l-zh">确认收入（ARR 均值法）</span><span class="l-en">Recognized revenue (avg-ARR)</span></td><td>2.9</td><td>11.6</td><td>30.2</td><td>64.0</td><td>118.4</td></tr>
+    <tr><td><span class="l-zh">毛利率</span><span class="l-en">Gross margin</span></td><td>62%</td><td>66%</td><td>70%</td><td>73%</td><td>76%</td></tr>
+    <tr><td><span class="l-zh">毛利</span><span class="l-en">Gross profit</span></td><td>1.8</td><td>7.6</td><td>21.1</td><td>46.7</td><td>90.0</td></tr>
+    <tr><td><span class="l-zh">研发（模板工厂 + 平台）</span><span class="l-en">R&amp;D (template factory + platform)</span></td><td>10.0</td><td>13.5</td><td>17.5</td><td>22.0</td><td>26.5</td></tr>
+    <tr><td><span class="l-zh">销售与市场</span><span class="l-en">Sales &amp; marketing</span></td><td>6.5</td><td>13.0</td><td>20.5</td><td>28.0</td><td>36.5</td></tr>
+    <tr><td><span class="l-zh">管理与行政</span><span class="l-en">G&amp;A</span></td><td>3.5</td><td>5.0</td><td>7.0</td><td>9.0</td><td>11.0</td></tr>
+    <tr><td><span class="l-zh">运营费用合计</span><span class="l-en">Total OpEx</span></td><td>20.0</td><td>31.5</td><td>45.0</td><td>59.0</td><td>74.0</td></tr>
+    <tr class="ebit"><td>EBITDA</td><td>-18.2</td><td>-23.9</td><td>-23.9</td><td>-12.3</td><td class="pos">+16.0</td></tr>
+    <tr><td><span class="l-zh">EBITDA 率</span><span class="l-en">EBITDA margin</span></td><td>—</td><td>—</td><td>-79%</td><td>-19%</td><td>+14%</td></tr>
+    <tr><td><span class="l-zh">员工数</span><span class="l-en">Headcount</span></td><td>78</td><td>120</td><td>180</td><td>245</td><td>310</td></tr>
+  </table>
+  <div class="fin-chart">
+    <div class="fc-bars">
+      <div class="fc-axis"></div>
+      <div class="fc-col"><div class="fc-year">Y1</div><div class="fc-bar neg" style="height:40px"></div><div class="fc-val neg" style="top:91px">-18.2</div></div>
+      <div class="fc-col"><div class="fc-year">Y2</div><div class="fc-bar neg" style="height:53px"></div><div class="fc-val neg" style="top:104px">-23.9</div></div>
+      <div class="fc-col"><div class="fc-year">Y3</div><div class="fc-bar neg" style="height:53px"></div><div class="fc-val neg" style="top:104px">-23.9</div></div>
+      <div class="fc-col"><div class="fc-year">Y4</div><div class="fc-bar neg" style="height:27px"></div><div class="fc-val neg" style="top:78px">-12.3</div></div>
+      <div class="fc-col"><div class="fc-bar pos" style="height:35px"></div><div class="fc-val pos" style="top:-4px">+16.0</div><div class="fc-year" style="top:52px">Y5</div></div>
+    </div>
+    <div class="fc-note"><span class="l-zh">EBITDA（$M）· 亏损峰值出现在 Y2–Y3 的 GTM 扩张期；Y4 起销售效率与毛利改善同时发力。</span><span class="l-en">EBITDA ($M) · Peak losses land in the Y2–Y3 GTM expansion; from Y4, sales efficiency and margin gains compound together.</span></div>
+  </div>
+  <div class="callout">
+    <p><span class="q"><span class="l-zh">投资人视角的三个读数：</span><span class="l-en">Three reads for an investor: </span></span>
+    <span class="l-zh">① 亏损由投入节奏驱动而非单位经济恶化（毛利逐年上行）；② OpEx 占收入比从 690% 降至 63%，经营杠杆真实存在；③ Y5 同时满足高增长（+78%）与正利润（+14%）——Rule of 40 ≈ 98。</span>
+    <span class="l-en">① Losses are driven by investment pacing, not deteriorating unit economics (gross margin rises every year); ② OpEx falls from 690% of revenue to 63% — real operating leverage; ③ Y5 delivers high growth (+78%) and positive margin (+14%) simultaneously — Rule of 40 ≈ 98.</span></p>
+  </div>
+</section>
+
+<!-- ============ SLIDE F3 · FUNDING & BREAK-EVEN ============ -->
+<section class="slide">
+  <div class="eyebrow">14 · Financial Model — Funding &amp; Break-Even</div>
+  <h2><span class="l-zh">融资计划与盈亏平衡：总需 $95M，第 4 年 Q4 打平</span><span class="l-en">Funding Plan &amp; Break-Even: $95M Total, Breakeven in Y4 Q4</span></h2>
+  <div class="round">
+    <div class="card">
+      <div class="rname"><span class="l-zh">启动资金 · SERIES A</span><span class="l-en">LAUNCH CAPITAL · SERIES A</span></div>
+      <div class="ramt">$35M</div>
+      <div class="rwhen"><span class="l-zh">通用版发布时 · 覆盖至第 18–20 个月</span><span class="l-en">At General-Edition launch · runway to month 18–20</span></div>
+      <div class="ubar"><span style="width:45%;background:var(--cyan)"></span><span style="width:28%;background:var(--blue)"></span><span style="width:15%;background:var(--gold)"></span><span style="width:12%;background:var(--faint)"></span></div>
+      <div class="ulegend">
+        <span class="l-zh"><i style="background:var(--cyan)"></i>研发与模板工厂 45%（$15.8M）：平台加固 + 首批 3 个新行业模板<br><i style="background:var(--blue)"></i>GTM 28%（$9.8M）：3 个垂直的销售与市场团队<br><i style="background:var(--gold)"></i>计算与基础设施 15%（$5.2M）<br><i style="background:var(--faint)"></i>认证合规 + G&amp;A 12%（$4.2M）</span>
+        <span class="l-en"><i style="background:var(--cyan)"></i>R&amp;D &amp; template factory 45% ($15.8M): platform hardening + first 3 new-vertical templates<br><i style="background:var(--blue)"></i>GTM 28% ($9.8M): sales &amp; marketing for 3 verticals<br><i style="background:var(--gold)"></i>Compute &amp; infrastructure 15% ($5.2M)<br><i style="background:var(--faint)"></i>Certifications + G&amp;A 12% ($4.2M)</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="rname"><span class="l-zh">追加投资 · SERIES B</span><span class="l-en">FOLLOW-ON · SERIES B</span></div>
+      <div class="ramt">$60M</div>
+      <div class="rwhen"><span class="l-zh">第 18–22 个月 · ARR $12–16M 时点（AI 原生私募倍数 25–30× ARR）</span><span class="l-en">Month 18–22 · at $12–16M ARR (AI-native private multiples: 25–30× ARR)</span></div>
+      <div class="ubar"><span style="width:50%;background:var(--blue)"></span><span style="width:20%;background:var(--cyan)"></span><span style="width:12%;background:var(--green)"></span><span style="width:10%;background:var(--gold)"></span><span style="width:8%;background:var(--faint)"></span></div>
+      <div class="ulegend">
+        <span class="l-zh"><i style="background:var(--blue)"></i>GTM 规模化 50%（$30M）<br><i style="background:var(--cyan)"></i>模板扩张 +5 个行业 20%（$12M）<br><i style="background:var(--green)"></i>国际化 12%（$7.2M）<br><i style="background:var(--gold)"></i>计算 10%（$6M）· <i style="background:var(--faint)"></i>缓冲 8%（$4.8M）</span>
+        <span class="l-en"><i style="background:var(--blue)"></i>GTM scale-up 50% ($30M)<br><i style="background:var(--cyan)"></i>Template expansion, +5 verticals 20% ($12M)<br><i style="background:var(--green)"></i>International 12% ($7.2M)<br><i style="background:var(--gold)"></i>Compute 10% ($6M) · <i style="background:var(--faint)"></i>Buffer 8% ($4.8M)</span>
+      </div>
+    </div>
+  </div>
+  <table class="fin">
+    <tr><th>$M</th><th>Y1</th><th>Y2</th><th>Y3</th><th>Y4</th><th>Y5</th></tr>
+    <tr><td><span class="l-zh">当年 EBITDA</span><span class="l-en">EBITDA</span></td><td>-18.2</td><td>-23.9</td><td>-23.9</td><td>-12.3</td><td>+16.0</td></tr>
+    <tr><td><span class="l-zh">累计消耗</span><span class="l-en">Cumulative burn</span></td><td>-18.2</td><td>-42.1</td><td>-66.0</td><td>-78.3</td><td>-62.3</td></tr>
+    <tr class="hi"><td><span class="l-zh">期末现金（A $35M + B $60M）</span><span class="l-en">Cash exit (A $35M + B $60M)</span></td><td>16.8</td><td>52.9</td><td>29.0</td><td>16.7</td><td>32.7</td></tr>
+  </table>
+  <div class="be-flag">◆ <span class="l-zh">单月 EBITDA 打平：第 4 年 Q4 ｜ 第 5 年全年转正 +$16M ｜ 峰值资金缺口 $78.3M（Y4）｜ 最低现金垫 $16.7M</span><span class="l-en">Monthly EBITDA breakeven: Y4 Q4 | Full-year positive in Y5 at +$16M | Peak funding gap $78.3M (Y4) | Minimum cash cushion $16.7M</span></div>
+  <div class="callout">
+    <p><span class="q"><span class="l-zh">为什么是两轮而不是一轮：</span><span class="l-en">Why two rounds instead of one: </span></span>
+    <span class="l-zh">A 轮只为「用 3 个新行业复现供应链的验证」定价；B 轮在 ARR $12–16M、模板机制二次验证后再融——届时按 AI 原生 25–30× 倍数定价，<span class="hl-w">创始人稀释最小化</span>。若 B 轮市场恶化，削减 GTM 扩张即可把打平点自力推进（见下页情景分析）。</span>
+    <span class="l-en">Series A is priced only for "replicating the supply-chain proof across 3 new verticals"; Series B raises after the template mechanism is validated a second time at $12–16M ARR — priced at AI-native 25–30× multiples, <span class="hl-w">minimizing founder dilution</span>. If the B market turns, cutting GTM expansion pushes to breakeven organically (see scenario analysis, next slide).</span></p>
+  </div>
+</section>
+
+<!-- ============ SLIDE F4 · INVESTOR METRICS ============ -->
+<section class="slide">
+  <div class="eyebrow">15 · Financial Model — Investor Metrics</div>
+  <h2><span class="l-zh">投资人指标仪表盘：每一项对照 2026 行业基准</span><span class="l-en">The Investor Dashboard: Every Metric vs. 2026 Benchmarks</span></h2>
+  <div class="grid g4">
+    <div class="card"><div class="kpi">22→10<span style="font-size:.45em"> mo</span></div><div class="kpi-lbl"><span class="l-zh"><span class="hl-w">CAC 回收期</span> Y1→Y5。基准：企业级中位 18–24 个月，精英 &lt;12——Y3 即达 15，Y5 进入精英区</span><span class="l-en"><span class="hl-w">CAC payback</span> Y1→Y5. Benchmark: enterprise median 18–24 mo, elite &lt;12 — we hit 15 by Y3 and elite territory by Y5</span></div></div>
+    <div class="card"><div class="kpi">4–6×</div><div class="kpi-lbl"><span class="l-zh"><span class="hl-w">LTV:CAC</span>（五年期 · NRR 118%）。基准：健康 3:1，企业级均值 4.5:1，顶级 4–6:1</span><span class="l-en"><span class="hl-w">LTV:CAC</span> (5-yr horizon · 118% NRR). Benchmark: healthy 3:1, enterprise avg 4.5:1, top quartile 4–6:1</span></div></div>
+    <div class="card"><div class="kpi">118%</div><div class="kpi-lbl"><span class="l-zh"><span class="hl-w">NRR</span> = 企业级行业中位数；&gt;120% 的公司估值高 2.3×——多模块架构是我们冲击 120%+ 的结构性抓手</span><span class="l-en"><span class="hl-w">NRR</span> = the enterprise median; companies &gt;120% command 2.3× valuations — the multi-module architecture is our structural lever toward 120%+</span></div></div>
+    <div class="card"><div class="kpi">3.2→0.3</div><div class="kpi-lbl"><span class="l-zh"><span class="hl-w">Burn Multiple</span> Y1→Y4（每 $1 新 ARR 的净消耗）。基准：&gt;$10M ARR 后 &gt;3 即为问题，&lt;1 为顶级——83% 的后期投资人视其为核心指标</span><span class="l-en"><span class="hl-w">Burn multiple</span> Y1→Y4 (net burn per $1 net-new ARR). Benchmark: &gt;3 past $10M ARR is a problem, &lt;1 is elite — 83% of late-stage investors call it critical</span></div></div>
+  </div>
+  <div class="grid g4">
+    <div class="card"><div class="kpi">1.24</div><div class="kpi-lbl"><span class="l-zh"><span class="hl-w">Magic Number</span>（Y3：新增 ARR / 销售费用）。基准：中位 0.7，≥1.0 优秀</span><span class="l-en"><span class="hl-w">Magic number</span> (Y3: net-new ARR / S&amp;M). Benchmark: median 0.7, ≥1.0 excellent</span></div></div>
+    <div class="card"><div class="kpi">≈98</div><div class="kpi-lbl"><span class="l-zh"><span class="hl-w">Rule of 40</span>（Y5：增长 78% + 利润率 14%）。基准：&gt;40 及格，&gt;60 享 2–3× 估值溢价</span><span class="l-en"><span class="hl-w">Rule of 40</span> (Y5: 78% growth + 14% margin). Benchmark: &gt;40 passes, &gt;60 earns a 2–3× valuation premium</span></div></div>
+    <div class="card"><div class="kpi">$489K</div><div class="kpi-lbl"><span class="l-zh"><span class="hl-w">人均 ARR</span>（Y5：$151.7M / 310 人）——资本效率的最直观读数</span><span class="l-en"><span class="hl-w">ARR per employee</span> (Y5: $151.7M / 310 heads) — the most legible read on capital efficiency</span></div></div>
+    <div class="card"><div class="kpi gold">$1.00</div><div class="kpi-lbl"><span class="l-zh"><span class="hl-w">扩张 ARR 获取成本</span> vs 新客 $2.00（行业数据）——模板架构让扩张收入占比持续上升，混合获客成本结构性下降</span><span class="l-en"><span class="hl-w">Cost per $1 of expansion ARR</span> vs $2.00 for new logos (industry data) — the template architecture keeps shifting mix toward expansion, structurally lowering blended CAC</span></div></div>
+  </div>
+  <table class="fin">
+    <tr><th><span class="l-zh">情景分析</span><span class="l-en">Scenario</span></th><th><span class="l-zh">Y5 ARR</span><span class="l-en">Y5 ARR</span></th><th><span class="l-zh">打平时点</span><span class="l-en">Breakeven</span></th><th><span class="l-zh">总资本需求</span><span class="l-en">Total capital</span></th><th><span class="l-zh">关键差异</span><span class="l-en">Key delta</span></th></tr>
+    <tr><td><span class="l-zh">保守</span><span class="l-en">Conservative</span></td><td>~$95M</td><td><span class="l-zh">第 5 年末</span><span class="l-en">End of Y5</span></td><td>~$115M<span class="l-zh">（需 C 轮 $25M）</span><span class="l-en"> (+$25M Series C)</span></td><td><span class="l-zh">客户 -25% · ACV -15% · 毛利改善放缓</span><span class="l-en">Customers -25% · ACV -15% · slower margin gains</span></td></tr>
+    <tr class="hi"><td><span class="l-zh">基准（本模型）</span><span class="l-en">Base (this model)</span></td><td>$151.7M</td><td><span class="l-zh">第 4 年 Q4</span><span class="l-en">Y4 Q4</span></td><td>$95M</td><td><span class="l-zh">如前页假设</span><span class="l-en">As per prior slides</span></td></tr>
+    <tr><td><span class="l-zh">乐观</span><span class="l-en">Aggressive</span></td><td>~$200M</td><td><span class="l-zh">第 4 年 Q1</span><span class="l-en">Y4 Q1</span></td><td>~$70M</td><td><span class="l-zh">供应链存量客户交叉销售 + 伙伴渠道提前起量</span><span class="l-en">Cross-sell into the supply-chain base + partner channel ramps early</span></td></tr>
+  </table>
+  <p class="src"><span class="l-zh">基准来源：Benchmarkit 2025（CAC 回收 / NRR / 毛利 / 扩张成本 $1 vs $2）；SaaS Capital / ScaleXP（burn multiple、投资人调研）；KeyBanc / ICONIQ（NRR 与估值关系）；Phoenix Strategy Group（Rule of 40 溢价）。</span><span class="l-en">Benchmark sources: Benchmarkit 2025 (CAC payback / NRR / margins / $1-vs-$2 expansion cost); SaaS Capital / ScaleXP (burn multiple, investor surveys); KeyBanc / ICONIQ (NRR-to-valuation curve); Phoenix Strategy Group (Rule of 40 premium).</span></p>
+</section>
+
+<!-- ============ SLIDE 16 · VISION ============ -->
+<section class="slide cover">
+  <div class="eyebrow">16 · The Vision</div>
+  <h1 style="max-width:1050px">
+    <span class="l-zh">下一个千亿美元级企业软件公司，<br>是一个<span style="color:var(--cyan)">通用的 AI 操作系统</span><br>加上<span style="color:var(--gold)">一个行业模板库</span>。</span>
+    <span class="l-en">The next $100B enterprise software company<br>is a <span style="color:var(--cyan)">general AI operating system</span><br>plus a <span style="color:var(--gold)">library of industry templates</span>.</span>
+  </h1>
+  <p class="cover-sub">
+    <span class="l-zh">横向平台有规模没有行业深度，垂直方案有深度没有平台经济学。<br>ITEM AI 同时拥有两者：五层已验证的通用内核（Layer 2–6），一个从供应链开始、向所有行业展开的模板库，以及两端完全开放的集成边界（Layer 1 &amp; 7）。</span>
+    <span class="l-en">Horizontal platforms have scale without industry depth; vertical solutions have depth without platform economics.<br>ITEM AI holds both: a proven five-layer general core (Layers 2–6), a template library that starts in supply chain and unfolds into every industry, and fully open integration boundaries at both ends (Layers 1 &amp; 7).</span>
+  </p>
+  <div class="cover-industries">
+    <span class="tag blue"><span class="l-zh">一个平台</span><span class="l-en">One Platform</span></span>
+    <span class="tag gold"><span class="l-zh">N 个行业</span><span class="l-en">N Industries</span></span>
+    <span class="tag green"><span class="l-zh">供应链 · 已验证</span><span class="l-en">Supply Chain · Proven</span></span>
+    <span class="tag grey"><span class="l-zh">你的行业 · 下一个</span><span class="l-en">Your Industry · Next</span></span>
+  </div>
+  <div class="cover-meta">ITEM AI · GENERAL ENTERPRISE EDITION · product_general_v4</div>
+</section>
+
+</div>
+
+<script>
+(function(){
+  /* ---------- language toggle ---------- */
+  var langBtn=document.getElementById('langBtn');
+  function setLang(l){
+    document.body.classList.toggle('en', l==='en');
+    document.documentElement.lang = l==='en' ? 'en' : 'zh-CN';
+    try{localStorage.setItem('item_lang',l);}catch(e){}
+  }
+  langBtn.addEventListener('click',function(){
+    setLang(document.body.classList.contains('en')?'zh':'en');
+    this.blur();
+  });
+  try{
+    var saved=localStorage.getItem('item_lang');
+    if(saved==='en')setLang('en');
+  }catch(e){}
+
+  /* ---------- slide navigation ---------- */
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var cur=0,tot=slides.length;
+  document.getElementById('tot').textContent=tot;
+  var dotsBox=document.getElementById('dots');
+  slides.forEach(function(_,i){
+    var d=document.createElement('button');
+    d.className='dot'+(i===0?' on':'');
+    d.setAttribute('aria-label','Slide '+(i+1));
+    d.addEventListener('click',function(){go(i);this.blur();});
+    dotsBox.appendChild(d);
+  });
+  var dots=[].slice.call(dotsBox.children);
+  function go(n){
+    if(n<0||n>=tot||n===cur)return;
+    slides[cur].classList.remove('active');
+    slides[cur].classList.toggle('prev',n>cur);
+    slides[n].classList.remove('prev');
+    slides[n].classList.add('active');
+    dots[cur].classList.remove('on');
+    dots[n].classList.add('on');
+    cur=n;
+    document.getElementById('cur').textContent=cur+1;
+    document.getElementById('progress').style.width=((cur+1)/tot*100)+'%';
+    slides[cur].scrollTop=0;
+  }
+  document.getElementById('prevBtn').addEventListener('click',function(){go(cur-1);this.blur();});
+  document.getElementById('nextBtn').addEventListener('click',function(){go(cur+1);this.blur();});
+  document.addEventListener('keydown',function(e){
+    var t=e.target;
+    if(t&&t.tagName==='BUTTON'&&(e.key===' '||e.key==='Enter'))return;
+    if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' ')go(cur+1);
+    if(e.key==='ArrowLeft'||e.key==='PageUp')go(cur-1);
+    if(e.key==='Home')go(0);
+    if(e.key==='End')go(tot-1);
+    if(e.key==='l'||e.key==='L')langBtn.click();
+  });
+  var tx=0,ty=0;
+  document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
+  document.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
+    if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5){ dx<0?go(cur+1):go(cur-1); }
+  },{passive:true});
+  document.getElementById('progress').style.width=(1/tot*100)+'%';
+})();
+</script>
+</body>
+</html>

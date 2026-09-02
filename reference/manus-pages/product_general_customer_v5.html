@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>ITEM AI — Customer Briefing · product_general_customer_v5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0A1628;--bg2:#0D1E36;--card:#122543;--card2:#16294A;--line:#1E3A5F;--blue:#2E75B6;--cyan:#38BDF8;--cyan-dim:#1E5C8A;--gold:#F5B942;--gold-dim:#8A6A1E;--green:#34D399;--text:#E8EEF7;--muted:#8FA3BF;--faint:#5A6E8C;--display:'Space Grotesk','Noto Sans SC',sans-serif;--body:'Inter','Noto Sans SC',-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;--mono:'IBM Plex Mono','Noto Sans SC',monospace}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--body)}
+::selection{background:var(--cyan);color:#04101F}
+body.en .l-zh{display:none!important}
+body:not(.en) .l-en{display:none!important}
+.deck{position:relative;width:100%;height:100%}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-start;padding:6.5vh 7vw;opacity:0;transform:translateX(60px);pointer-events:none;transition:opacity .55s ease,transform .55s ease;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.slide::before{content:"";margin-top:auto;flex-shrink:0}
+.slide::after{content:"";margin-bottom:auto;flex-shrink:0}
+.slide.active{opacity:1;transform:translateX(0);pointer-events:auto}
+.slide.prev{transform:translateX(-60px)}
+@media(prefers-reduced-motion:reduce){.slide{transition:none}}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 28px;background:linear-gradient(180deg,rgba(10,22,40,.92),rgba(10,22,40,0));pointer-events:none}
+.topbar>*{pointer-events:auto}
+.brand{font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:.14em;color:var(--text)}
+.brand b{color:var(--cyan)}
+.doc-tag{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.08em}
+.top-right{display:flex;align-items:center;gap:14px}
+.counter{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.counter b{color:var(--cyan)}
+.langbtn{font-family:var(--mono);font-size:11px;letter-spacing:.12em;cursor:pointer;color:var(--cyan);background:rgba(56,189,248,.08);border:1px solid var(--cyan-dim);border-radius:99px;padding:5px 14px;transition:all .2s}
+.langbtn:hover{background:rgba(56,189,248,.16);border-color:var(--cyan)}
+.navbtn{position:fixed;top:50%;transform:translateY(-50%);z-index:60;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(18,37,67,.75);color:var(--muted);font-size:18px;cursor:pointer;backdrop-filter:blur(6px);transition:all .2s;display:flex;align-items:center;justify-content:center}
+.navbtn:hover{border-color:var(--cyan);color:var(--cyan)}
+#prevBtn{left:18px}#nextBtn{right:18px}
+.progress{position:fixed;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--cyan));z-index:60;transition:width .4s ease}
+.dots{position:fixed;right:22px;bottom:22px;z-index:55;display:flex;gap:6px;flex-wrap:wrap;max-width:220px;justify-content:flex-end}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--line);cursor:pointer;transition:all .2s;border:none;padding:0}
+.dot.on{background:var(--cyan);transform:scale(1.35)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.28em;color:var(--cyan);text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:"";width:34px;height:1px;background:var(--cyan)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,4.6vw,62px);line-height:1.14;letter-spacing:-.01em}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(25px,3vw,40px);line-height:1.2;margin-bottom:14px}
+.lede{font-size:clamp(14px,1.2vw,16.5px);color:var(--muted);line-height:1.75;max-width:900px}
+.hl{color:var(--cyan);font-weight:600}.hl-g{color:var(--gold);font-weight:600}.hl-w{color:var(--text);font-weight:600}
+.src{font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-top:auto;padding-top:20px;line-height:1.7}
+.grid{display:grid;gap:14px;margin-top:24px}
+.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:linear-gradient(160deg,var(--card),rgba(18,37,67,.55));border:1px solid var(--line);border-radius:12px;padding:20px 22px;transition:border-color .25s,transform .25s}
+.card:hover{border-color:var(--cyan-dim);transform:translateY(-2px)}
+.card h3{font-family:var(--display);font-size:16px;font-weight:700;margin-bottom:8px;color:var(--text)}
+.card p{font-size:13px;color:var(--muted);line-height:1.7}
+.kpi{font-family:var(--display);font-weight:700;font-size:clamp(26px,2.6vw,40px);color:var(--cyan);line-height:1.05}
+.kpi.gold{color:var(--gold)}
+.kpi-lbl{font-size:13px;color:var(--muted);margin-top:10px;line-height:1.65}
+.tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;padding:3px 9px;border-radius:99px;border:1px solid;white-space:nowrap}
+.tag.blue{color:var(--cyan);border-color:var(--cyan-dim);background:rgba(56,189,248,.07)}
+.tag.gold{color:var(--gold);border-color:var(--gold-dim);background:rgba(245,185,66,.07)}
+.tag.grey{color:var(--faint);border-color:var(--line);background:rgba(90,110,140,.08)}
+.tag.green{color:var(--green);border-color:rgba(52,211,153,.35);background:rgba(52,211,153,.07)}
+.cover{background:radial-gradient(1100px 620px at 78% 18%,rgba(46,117,182,.22),transparent 60%),radial-gradient(800px 500px at 12% 88%,rgba(56,189,248,.10),transparent 60%),var(--bg)}
+.cover-tag{font-family:var(--mono);font-size:12px;color:var(--cyan);letter-spacing:.3em;margin-bottom:26px}
+.cover h1 .en-sub{display:block;font-size:.5em;color:var(--muted);font-weight:500;letter-spacing:.02em;margin-top:14px}
+.cover-sub{margin-top:28px;font-size:clamp(14px,1.3vw,18px);color:var(--muted);line-height:1.8;max-width:820px}
+.cover-industries{display:flex;flex-wrap:wrap;gap:10px;margin-top:32px}
+.cover-industries .tag{font-size:11.5px;padding:6px 14px}
+.cover-meta{margin-top:44px;font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.12em;line-height:2}
+.stack{display:flex;flex-direction:column;gap:6px;margin-top:16px;max-width:1080px}
+.layer{display:grid;grid-template-columns:130px 1fr 300px;gap:18px;align-items:center;border-radius:10px;padding:10px 20px;transition:all .25s}
+.layer .lnum{font-family:var(--mono);font-size:11px;letter-spacing:.1em}
+.layer .lname{font-family:var(--display);font-weight:700;font-size:15px}
+.layer .lname small{display:block;font-family:var(--body);font-weight:400;font-size:11.5px;color:var(--muted);margin-top:3px;letter-spacing:0}
+.layer .lprod{font-family:var(--mono);font-size:10.5px;line-height:1.65;text-align:right}
+.layer.core{background:linear-gradient(90deg,rgba(46,117,182,.28),rgba(56,189,248,.10));border:1px solid var(--cyan-dim)}
+.layer.core:hover{border-color:var(--cyan);box-shadow:0 0 26px rgba(56,189,248,.18);transform:translateX(4px)}
+.layer.core .lnum{color:var(--cyan)}.layer.core .lprod{color:#A9D4F5}
+.layer.integ{background:rgba(18,37,67,.28);border:1px dashed var(--faint);opacity:.72}
+.layer.integ .lnum{color:var(--faint)}.layer.integ .lname{color:var(--muted)}.layer.integ .lprod{color:var(--faint)}
+.layer.integ:hover{opacity:.95}
+.stack-legend{display:flex;gap:26px;margin-top:12px;flex-wrap:wrap}
+.leg{display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--muted)}
+.leg .sw{width:26px;height:13px;border-radius:4px}
+.leg .sw.core{background:linear-gradient(90deg,rgba(46,117,182,.5),rgba(56,189,248,.25));border:1px solid var(--cyan-dim)}
+.leg .sw.integ{background:rgba(18,37,67,.3);border:1px dashed var(--faint)}
+.brace{font-family:var(--mono);font-size:10.5px;color:var(--cyan);letter-spacing:.15em;padding-left:12px;border-left:2px solid var(--cyan);margin:2px 0 2px 6px}
+.ldetail-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+.lbadge{font-family:var(--mono);font-size:13px;color:#04101F;background:linear-gradient(90deg,var(--blue),var(--cyan));padding:5px 14px;border-radius:7px;font-weight:500;letter-spacing:.1em}
+.mini-stack{display:flex;gap:4px;margin-bottom:20px}
+.mini-stack span{height:7px;flex:1;border-radius:3px;background:var(--line)}
+.mini-stack span.on{background:linear-gradient(90deg,var(--blue),var(--cyan))}
+.mini-stack span.integ{background:repeating-linear-gradient(45deg,var(--line),var(--line) 4px,transparent 4px,transparent 8px);border:1px dashed var(--faint);height:5px}
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
+.pcard{border-radius:10px;padding:13px 15px;border:1px solid var(--line);background:rgba(18,37,67,.5);transition:all .2s}
+.pcard:hover{transform:translateY(-2px)}
+.pcard.blue{border-left:3px solid var(--cyan)}.pcard.blue:hover{border-color:var(--cyan-dim);border-left-color:var(--cyan)}
+.pcard.gold{border-left:3px solid var(--gold)}.pcard.gold:hover{border-color:var(--gold-dim);border-left-color:var(--gold)}
+.pcard .pname{font-family:var(--display);font-weight:700;font-size:14px}
+.pcard .ptag{font-family:var(--mono);font-size:9.5px;color:var(--faint);letter-spacing:.04em;margin-top:2px}
+.pcard .pdesc{font-size:11.5px;color:var(--muted);margin-top:7px;line-height:1.6}
+.pcard .demo-link{display:inline-flex;align-items:center;gap:5px;margin-top:8px;font-family:var(--mono);font-size:10px;color:var(--cyan);text-decoration:none;letter-spacing:.04em;transition:all .2s}
+.pcard .demo-link:hover{color:var(--text);text-decoration:underline}
+.pcard .demo-link::before{content:"▶";font-size:8px}
+.cat-head{display:flex;align-items:center;gap:12px;margin-top:24px;margin-bottom:4px}
+.cat-head .cat-title{font-family:var(--display);font-weight:700;font-size:16px}
+.cat-head .cat-line{flex:1;height:1px;background:var(--line)}
+.cat-head .cat-count{font-family:var(--mono);font-size:11px;color:var(--faint)}
+table{width:100%;border-collapse:collapse;margin-top:18px;font-size:12.5px}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--cyan);text-align:left;padding:10px 14px;border-bottom:1px solid var(--cyan-dim);text-transform:uppercase}
+td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--muted);line-height:1.6;vertical-align:top}
+td:first-child{color:var(--text);font-weight:600}
+tr:hover td{background:rgba(56,189,248,.03)}
+.flow{display:flex;align-items:stretch;gap:0;margin-top:26px;flex-wrap:wrap}
+.fstep{flex:1;min-width:200px;position:relative;padding:22px 26px 22px 34px;background:var(--card);border:1px solid var(--line)}
+.fstep:first-child{border-radius:12px 0 0 12px}
+.fstep:last-child{border-radius:0 12px 12px 0}
+.fstep+.fstep{border-left:none}
+.fstep::after{content:"";position:absolute;right:-11px;top:50%;transform:translateY(-50%) rotate(45deg);width:20px;height:20px;background:var(--card);border-top:1px solid var(--line);border-right:1px solid var(--line);z-index:2}
+.fstep:last-child::after{display:none}
+.fstep .fphase{font-family:var(--mono);font-size:10px;color:var(--cyan);letter-spacing:.2em;margin-bottom:8px}
+.fstep h3{font-family:var(--display);font-size:17px;margin-bottom:8px}
+.fstep p{font-size:12px;color:var(--muted);line-height:1.7}
+.callout{margin-top:24px;border-left:3px solid var(--cyan);background:rgba(56,189,248,.05);border-radius:0 12px 12px 0;padding:18px 24px;max-width:1000px}
+.callout p{font-size:14px;line-height:1.8;color:var(--text)}
+.callout .q{color:var(--cyan)}
+.callout.gold{border-left-color:var(--gold);background:rgba(245,185,66,.05)}
+.comp-wrap{display:grid;grid-template-columns:440px 1fr;gap:26px;margin-top:20px;align-items:start}
+.quad{position:relative;height:340px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(var(--line),var(--line)) center/1px 100% no-repeat,linear-gradient(var(--line),var(--line)) center/100% 1px no-repeat,radial-gradient(420px 260px at 88% 12%,rgba(56,189,248,.10),transparent 65%),rgba(18,37,67,.35)}
+.quad .ax{position:absolute;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;color:var(--faint);line-height:1.5}
+.quad .ax.x1{bottom:8px;left:12px}.quad .ax.x2{bottom:8px;right:12px;text-align:right}
+.quad .ax.y1{top:8px;left:12px}
+.qdot{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center}
+.qdot .qb{width:15px;height:15px;border-radius:50%}
+.qdot .qn{font-family:var(--display);font-weight:700;font-size:12px;line-height:1.3;white-space:nowrap}
+.qdot .qs{font-family:var(--mono);font-size:9px;color:var(--faint);line-height:1.4}
+.qdot.item .qb{background:var(--cyan);box-shadow:0 0 18px rgba(56,189,248,.8)}.qdot.item .qn{color:var(--cyan)}
+.qdot.glean .qb{background:var(--gold)}.qdot.glean .qn{color:var(--gold)}
+.qdot.aa .qb{background:#C084FC}.qdot.aa .qn{color:#C084FC}
+.qdot.ghost .qb{background:transparent;border:1.5px dashed var(--faint);width:13px;height:13px}.qdot.ghost .qn{color:var(--faint);font-weight:500;font-size:11px}
+table.comp td{font-size:11.5px;padding:8px 10px;line-height:1.55}
+table.comp th{padding:8px 10px}
+table.comp td:first-child{white-space:nowrap}
+.timeline{display:flex;gap:0;margin-top:30px;position:relative}
+.timeline::before{content:"";position:absolute;top:38px;left:5%;right:5%;height:3px;background:linear-gradient(90deg,var(--blue),var(--cyan),var(--green))}
+.tstep{flex:1;text-align:center;position:relative;padding-top:60px}
+.tstep .tnum{position:absolute;top:24px;left:50%;transform:translateX(-50%);width:28px;height:28px;border-radius:50%;background:var(--cyan);color:#04101F;font-family:var(--mono);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;z-index:2}
+.tstep h3{font-family:var(--display);font-size:15px;margin-bottom:6px}
+.tstep .tdur{font-family:var(--mono);font-size:11px;color:var(--cyan);margin-bottom:8px}
+.tstep p{font-size:12px;color:var(--muted);line-height:1.6;padding:0 10px}
+@media(max-width:960px){.slide{padding:max(9vh,76px) 6vw 12vh}.g3,.g4{grid-template-columns:repeat(2,1fr)}.pgrid{grid-template-columns:repeat(2,1fr)}.layer{grid-template-columns:80px 1fr;gap:10px}.layer .lprod{display:none}.flow{flex-direction:column}.fstep{border-radius:12px!important;border-left:1px solid var(--line)!important;margin-bottom:10px}.fstep::after{display:none}.navbtn{width:38px;height:38px}.dots{display:none}.doc-tag{display:none}.comp-wrap{grid-template-columns:1fr}.quad{height:300px}.timeline{flex-direction:column;gap:20px}.timeline::before{display:none}.tstep{padding-top:0;text-align:left;padding-left:50px}.tstep .tnum{left:0;top:0;transform:none}}
+@media(max-width:600px){.g2,.g3,.g4,.pgrid{grid-template-columns:1fr}h1{font-size:30px}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="brand">ITEM <b>AI</b></div>
+  <div class="doc-tag">product_general_customer_v5</div>
+  <div class="top-right">
+    <button class="langbtn" id="langBtn" aria-label="Switch language"><span class="l-zh">EN</span><span class="l-en">中文</span></button>
+    <div class="counter"><b id="cur">1</b> / <span id="tot">14</span></div>
+  </div>
+</div>
+<button class="navbtn" id="prevBtn" aria-label="Previous">‹</button>
+<button class="navbtn" id="nextBtn" aria-label="Next">›</button>
+<div class="progress" id="progress"></div>
+<div class="dots" id="dots"></div>
+
+<div class="deck" id="deck">
+
+<!-- SLIDE 1 · COVER -->
+<section class="slide cover active">
+  <div class="cover-tag">CUSTOMER EDITION · V5</div>
+  <h1><span class="l-zh">ITEM AI<br>通用企业 AI 操作系统<span class="en-sub">The Enterprise AI Operating System — for Every Industry</span></span><span class="l-en">ITEM AI<br>The General Enterprise<br>AI Operating System<span class="en-sub">One Platform · Every Industry</span></span></h1>
+  <p class="cover-sub"><span class="l-zh">一套<span class="hl">已在供应链行业验证并生产运行</span>的 AI 操作系统架构，现以<span class="hl-w">「平台 + 行业模板」</span>的方式向所有行业开放。同一个本体、同一个 AI 运行时、同一个运营平台——只需更换行业模板，即可落地到任何垂直领域。</span><span class="l-en">An AI operating system <span class="hl">validated and running in production in supply chain</span> — now open to every industry as <span class="hl-w">"one platform + pluggable industry templates."</span> Same ontology, same AI runtime, same ops platform: swap the template and deploy into any vertical.</span></p>
+  <div class="cover-industries">
+    <span class="tag green"><span class="l-zh">✓ 供应链 · 已验证</span><span class="l-en">✓ Supply Chain · Proven</span></span>
+    <span class="tag gold"><span class="l-zh">财务咨询</span><span class="l-en">Financial Advisory</span></span>
+    <span class="tag gold"><span class="l-zh">餐馆运营</span><span class="l-en">Restaurant Ops</span></span>
+    <span class="tag gold"><span class="l-zh">房产管理</span><span class="l-en">Property Mgmt</span></span>
+    <span class="tag gold"><span class="l-zh">地产开发</span><span class="l-en">Real Estate Dev</span></span>
+    <span class="tag grey"><span class="l-zh">你的行业 · 下一个</span><span class="l-en">Your Industry · Next</span></span>
+  </div>
+  <div class="cover-meta">ITEM AI · CUSTOMER EDITION · V5</div>
+</section>
+
+<!-- SLIDE 2 · REPOSITIONING -->
+<section class="slide">
+  <div class="eyebrow">01 · Repositioning</div>
+  <h2><span class="l-zh">从「物流 AI」到「通用企业 AI 操作系统」</span><span class="l-en">From "Logistics AI" to "General Enterprise AI OS"</span></h2>
+  <p class="lede"><span class="l-zh">供应链是我们的<span class="hl">出发点</span>，不是终点。我们在那里构建了完整的 AI 操作系统——本体、智能体运行时、应用工厂、运营工作区。我们发现：<span class="hl-w">这套架构的 80% 与行业无关</span>。</span><span class="l-en">Supply chain is our <span class="hl">starting point</span>, not our destination. There, we built a complete AI OS — ontology, agent runtime, app factory, ops workspace. We discovered: <span class="hl-w">80% of this architecture is industry-agnostic</span>.</span></p>
+  <div class="grid g3">
+    <div class="card"><h3><span class="l-zh">已验证的事实</span><span class="l-en">What We've Proven</span></h3><p><span class="l-zh">在供应链行业，ITEM 已运行完整的 AI 操作系统：从数据本体到智能体编排，从工作流执行到物理设备对接。这是生产系统，不是概念验证。</span><span class="l-en">In supply chain, ITEM runs a complete AI OS in production: from data ontology to agent orchestration, workflow execution to physical device integration.</span></p></div>
+    <div class="card"><h3><span class="l-zh">架构的通用性</span><span class="l-en">Architecture Universality</span></h3><p><span class="l-zh">决策、执行、预测、可视化、支持、增长——每个行业都需要。行业区别只在于：<span class="hl-w">对象不同、流程不同、合规不同</span>——恰好可以模板化。</span><span class="l-en">Deciding, executing, predicting, visualizing, supporting, growing — every industry needs these. Differences: <span class="hl-w">objects, processes, compliance</span> — precisely what can be templated.</span></p></div>
+    <div class="card"><h3><span class="l-zh">模板化的含义</span><span class="l-en">What "Templated" Means</span></h3><p><span class="l-zh">进入新行业 = <span class="hl-w">配置新模板</span>：加载行业对象、预置行业流程、接入行业系统。数周，而非数年。</span><span class="l-en">New industry = <span class="hl-w">configure a new template</span>: load industry objects, preset workflows, connect systems. Weeks, not years.</span></p></div>
+  </div>
+</section>
+
+<!-- SLIDE 3 · PROBLEM -->
+<section class="slide">
+  <div class="eyebrow">02 · The Problem</div>
+  <h2><span class="l-zh">每个行业都面临同一个问题</span><span class="l-en">Every Industry Faces the Same Problem</span></h2>
+  <p class="lede"><span class="l-zh">传统企业软件记录运营，但<span class="hl-w">记录不等于运行</span>。现有 AI 工具要么只做知识检索，要么只做流程自动化——<span class="hl">没有一个真正拥有运营数据模型并延伸到物理世界</span>。</span><span class="l-en">Traditional software records operations, but <span class="hl-w">recording is not running</span>. Existing AI tools do knowledge retrieval or process automation — <span class="hl">none truly owns the operational data model and extends into the physical world</span>.</span></p>
+  <div class="grid g3">
+    <div class="card"><h3><span class="l-zh">知识层工具</span><span class="l-en">Knowledge-Layer Tools</span></h3><p><span class="l-zh">帮你「找到信息」——但决策仍然是人的，执行仍然是手动的。</span><span class="l-en">Help you "find information" — but decisions remain human, execution remains manual.</span></p></div>
+    <div class="card"><h3><span class="l-zh">流程层工具</span><span class="l-en">Process-Layer Tools</span></h3><p><span class="l-zh">帮你「自动化步骤」——但不理解业务对象，不拥有数据模型，无法做运营决策。</span><span class="l-en">Help "automate steps" — but don't understand business objects, don't own the data model, can't make operational decisions.</span></p></div>
+    <div class="card" style="border-color:var(--cyan-dim)"><h3 style="color:var(--cyan)"><span class="l-zh">运营层：ITEM AI</span><span class="l-en">Operations Layer: ITEM AI</span></h3><p><span class="l-zh"><span class="hl-w">拥有运营本体、能做决策、能驱动物理执行的 AI 操作系统</span>——这是我们的位置。</span><span class="l-en"><span class="hl-w">An AI OS that owns the operational ontology, makes decisions, and drives physical execution</span> — this is where we sit.</span></p></div>
+  </div>
+</section>
+
+<!-- SLIDE 4 · WHY NOW -->
+<section class="slide">
+  <div class="eyebrow">03 · Why Now</div>
+  <h2><span class="l-zh">为什么是现在？</span><span class="l-en">Why Now?</span></h2>
+  <div class="grid g2">
+    <div class="card"><h3><span class="l-zh">LLM 让本体构建成本降低 10×</span><span class="l-en">LLMs Cut Ontology Cost by 10×</span></h3><p><span class="l-zh">大语言模型从文档、流程、对话中自动提取行业对象与关系——构建速度从月级降到天级。</span><span class="l-en">LLMs auto-extract industry objects and relationships from documents, processes, conversations — build time drops from months to days.</span></p></div>
+    <div class="card"><h3><span class="l-zh">智能体技术成熟</span><span class="l-en">Agent Technology Has Matured</span></h3><p><span class="l-zh">多智能体协作、工具调用、长期记忆——让「AI 做运营决策」从理论变为现实。</span><span class="l-en">Multi-agent collaboration, tool use, long-term memory — "AI making operational decisions" is now reality, not theory.</span></p></div>
+    <div class="card"><h3><span class="l-zh">企业准备好了</span><span class="l-en">Enterprises Are Ready</span></h3><p><span class="l-zh">企业不再问「AI 能做什么」，而是问「AI 能帮我运营什么」。预算从「探索」转向「运营级部署」。</span><span class="l-en">Enterprises now ask "what can AI run for me?" Budgets shift from "exploration" to "operations-grade deployment."</span></p></div>
+    <div class="card"><h3><span class="l-zh">我们已经跑通了</span><span class="l-en">We've Already Proven It</span></h3><p><span class="l-zh">ITEM 已经在供应链行业用这套架构跑了生产系统。现在是把已验证模式复制到更多行业的时机。</span><span class="l-en">ITEM already runs production systems with this architecture in supply chain. Now is the time to replicate across industries.</span></p></div>
+  </div>
+</section>
+
+<!-- SLIDE 5 · 7-LAYER ARCHITECTURE -->
+<section class="slide">
+  <div class="eyebrow">04 · Architecture</div>
+  <h2><span class="l-zh">七层架构：五层自研内核 + 两层开放集成</span><span class="l-en">7-Layer Architecture: Five Core Layers + Two Open Integration Layers</span></h2>
+  <p class="lede"><span class="l-zh">Layer 1 和 Layer 7 是<span class="hl-w">开放集成层</span>——与客户已有的系统和设备对接。Layer 2–6 是 ITEM 的<span class="hl">核心自研产品</span>。</span><span class="l-en">Layers 1 & 7 are <span class="hl-w">open integration layers</span> — connecting to your existing systems and devices. Layers 2–6 are ITEM's <span class="hl">core proprietary product</span>.</span></p>
+  <div class="stack">
+    <div class="layer integ"><div class="lnum">LAYER 7</div><div class="lname"><span class="l-zh">物理设备集成</span><span class="l-en">Physical Device Integration</span><small><span class="l-zh">INTEGRATION · 与客户已有设备对接</span><span class="l-en">INTEGRATION · Connects to your existing devices</span></small></div><div class="lprod"><span class="l-zh">客户的机器人 · IoT · PLC</span><span class="l-en">Your robots · IoT · PLC</span></div></div>
+    <div class="layer core"><div class="lnum">LAYER 6</div><div class="lname"><span class="l-zh">行业模板层</span><span class="l-en">Industry Templates</span></div><div class="lprod">ItemChain · ItemFin · ItemDine · ItemEstate …</div></div>
+    <div class="layer core"><div class="lnum">LAYER 5</div><div class="lname"><span class="l-zh">通用 AI 应用层</span><span class="l-en">General AI Applications</span></div><div class="lprod">ItemGPT · ItemClaw · ItemFlow · ItemSense …</div></div>
+    <div class="layer core"><div class="lnum">LAYER 4</div><div class="lname"><span class="l-zh">应用与流程工厂</span><span class="l-en">App & Process Factory (Foundry)</span></div><div class="lprod">Low-code builder · Workflow engine · Event processing</div></div>
+    <div class="layer core"><div class="lnum">LAYER 3</div><div class="lname"><span class="l-zh">AI 智能体平台</span><span class="l-en">AI Agent Platform (AIP)</span></div><div class="lprod">Agent runtime · Multi-agent · Tool registry · Memory</div></div>
+    <div class="layer core"><div class="lnum">LAYER 2</div><div class="lname"><span class="l-zh">运营本体层</span><span class="l-en">Operational Ontology</span></div><div class="lprod">Knowledge graph · Digital twin · Semantic layer</div></div>
+    <div class="layer integ"><div class="lnum">LAYER 1</div><div class="lname"><span class="l-zh">数据与系统集成</span><span class="l-en">Data & System Integration</span><small><span class="l-zh">INTEGRATION · 与客户已有 IT 系统对接</span><span class="l-en">INTEGRATION · Connects to your existing IT systems</span></small></div><div class="lprod"><span class="l-zh">客户的 ERP · WMS · CRM · 数据库</span><span class="l-en">Your ERP · WMS · CRM · databases</span></div></div>
+  </div>
+  <div class="stack-legend">
+    <div class="leg"><div class="sw core"></div><span class="l-zh">ITEM 核心产品（Layer 2–6）</span><span class="l-en">ITEM Core Product (Layers 2–6)</span></div>
+    <div class="leg"><div class="sw integ"></div><span class="l-zh">开放集成层（与客户系统/设备对接）</span><span class="l-en">Open Integration (connects to your systems/devices)</span></div>
+  </div>
+</section>
+
+<!-- SLIDE 6 · LAYER 2 -->
+<section class="slide">
+  <div class="mini-stack"><span class="integ"></span><span class="on"></span><span></span><span></span><span></span><span></span><span class="integ"></span></div>
+  <div class="ldetail-head"><span class="lbadge">LAYER 2</span><h2><span class="l-zh">运营本体 —— 让 AI 理解你的业务</span><span class="l-en">Operational Ontology — Making AI Understand Your Business</span></h2></div>
+  <p class="lede"><span class="l-zh">传统系统存储数据行；ITEM 构建<span class="hl">业务对象的语义图谱</span>。每个对象（订单、客户、设备、空间、流程）都有类型、关系、规则和历史。AI 智能体在本体上推理，而非在表格上查询。</span><span class="l-en">Traditional systems store data rows; ITEM builds a <span class="hl">semantic graph of business objects</span>. Every object (order, customer, device, space, process) has types, relationships, rules, and history. AI agents reason on the ontology, not query tables.</span></p>
+  <div class="grid g3">
+    <div class="card"><h3><span class="l-zh">Wiki + 本体构建</span><span class="l-en">Wiki + Ontology Building</span></h3><p><span class="l-zh">用自然语言描述你的业务，AI 自动生成结构化本体。从文档、流程、对话中提取对象与关系。</span><span class="l-en">Describe your business in natural language; AI auto-generates the structured ontology from documents, processes, and conversations.</span></p><a class="demo-link" href="#" target="_blank"><span class="l-zh">观看演示</span><span class="l-en">Watch Demo</span></a></div>
+    <div class="card"><h3><span class="l-zh">数字孪生</span><span class="l-en">Digital Twin</span></h3><p><span class="l-zh">实时映射物理世界的状态——仓库、门店、楼宇、产线。每个变化自动反映在本体中。</span><span class="l-en">Real-time mirror of physical-world state — warehouses, stores, buildings, production lines. Every change auto-reflected in the ontology.</span></p></div>
+    <div class="card"><h3><span class="l-zh">语义数据层</span><span class="l-en">Semantic Data Fabric</span></h3><p><span class="l-zh">统一来自多个系统的数据，建立跨源的语义关联。不替换你的数据库，而是在其上建立智能层。</span><span class="l-en">Unify data from multiple systems with cross-source semantic links. Doesn't replace your databases — builds an intelligence layer on top.</span></p><a class="demo-link" href="#" target="_blank"><span class="l-zh">观看演示</span><span class="l-en">Watch Demo</span></a></div>
+  </div>
+  <div class="callout"><p><span class="q"><span class="l-zh">对客户的意义：</span><span class="l-en">What this means for you: </span></span><span class="l-zh">你不需要重新整理数据或替换现有系统。ITEM 从你已有的数据中构建智能层——AI 立即理解你的业务上下文。</span><span class="l-en">You don't need to reorganize data or replace existing systems. ITEM builds the intelligence layer from your existing data — AI immediately understands your business context.</span></p></div>
+</section>
+
+<!-- SLIDE 7 · LAYER 3 -->
+<section class="slide">
+  <div class="mini-stack"><span class="integ"></span><span></span><span class="on"></span><span></span><span></span><span></span><span class="integ"></span></div>
+  <div class="ldetail-head"><span class="lbadge">LAYER 3</span><h2><span class="l-zh">AI 智能体平台 —— 让 AI 为你做决策和执行</span><span class="l-en">AI Agent Platform — AI That Decides and Executes for You</span></h2></div>
+  <p class="lede"><span class="l-zh">不是聊天机器人，是<span class="hl">能做事的 AI 员工</span>。每个智能体拥有角色、权限、工具和记忆，在本体上推理，通过工作流执行任务，遇到不确定时请求人类确认。</span><span class="l-en">Not chatbots — <span class="hl">AI workers that get things done</span>. Each agent has a role, permissions, tools, and memory. They reason on the ontology, execute through workflows, and ask for human confirmation when uncertain.</span></p>
+  <div class="grid g3">
+    <div class="card"><h3><span class="l-zh">Agent Factory</span><span class="l-en">Agent Factory</span></h3><p><span class="l-zh">可视化创建和管理智能体：定义角色、分配工具、设置权限边界。无需编程即可部署专业 AI 员工。</span><span class="l-en">Visually create and manage agents: define roles, assign tools, set permission boundaries. Deploy specialized AI workers without coding.</span></p><a class="demo-link" href="#" target="_blank"><span class="l-zh">观看演示</span><span class="l-en">Watch Demo</span></a></div>
+    <div class="card"><h3><span class="l-zh">多智能体协作</span><span class="l-en">Multi-Agent Collaboration</span></h3><p><span class="l-zh">多个智能体协同完成复杂任务：调度员 + 审核员 + 执行员。自动分工、自动升级、自动汇报。</span><span class="l-en">Multiple agents collaborate on complex tasks: dispatcher + reviewer + executor. Auto-delegation, auto-escalation, auto-reporting.</span></p></div>
+    <div class="card"><h3><span class="l-zh">人在回路</span><span class="l-en">Human-in-the-Loop</span></h3><p><span class="l-zh">AI 不是黑箱。关键决策点自动请求人类确认，所有推理过程可审计、可追溯。</span><span class="l-en">AI is not a black box. Critical decision points auto-request human confirmation; all reasoning is auditable and traceable.</span></p></div>
+  </div>
+</section>
+
+<!-- SLIDE 8 · LAYER 4 -->
+<section class="slide">
+  <div class="mini-stack"><span class="integ"></span><span></span><span></span><span class="on"></span><span></span><span></span><span class="integ"></span></div>
+  <div class="ldetail-head"><span class="lbadge">LAYER 4</span><h2><span class="l-zh">应用与流程工厂 (Foundry) —— 快速构建你的运营应用</span><span class="l-en">App & Process Factory (Foundry) — Build Your Ops Apps Fast</span></h2></div>
+  <p class="lede"><span class="l-zh">本体驱动的应用与流程工厂：数据集成、低代码/无代码应用构建器、工作流编排、实时事件处理、人机协作。<span class="hl">行业模板就是 Foundry 上的预置应用包</span>——客户和合作伙伴可以用同样的工具构建自己的扩展。</span><span class="l-en">The ontology-powered app & process factory: data integration, low-code/no-code builder, workflow orchestration, real-time event processing, human+AI collaboration. <span class="hl">Industry templates are prebuilt Foundry app packages</span> — customers and partners build their own extensions with the same tools.</span></p>
+  <div class="grid g3">
+    <div class="card"><h3><span class="l-zh">Capacity Platform</span><span class="l-en">Capacity Platform</span></h3><p><span class="l-zh">低代码构建运营应用：拖拽式界面、数据绑定、权限控制。从想法到上线，天级而非月级。</span><span class="l-en">Low-code ops app builder: drag-and-drop UI, data binding, permission control. Idea to production in days, not months.</span></p><a class="demo-link" href="#" target="_blank"><span class="l-zh">观看演示</span><span class="l-en">Watch Demo</span></a></div>
+    <div class="card"><h3><span class="l-zh">工作流引擎</span><span class="l-en">Workflow Engine</span></h3><p><span class="l-zh">可视化设计复杂业务流程：条件分支、并行执行、异常处理、SLA 监控。AI 智能体和人类在同一流程中协作。</span><span class="l-en">Visually design complex business processes: conditional branching, parallel execution, exception handling, SLA monitoring. AI agents and humans collaborate in the same flow.</span></p></div>
+    <div class="card"><h3><span class="l-zh">实时事件处理</span><span class="l-en">Real-Time Event Processing</span></h3><p><span class="l-zh">毫秒级响应业务事件：库存变动、订单异常、设备告警、客户行为。事件驱动，不是轮询。</span><span class="l-en">Millisecond response to business events: inventory changes, order anomalies, device alerts, customer actions. Event-driven, not polling.</span></p></div>
+  </div>
+  <div class="callout"><p><span class="q"><span class="l-zh">对客户的意义：</span><span class="l-en">What this means for you: </span></span><span class="l-zh">新行业模板 = Foundry 上的一组预置应用与流程。「进入新行业 = 数周配置而非数年开发」在工程上成立的原因就在这里。</span><span class="l-en">A new industry template = a set of prebuilt Foundry apps. "New industry = weeks of configuration, not years of development" holds at the engineering level.</span></p></div>
+</section>
+
+<!-- SLIDE 9 · LAYER 5 · GENERAL APPS WITH DEMO LINKS -->
+<section class="slide">
+  <div class="mini-stack"><span class="integ"></span><span></span><span></span><span></span><span class="on"></span><span></span><span class="integ"></span></div>
+  <div class="ldetail-head"><span class="lbadge">LAYER 5</span><h2><span class="l-zh">通用 AI 应用 —— 12 个跨行业复用的产品</span><span class="l-en">General AI Applications — 12 Products Reused Across Industries</span></h2></div>
+  <p class="lede"><span class="l-zh">这 12 个产品<span class="hl">不属于任何一个行业</span>。决策、执行、预测、看见、听见、支持、增长——每个行业都需要。在供应链生产环境中打磨成熟，切换行业时<span class="hl-w">零改造复用</span>。</span><span class="l-en">These 12 products <span class="hl">belong to no single industry</span>. Deciding, executing, predicting, seeing, hearing, supporting, growing — every industry needs them. Hardened in production, <span class="hl-w">reused with zero rework</span> when switching verticals.</span></p>
+  <div class="pgrid">
+    <div class="pcard blue"><div class="pname">ItemGPT</div><div class="ptag">AI FOR EVERY DECISION</div><div class="pdesc"><span class="l-zh">自然语言运营接口——用一句话调度整个平台</span><span class="l-en">Natural-language ops interface — command the platform in one sentence</span></div><a class="demo-link" href="#" target="_blank"><span class="l-zh">观看演示</span><span class="l-en">Watch Demo</span></a></div>
+    <div class="pcard blue"><div class="pname">ItemClaw</div><div class="ptag">EXECUTION WITHOUT FRICTION</div><div class="pdesc"><span class="l-zh">多智能体工作流执行器——从建议到执行</span><span class="l-en">Multi-agent workflow executor — suggestion to execution</span></div><a class="demo-link" href="#" target="_blank"><span class="l-zh">观看演示</span><span class="l-en">Watch Demo</span></a></div>
+    <div class="pcard blue"><div class="pname">ItemFlow</div><div class="ptag">DESIGN. AUTOMATE. SCALE.</div><div class="pdesc"><span class="l-zh">可视化 AI 工作流构建器</span><span class="l-en">Visual AI workflow builder</span></div><a class="demo-link" href="#" target="_blank"><span class="l-zh">观看演示</span><span class="l-en">Watch Demo</span></a></div>
+    <div class="pcard blue"><div class="pname">ItemSense</div><div class="ptag">SEE EVERYTHING. INSTANTLY.</div><div class="pdesc"><span class="l-zh">实时可视化 + 数字孪生驾驶舱</span><span class="l-en">Real-time visibility + digital-twin cockpit</span></div><a class="demo-link" href="#" target="_blank"><span class="l-zh">观看演示</span><span class="l-en">Watch Demo</span></a></div>
+    <div class="pcard blue"><div class="pname">ItemPredict</div><div class="ptag">PREDICT WHAT'S NEXT</div><div class="pdesc"><span class="l-zh">需求/现金流/客流/资源的通用预测引擎</span><span class="l-en">General forecasting — demand / cash flow / footfall / resources</span></div></div>
+    <div class="pcard blue"><div class="pname">ItemOps AI</div><div class="ptag">OPERATIONS THAT RUN THEMSELVES</div><div class="pdesc"><span class="l-zh">自主运营与持续优化</span><span class="l-en">Autonomous operations and continuous optimization</span></div></div>
+    <div class="pcard blue"><div class="pname">ItemAudit</div><div class="ptag">FIND WHAT YOU'RE LOSING</div><div class="pdesc"><span class="l-zh">计费纠错、合规稽核、成本回收</span><span class="l-en">Billing-error detection, compliance audit, cost recovery</span></div></div>
+    <div class="pcard blue"><div class="pname">ItemVision</div><div class="ptag">SEE WHAT OTHERS MISS</div><div class="pdesc"><span class="l-zh">计算机视觉——安防、质检、现场监控</span><span class="l-en">Computer vision — security, quality, site monitoring</span></div><a class="demo-link" href="#" target="_blank"><span class="l-zh">观看演示</span><span class="l-en">Watch Demo</span></a></div>
+    <div class="pcard blue"><div class="pname">ItemVoice</div><div class="ptag">OPERATE HANDS-FREE</div><div class="pdesc"><span class="l-zh">语音 AI——一线作业与来电的免提交互</span><span class="l-en">Voice AI — hands-free frontline work and inbound calls</span></div></div>
+    <div class="pcard blue"><div class="pname">ItemSupport</div><div class="ptag">EVERY CHANNEL. ONE THREAD.</div><div class="pdesc"><span class="l-zh">全渠道工单：邮件·消息·短信·电话</span><span class="l-en">Omnichannel ticketing: email · messaging · SMS · phone</span></div><a class="demo-link" href="#" target="_blank"><span class="l-zh">观看演示</span><span class="l-en">Watch Demo</span></a></div>
+    <div class="pcard blue"><div class="pname">ItemGrow</div><div class="ptag">PIPELINE THAT NEVER SLEEPS</div><div class="pdesc"><span class="l-zh">SDR/BDR · SEO/AEO/GEO · 内容生成的 GTM AI</span><span class="l-en">GTM AI — SDR/BDR · SEO/AEO/GEO · content generation</span></div><a class="demo-link" href="#" target="_blank"><span class="l-zh">观看演示</span><span class="l-en">Watch Demo</span></a></div>
+    <div class="pcard blue"><div class="pname">ItemDoc</div><div class="ptag">DOCUMENTS THAT PROCESS THEMSELVES</div><div class="pdesc"><span class="l-zh">文档自动化——合同、发票、报告的读取与生成</span><span class="l-en">Document automation — contracts, invoices, reports</span></div></div>
+  </div>
+</section>
+
+<!-- SLIDE 10 · LAYER 6 · TEMPLATES -->
+<section class="slide">
+  <div class="mini-stack"><span class="integ"></span><span></span><span></span><span></span><span></span><span class="on"></span><span class="integ"></span></div>
+  <div class="ldetail-head"><span class="lbadge">LAYER 6</span><h2><span class="l-zh">行业模板 —— 10 个可插拔的垂直方案</span><span class="l-en">Industry Templates — 10 Pluggable Vertical Solutions</span></h2></div>
+  <p class="lede"><span class="l-zh">每个模板 = <span class="hl-w">行业本体对象 + 预置工作流 + 合规规则包 + 行业智能体 + 系统连接器</span>。<span class="hl">供应链模板已在生产环境验证</span>——证明了整个模板机制可以跑通；其余行业按同一机制复制。</span><span class="l-en">Each template = <span class="hl-w">industry ontology + prebuilt workflows + compliance rules + industry agents + connectors</span>. <span class="hl">Supply-chain template is proven in production</span> — validating the mechanism; other industries replicate it.</span></p>
+  <div class="pgrid">
+    <div class="pcard gold"><div class="pname">ItemChain <span class="tag green" style="font-size:9px;padding:2px 7px">✓ PROVEN</span></div><div class="ptag">SUPPLY CHAIN & LOGISTICS</div><div class="pdesc"><span class="l-zh">订单/运输/仓储/堆场全套执行——旗舰模板</span><span class="l-en">Full order/transport/warehouse/yard execution — flagship</span></div></div>
+    <div class="pcard gold"><div class="pname">ItemDock</div><div class="ptag">PORTS & DRAYAGE</div><div class="pdesc"><span class="l-zh">港口、拖车、集装箱运营</span><span class="l-en">Port, drayage & container operations</span></div></div>
+    <div class="pcard gold"><div class="pname">ItemTrade</div><div class="ptag">GLOBAL TRADE</div><div class="pdesc"><span class="l-zh">关税归类、跨境合规、贸易智能</span><span class="l-en">Tariff classification, compliance, trade intelligence</span></div></div>
+    <div class="pcard gold"><div class="pname">ItemFin</div><div class="ptag">FINANCIAL ADVISORY</div><div class="pdesc"><span class="l-zh">财务咨询：客户画像、组合分析、合规报送</span><span class="l-en">Advisory: client profiling, portfolio analytics, filings</span></div></div>
+    <div class="pcard gold"><div class="pname">ItemDine</div><div class="ptag">RESTAURANT OPS</div><div class="pdesc"><span class="l-zh">餐馆运营：排班、备货预测、损耗控制</span><span class="l-en">Restaurant: scheduling, prep forecasting, waste control</span></div></div>
+    <div class="pcard gold"><div class="pname">ItemEstate</div><div class="ptag">PROPERTY MANAGEMENT</div><div class="pdesc"><span class="l-zh">房产管理：租约、租户服务、报修、能耗</span><span class="l-en">Property: leases, tenant services, repairs, energy</span></div></div>
+    <div class="pcard gold"><div class="pname">ItemBuild</div><div class="ptag">REAL ESTATE DEV</div><div class="pdesc"><span class="l-zh">地产开发：项目进度、供应商、成本与销售</span><span class="l-en">Development: schedules, vendors, cost, sales</span></div></div>
+    <div class="pcard gold"><div class="pname">ItemHealth</div><div class="ptag">HEALTHCARE OPS</div><div class="pdesc"><span class="l-zh">医疗运营：冷链、效期、合规追溯</span><span class="l-en">Healthcare: cold chain, expiry, traceability</span></div></div>
+    <div class="pcard gold"><div class="pname">ItemAuto</div><div class="ptag">MANUFACTURING</div><div class="pdesc"><span class="l-zh">制造与汽车：JIT 排序、供应商风险</span><span class="l-en">Manufacturing: JIT sequencing, supplier risk</span></div></div>
+    <div class="pcard gold"><div class="pname">ItemRetail</div><div class="ptag">RETAIL & COMMERCE</div><div class="pdesc"><span class="l-zh">零售电商：全渠道订单、库存、退货</span><span class="l-en">Retail: omnichannel orders, inventory, returns</span></div></div>
+  </div>
+</section>
+
+<!-- SLIDE 11 · PRODUCT CATALOG -->
+<section class="slide">
+  <div class="eyebrow">05 · Product Catalog</div>
+  <h2><span class="l-zh">22 个产品：12 通用应用 × 10 行业模板</span><span class="l-en">22 Products: 12 General Apps × 10 Industry Templates</span></h2>
+  <div class="cat-head"><span class="tag blue">GENERAL</span><span class="cat-title"><span class="l-zh">跨行业复用 · Layer 5</span><span class="l-en">Cross-industry · Layer 5</span></span><span class="cat-line"></span><span class="cat-count">12</span></div>
+  <p class="lede" style="font-size:13px"><span class="l-zh">ItemGPT · ItemClaw · ItemFlow · ItemSense · ItemPredict · ItemOps AI · ItemAudit · ItemVision · ItemVoice · ItemSupport · ItemGrow · ItemDoc</span><span class="l-en">ItemGPT · ItemClaw · ItemFlow · ItemSense · ItemPredict · ItemOps AI · ItemAudit · ItemVision · ItemVoice · ItemSupport · ItemGrow · ItemDoc</span></p>
+  <div class="cat-head"><span class="tag gold">VERTICAL</span><span class="cat-title"><span class="l-zh">可插拔垂直方案 · Layer 6</span><span class="l-en">Pluggable verticals · Layer 6</span></span><span class="cat-line"></span><span class="cat-count">10</span></div>
+  <p class="lede" style="font-size:13px"><span class="l-zh">ItemChain ✓ · ItemDock · ItemTrade · ItemFin · ItemDine · ItemEstate · ItemBuild · ItemHealth · ItemAuto · ItemRetail</span><span class="l-en">ItemChain ✓ · ItemDock · ItemTrade · ItemFin · ItemDine · ItemEstate · ItemBuild · ItemHealth · ItemAuto · ItemRetail</span></p>
+  <table>
+    <tr><th><span class="l-zh">维度</span><span class="l-en">Dimension</span></th><th><span class="l-zh">通用应用（12）</span><span class="l-en">General Apps (12)</span></th><th><span class="l-zh">行业模板（10）</span><span class="l-en">Templates (10)</span></th></tr>
+    <tr><td><span class="l-zh">回答的问题</span><span class="l-en">Question</span></td><td><span class="l-zh">「企业运营需要哪些 AI 能力？」</span><span class="l-en">"What AI capabilities does ops need?"</span></td><td><span class="l-zh">「这些能力如何长成某个行业的样子？」</span><span class="l-en">"How do capabilities take an industry's shape?"</span></td></tr>
+    <tr><td><span class="l-zh">复用方式</span><span class="l-en">Reuse</span></td><td><span class="l-zh">跨行业 100% 复用</span><span class="l-en">100% cross-industry reuse</span></td><td><span class="l-zh">按行业加载，可组合、可定制</span><span class="l-en">Per-industry; composable, customizable</span></td></tr>
+    <tr><td><span class="l-zh">验证状态</span><span class="l-en">Status</span></td><td><span class="l-zh">已在供应链生产环境运行</span><span class="l-en">Running in supply-chain production</span></td><td><span class="l-zh">ItemChain 已验证；其余按同一机制复制</span><span class="l-en">ItemChain proven; others replicate the mechanism</span></td></tr>
+  </table>
+</section>
+
+<!-- SLIDE 12 · COMPETITIVE POSITIONING -->
+<section class="slide">
+  <div class="eyebrow">06 · How We're Different</div>
+  <h2><span class="l-zh">竞争定位：知识层 · 流程层 · 运营层</span><span class="l-en">Positioning: Knowledge · Process · Operations Layer</span></h2>
+  <p class="lede"><span class="l-zh">Glean 让企业「更懂自己知道什么」；Automation Anywhere 让「现有流程自己跑」。ITEM 在第三个位置：<span class="hl">让运营本身运行在 AI 操作系统上</span>——拥有运营数据模型，并延伸到物理世界。</span><span class="l-en">Glean helps enterprises "know what they know"; Automation Anywhere makes "existing processes run themselves." ITEM occupies a third position: <span class="hl">the operation itself runs on an AI OS</span> — owning the operational data model and extending into the physical world.</span></p>
+  <div class="comp-wrap">
+    <div class="quad">
+      <div class="ax y1"><span class="l-zh">数字 + 物理</span><span class="l-en">DIGITAL + PHYSICAL</span></div>
+      <div class="ax x1"><span class="l-zh">增强现有系统</span><span class="l-en">AUGMENT THE STACK</span></div>
+      <div class="ax x2"><span class="l-zh">成为运营系统</span><span class="l-en">OWN THE OPERATION</span></div>
+      <div class="qdot ghost" style="left:16%;top:82%"><div class="qb"></div><div class="qn">Copilot · Agentforce</div></div>
+      <div class="qdot glean" style="left:26%;top:60%"><div class="qb"></div><div class="qn">Glean</div><div class="qs">Work AI · knowledge</div></div>
+      <div class="qdot aa" style="left:44%;top:70%"><div class="qb"></div><div class="qn">Automation Anywhere</div><div class="qs">APA · process bots</div></div>
+      <div class="qdot item" style="left:79%;top:22%"><div class="qb"></div><div class="qn">ITEM AI</div><div class="qs"><span class="l-zh">运营 OS · 本体+模板+物理</span><span class="l-en">Ops OS · ontology+templates+physical</span></div></div>
+    </div>
+    <table class="comp">
+      <tr><th><span class="l-zh">维度</span><span class="l-en">Dimension</span></th><th>Glean</th><th>Automation Anywhere</th><th style="color:var(--cyan)">ITEM AI</th></tr>
+      <tr><td><span class="l-zh">数据模型</span><span class="l-en">Data model</span></td><td><span class="l-zh">文档上下文图谱</span><span class="l-en">Document context graph</span></td><td><span class="l-zh">流程定义</span><span class="l-en">Process definitions</span></td><td><span class="hl-w"><span class="l-zh">运营本体 + 数字孪生</span><span class="l-en">Operational ontology + digital twin</span></span></td></tr>
+      <tr><td><span class="l-zh">与您系统的关系</span><span class="l-en">Relation to your systems</span></td><td><span class="l-zh">坐在其上读取</span><span class="l-en">Sits on top, reads</span></td><td><span class="l-zh">在界面上自动化</span><span class="l-en">Automates via UI/API</span></td><td><span class="hl-w"><span class="l-zh">成为运营记录系统</span><span class="l-en">Becomes the ops system of record</span></span></td></tr>
+      <tr><td><span class="l-zh">物理世界</span><span class="l-en">Physical world</span></td><td><span class="l-zh">无</span><span class="l-en">None</span></td><td><span class="l-zh">仅软件 bot</span><span class="l-en">Software bots only</span></td><td><span class="hl-w"><span class="l-zh">真实机器人 + 设备</span><span class="l-en">Real robots + devices</span></span></td></tr>
+      <tr><td><span class="l-zh">行业化</span><span class="l-en">Verticalization</span></td><td><span class="l-zh">营销分段</span><span class="l-en">Marketing segments</span></td><td><span class="l-zh">预置流程方案</span><span class="l-en">Prebuilt process solutions</span></td><td><span class="hl-w"><span class="l-zh">运营级行业模板</span><span class="l-en">Ops-grade industry templates</span></span></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- SLIDE 13 · HOW WE WORK WITH YOU -->
+<section class="slide">
+  <div class="eyebrow">07 · Implementation</div>
+  <h2><span class="l-zh">实施路径：Land → Expand → Own</span><span class="l-en">How We Work With You: Land → Expand → Own</span></h2>
+  <div class="flow">
+    <div class="fstep">
+      <div class="fphase">PHASE 1 · LAND</div>
+      <h3><span class="l-zh">模板切入</span><span class="l-en">Land with Template</span></h3>
+      <p><span class="l-zh">用行业模板 + ItemGPT 解决一个高痛点场景。<br><br><span class="hl-w">2–4 周发现 → 4–8 周上线</span><br>先赢一个可量化的 ROI。</span><span class="l-en">Use industry template + ItemGPT on one high-pain scenario.<br><br><span class="hl-w">2–4 weeks discovery → 4–8 weeks live</span><br>Win one quantifiable ROI first.</span></p>
+    </div>
+    <div class="fstep">
+      <div class="fphase">PHASE 2 · EXPAND</div>
+      <h3><span class="l-zh">通用应用扩张</span><span class="l-en">Expand with General Apps</span></h3>
+      <p><span class="l-zh">沿 12 个通用应用横向铺开：ItemSupport 接管服务、ItemPredict 覆盖预测、ItemAudit 追回损失。<br><br><span class="hl-w">8–16 周</span>扩展到多个运营场景。</span><span class="l-en">Roll out general apps: ItemSupport for service, ItemPredict for forecasts, ItemAudit for cost recovery.<br><br><span class="hl-w">8–16 weeks</span> to expand across ops scenarios.</span></p>
+    </div>
+    <div class="fstep">
+      <div class="fphase">PHASE 3 · OWN</div>
+      <h3><span class="l-zh">运营操作系统</span><span class="l-en">Own the OS</span></h3>
+      <p><span class="l-zh">Foundry 上沉淀您自己的应用与流程，物理设备接入智能订阅，AI OS 成为全员每天打开的工作台。<br><br>ITEM 不再是供应商——而是您的<span class="hl-w">运营操作系统</span>。</span><span class="l-en">Your own apps and processes settle onto Foundry, devices join the intelligence layer, AI OS becomes the daily workspace.<br><br>ITEM is no longer a vendor — it's your <span class="hl-w">operating system</span>.</span></p>
+    </div>
+  </div>
+  <div class="callout"><p><span class="q"><span class="l-zh">定价模型：</span><span class="l-en">Pricing: </span></span><span class="l-zh">平台订阅（按模块+席位）+ 行业模板授权 + 用量计费（智能体执行/工作流运行）+ 设备智能订阅。从小开始，随业务增长自然扩展。</span><span class="l-en">Platform subscription (modules + seats) + template license + usage billing (agent runs / workflow executions) + device intelligence subscription. Start small, scale naturally with your business.</span></p></div>
+</section>
+
+<!-- SLIDE 14 · VISION -->
+<section class="slide cover">
+  <div class="eyebrow">08 · The Vision</div>
+  <h1 style="max-width:1050px">
+    <span class="l-zh">传统软件记录运营。<br><span style="color:var(--cyan)">ITEM AI 运行运营</span><br>——并驱动结果。</span>
+    <span class="l-en">Traditional software records operations.<br><span style="color:var(--cyan)">ITEM AI runs them</span><br>— and drives outcomes.</span>
+  </h1>
+  <p class="cover-sub"><span class="l-zh">一个平台，N 个行业。五层已验证的通用内核（Layer 2–6），一个从供应链开始、向所有行业展开的模板库，以及两端完全开放的集成边界（Layer 1 & 7）。<br><br>您的行业，就是下一个模板。</span><span class="l-en">One platform, N industries. A proven five-layer core (Layers 2–6), a template library starting in supply chain and unfolding into every industry, and fully open integration at both ends (Layers 1 & 7).<br><br>Your industry is the next template.</span></p>
+  <div class="cover-industries">
+    <span class="tag blue"><span class="l-zh">一个平台</span><span class="l-en">One Platform</span></span>
+    <span class="tag gold"><span class="l-zh">N 个行业</span><span class="l-en">N Industries</span></span>
+    <span class="tag green"><span class="l-zh">供应链 · 已验证</span><span class="l-en">Supply Chain · Proven</span></span>
+    <span class="tag grey"><span class="l-zh">你的行业 · 下一个</span><span class="l-en">Your Industry · Next</span></span>
+  </div>
+  <div class="cover-meta">ITEM AI · CUSTOMER EDITION · product_general_customer_v5</div>
+</section>
+
+</div>
+
+<script>
+(function(){
+  var langBtn=document.getElementById('langBtn');
+  function setLang(l){document.body.classList.toggle('en',l==='en');document.documentElement.lang=l==='en'?'en':'zh-CN';try{localStorage.setItem('item_lang',l)}catch(e){}}
+  langBtn.addEventListener('click',function(){setLang(document.body.classList.contains('en')?'zh':'en');this.blur()});
+  try{var saved=localStorage.getItem('item_lang');if(saved==='en')setLang('en')}catch(e){}
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var cur=0,tot=slides.length;
+  document.getElementById('tot').textContent=tot;
+  var dotsBox=document.getElementById('dots');
+  slides.forEach(function(_,i){var d=document.createElement('button');d.className='dot'+(i===0?' on':'');d.setAttribute('aria-label','Slide '+(i+1));d.addEventListener('click',function(){go(i);this.blur()});dotsBox.appendChild(d)});
+  var dots=[].slice.call(dotsBox.children);
+  function go(n){if(n<0||n>=tot||n===cur)return;slides[cur].classList.remove('active');slides[cur].classList.toggle('prev',n>cur);slides[n].classList.remove('prev');slides[n].classList.add('active');dots[cur].classList.remove('on');dots[n].classList.add('on');cur=n;document.getElementById('cur').textContent=cur+1;document.getElementById('progress').style.width=((cur+1)/tot*100)+'%';slides[cur].scrollTop=0}
+  document.getElementById('prevBtn').addEventListener('click',function(){go(cur-1);this.blur()});
+  document.getElementById('nextBtn').addEventListener('click',function(){go(cur+1);this.blur()});
+  document.addEventListener('keydown',function(e){var t=e.target;if(t&&t.tagName==='BUTTON'&&(e.key===' '||e.key==='Enter'))return;if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' ')go(cur+1);if(e.key==='ArrowLeft'||e.key==='PageUp')go(cur-1);if(e.key==='Home')go(0);if(e.key==='End')go(tot-1);if(e.key==='l'||e.key==='L')langBtn.click()});
+  var tx=0,ty=0;
+  document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+  document.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5){dx<0?go(cur+1):go(cur-1)}},{passive:true});
+  document.getElementById('progress').style.width=(1/tot*100)+'%';
+})();
+</script>
+</body>
+</html>
