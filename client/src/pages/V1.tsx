@@ -1,8 +1,13 @@
+// TODO(i18n): this variant still renders hardcoded English copy (here and in
+// components/sections-v1). It needs a `pages.v1` / `deck.v1.*` dictionary
+// (zh/en/ja/es) and `useT` calls — see client/src/i18n/CONVENTIONS.md.
+
 /**
- * V1 — Lenovo version of the presentation (backup)
- * Uses original Lenovo-branded section components from sections-v1/
- * All other sections are shared with the main (Fashion Nova) version
+ * V1 — Lenovo cut of the presentation (backup)
+ * Uses the Lenovo-branded section components from sections-v1/.
+ * All other sections are shared with the main (Fashion Nova) version.
  */
+import TopBar from "@/components/TopBar";
 import SideNav from "@/components/SideNav";
 import HeroSection from "@/components/sections-v1/HeroSection";
 import CompanyIntroSection from "@/components/sections-v1/CompanyIntroSection";
@@ -20,7 +25,8 @@ import FutureSection from "@/components/sections-v1/FutureSection";
 
 export default function V1() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background text-foreground">
+      <TopBar />
       <SideNav />
       <main className="lg:pl-16">
         <HeroSection />

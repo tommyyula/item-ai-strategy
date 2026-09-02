@@ -1,19 +1,14 @@
-// TopLogo is no longer used as a fixed element.
-// Item logo is now embedded in each section via SectionTitle component.
-// This component is kept for special sections (Hero, CompanyIntro) that don't use SectionTitle.
+import BrandLogo from "@/components/BrandLogo";
 
-const ITEM_LOGO = "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image8_1a8f9bd6.png";
-
+/**
+ * Thin wrapper kept for sections that want an inline ITEM mark of their own.
+ * The artwork itself is `<BrandLogo />`, which swaps per theme; this component
+ * only supplies the surrounding box. Page-level branding is `<TopBar />`.
+ */
 export default function TopLogo({ className = "" }: { className?: string }) {
   return (
     <div className={className}>
-      <img
-        src={ITEM_LOGO}
-        alt="Item"
-        className="h-6 opacity-50"
-      />
+      <BrandLogo variant="mark" heightClass="h-6" className="opacity-70" />
     </div>
   );
 }
-
-export { ITEM_LOGO };

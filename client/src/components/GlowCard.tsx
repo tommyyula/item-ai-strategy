@@ -14,8 +14,10 @@ export default function GlowCard({
   hover = true,
 }: GlowCardProps) {
   const glowStyles = {
-    cyan: "hover:border-cyan-glow/50 hover:shadow-[0_0_30px_oklch(0.82_0.15_195/0.15)]",
-    purple: "hover:border-purple-glow/50 hover:shadow-[0_0_30px_oklch(0.55_0.25_290/0.15)]",
+    // Glow alpha rides on --glow, so the hover lift stays soft on a light
+    // ground rather than blooming like neon.
+    cyan: "hover:border-cyan-glow/50 hover:shadow-[0_0_30px_color-mix(in_oklch,var(--cyan-glow)_calc(15%*var(--glow)),transparent)]",
+    purple: "hover:border-purple-glow/50 hover:shadow-[0_0_30px_color-mix(in_oklch,var(--purple-glow)_calc(15%*var(--glow)),transparent)]",
   };
 
   return (

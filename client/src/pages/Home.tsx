@@ -1,4 +1,6 @@
 import SideNav from "@/components/SideNav";
+import TopBar from "@/components/TopBar";
+import ArchitectureSection from "@/components/sections/ArchitectureSection";
 import HeroSection from "@/components/sections/HeroSection";
 import CompanyIntroSection from "@/components/sections/CompanyIntroSection";
 import EvolutionSection from "@/components/sections/EvolutionSection";
@@ -16,6 +18,7 @@ import FutureSection from "@/components/sections/FutureSection";
 export default function Home() {
   return (
     <div className="min-h-screen">
+      <TopBar />
       <SideNav />
       <main className="lg:pl-16">
         <HeroSection />
@@ -33,6 +36,8 @@ export default function Home() {
         <PhysicalSection />
         <div className="section-divider" />
         <JourneySection />
+        <div className="section-divider" />
+        <ArchitectureSection />
         <div className="section-divider" />
         <OntologySection />
         <div className="section-divider" />

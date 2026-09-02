@@ -1,82 +1,85 @@
 /**
- * Design: Deep Space Command — Entering the Physical World (Bilingual, EN primary)
- * Left: AGV Inventory Count Robot (large video)
- * Right: 5 smaller video demos (YMS Gate, IoT Yard, Pack Station, Vision Pro, Dog Walk)
+ * Entering the physical world.
+ *
+ * The banner used to be a hosted `warehouse-robots-*.webp` that is gone. It is
+ * now a token-built band: an accent wash plus an authored inline SVG of a
+ * warehouse aisle with AMRs, drawn entirely with `currentColor` and the theme
+ * variables so it reads in both day and night view.
  */
 
 import AnimatedSection from "../AnimatedSection";
 import SectionTitle from "../SectionTitle";
 import GlowCard from "../GlowCard";
 import { Play, Bot, Camera, ScanLine, Glasses, Dog, Wifi } from "lucide-react";
+import { useT } from "@/i18n/runtime";
 
-const WAREHOUSE_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/warehouse-robots-N5qtLpeJoFJNGcr4G4K6Qk.webp";
-
-const leftVideo = {
-  titleEn: "AGV Inventory Count Robot",
-  titleCn: "AGV盘点机器人",
-  descEn: "Autonomous guided vehicles perform real-time inventory counting across warehouse aisles — replacing manual cycle counts with 24/7 automated precision.",
-  descCn: "自主导引车在仓库通道中执行实时库存盘点——以24/7自动化精度取代人工循环盘点。",
-  videoId: "pdtSXZ2tpQ4",
-  icon: Bot,
-};
+const BANNER_WASH = `
+  radial-gradient(70% 120% at 12% 50%, color-mix(in oklch, var(--cyan-glow) 22%, transparent) 0%, transparent 72%),
+  radial-gradient(60% 120% at 88% 40%, color-mix(in oklch, var(--purple-glow) 18%, transparent) 0%, transparent 74%)
+`;
 
 const rightVideos = [
-  {
-    titleEn: "YMS Gate Recognition",
-    titleCn: "YMS道闸识别",
-    descEn: "AI-powered vehicle recognition and scheduling at yard gates.",
-    descCn: "AI驱动的道闸车辆识别与调度。",
-    videoId: "DY37zk0J3ck",
-    icon: ScanLine,
-  },
-  {
-    titleEn: "IoT Yard Assistant Agent",
-    titleCn: "IoT堆场助手Agent",
-    descEn: "IoT sensors + AI Agent for real-time yard management.",
-    descCn: "IoT传感器+AI Agent实现实时堆场管理。",
-    videoId: "NAUl7oNpA7s",
-    icon: Wifi,
-  },
-  {
-    titleEn: "Pack Station Monitor",
-    titleCn: "打包台监控",
-    descEn: "Vision AI monitors packing quality and compliance in real-time.",
-    descCn: "视觉AI实时监控打包质量与合规性。",
-    videoId: "1sKOAjcCTq8",
-    icon: Camera,
-  },
-  {
-    titleEn: "Picking by Vision Pro",
-    titleCn: "Vision Pro拣货",
-    descEn: "Apple Vision Pro AR-guided warehouse picking operations.",
-    descCn: "Apple Vision Pro AR引导的仓库拣货作业。",
-    videoId: "AafmAqWqqYM",
-    icon: Glasses,
-  },
-  {
-    titleEn: "Dog Walk — Yard Security",
-    titleCn: "机器狗巡逻——堆场安防",
-    descEn: "Robotic dog patrols for autonomous yard security monitoring.",
-    descCn: "机器狗自主巡逻，实现堆场安防监控。",
-    videoId: "RJ8AzaJF4As",
-    icon: Dog,
-  },
+  { key: "gate", videoId: "DY37zk0J3ck", icon: ScanLine },
+  { key: "iot", videoId: "NAUl7oNpA7s", icon: Wifi },
+  { key: "pack", videoId: "1sKOAjcCTq8", icon: Camera },
+  { key: "visionPro", videoId: "AafmAqWqqYM", icon: Glasses },
+  { key: "dog", videoId: "RJ8AzaJF4As", icon: Dog },
 ];
 
+/** Authored replacement for the lost warehouse photograph. */
+function AisleGraphic() {
+  return (
+    <svg
+      viewBox="0 0 480 140"
+      className="absolute inset-y-0 right-0 h-full w-auto text-cyan-glow opacity-40"
+      fill="none"
+      aria-hidden
+      preserveAspectRatio="xMaxYMid slice"
+    >
+      {/* Racking bays receding to the right */}
+      {[0, 1, 2, 3, 4].map((i) => (
+        <g key={i} stroke="currentColor" strokeWidth="1.2" opacity={0.35 + i * 0.12}>
+          <rect x={190 + i * 58} y={30 + (4 - i) * 3} width="44" height={78 - (4 - i) * 6} rx="2" />
+          <line
+            x1={190 + i * 58}
+            y1={56 + (4 - i) * 1.5}
+            x2={234 + i * 58}
+            y2={56 + (4 - i) * 1.5}
+          />
+          <line
+            x1={190 + i * 58}
+            y1={82 - (4 - i) * 1.5}
+            x2={234 + i * 58}
+            y2={82 - (4 - i) * 1.5}
+          />
+        </g>
+      ))}
+      {/* Aisle floor lines */}
+      <path d="M150 132 L470 104" stroke="currentColor" strokeWidth="1" opacity="0.5" />
+      <path d="M150 118 L470 96" stroke="currentColor" strokeWidth="0.8" opacity="0.3" />
+      {/* Two AMRs on the aisle */}
+      <g fill="currentColor" opacity="0.75">
+        <rect x="196" y="112" width="30" height="12" rx="3" />
+        <rect x="318" y="100" width="22" height="9" rx="2.5" />
+      </g>
+      <circle cx="211" cy="106" r="3.5" fill="currentColor" opacity="0.9" />
+      <circle cx="329" cy="96" r="2.6" fill="currentColor" opacity="0.9" />
+    </svg>
+  );
+}
+
 function VideoCard({
-  titleEn,
-  titleCn,
-  descEn,
-  descCn,
+  title,
+  desc,
   videoId,
+  watchLabel,
   icon: Icon,
   large = false,
 }: {
-  titleEn: string;
-  titleCn: string;
-  descEn: string;
-  descCn: string;
+  title: string;
+  desc: string;
   videoId: string;
+  watchLabel: string;
   icon: React.ComponentType<{ className?: string }>;
   large?: boolean;
 }) {
@@ -85,37 +88,41 @@ function VideoCard({
       href={`https://youtu.be/${videoId}`}
       target="_blank"
       rel="noopener noreferrer"
+      aria-label={`${title} — ${watchLabel}`}
       className="group block"
     >
-      <div className="relative rounded-lg overflow-hidden border border-white/10 hover:border-cyan-500/30 transition-colors">
+      <div className="relative rounded-lg overflow-hidden border border-border hover:border-cyan-glow/40 transition-colors">
         <img
           src={`https://img.youtube.com/vi/${videoId}/mqdefault.jpg`}
-          alt={titleEn}
-          className={`w-full object-cover opacity-70 group-hover:opacity-90 transition-opacity ${
+          alt=""
+          loading="lazy"
+          className={`w-full object-cover opacity-80 group-hover:opacity-100 transition-opacity ${
             large ? "h-64 md:h-72" : "h-28"
           }`}
         />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className={`rounded-full bg-black/60 border border-white/20 flex items-center justify-center group-hover:bg-cyan-500/30 group-hover:border-cyan-500/40 transition-all ${
-            large ? "w-14 h-14" : "w-9 h-9"
-          }`}>
-            <Play className={`text-white ml-0.5 ${large ? "w-6 h-6" : "w-3.5 h-3.5"}`} />
-          </div>
-        </div>
-        <div className="absolute bottom-2 left-2 text-[10px] font-mono text-white/80 bg-black/50 px-2 py-0.5 rounded">
-          ▶ Watch
-        </div>
+        <span className="absolute inset-0 flex items-center justify-center">
+          <span
+            className={`rounded-full bg-background/70 border border-border flex items-center justify-center group-hover:bg-cyan-glow/30 group-hover:border-cyan-glow/40 transition-all ${
+              large ? "w-14 h-14" : "w-9 h-9"
+            }`}
+          >
+            <Play className={`text-foreground ml-0.5 ${large ? "w-6 h-6" : "w-3.5 h-3.5"}`} />
+          </span>
+        </span>
+        <span className="absolute bottom-2 left-2 text-[10px] font-mono text-foreground bg-background/70 px-2 py-0.5 rounded">
+          {watchLabel}
+        </span>
       </div>
       <div className="mt-2 flex items-start gap-2">
-        <Icon className={`shrink-0 text-cyan-glow/60 mt-0.5 ${large ? "w-4 h-4" : "w-3.5 h-3.5"}`} />
+        <Icon
+          className={`shrink-0 text-cyan-glow mt-0.5 ${large ? "w-4 h-4" : "w-3.5 h-3.5"}`}
+        />
         <div>
-          <p className={`font-semibold ${large ? "text-sm" : "text-xs"}`}>{titleEn}</p>
-          <p className="text-[10px] text-muted-foreground/65">{titleCn}</p>
+          <p className={`font-semibold text-foreground ${large ? "text-sm" : "text-xs"}`}>
+            {title}
+          </p>
           {large && (
-            <>
-              <p className="text-xs text-muted-foreground leading-relaxed mt-1">{descEn}</p>
-              <p className="text-[10px] text-muted-foreground/65 leading-relaxed mt-0.5">{descCn}</p>
-            </>
+            <p className="text-xs text-muted-foreground leading-relaxed mt-1">{desc}</p>
           )}
         </div>
       </div>
@@ -124,58 +131,72 @@ function VideoCard({
 }
 
 export default function PhysicalSection() {
+  const t = useT("deck.physical");
+  const watch = t("watch");
+
   return (
     <section id="physical" className="py-24 md:py-32">
       <div className="container max-w-6xl">
-        <SectionTitle
-          number="06"
-          title="走向物理世界"
-          titleEn="Entering the Physical World"
-          subtitle="硬件无关的WES——让智能真正离开屏幕，从AGV盘点到Vision Pro拣货，从道闸识别到机器狗巡逻。"
-          subtitleEn="Hardware-agnostic WES — bringing intelligence beyond the screen, from AGV counting to Vision Pro picking, from gate recognition to robotic dog patrols."
-        />
+        <SectionTitle number="06" title={t("title")} subtitle={t("subtitle")} />
 
-        {/* Hero banner */}
+        {/* Banner — token-built, replaces the lost warehouse photo */}
         <AnimatedSection className="mb-10">
-          <div className="relative rounded-lg overflow-hidden">
-            <img src={WAREHOUSE_IMG} alt="Smart Warehouse" className="w-full h-48 md:h-56 object-cover rounded-lg" />
-            <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/40 to-transparent" />
+          <div className="relative rounded-lg overflow-hidden border border-border bg-surface-veil h-48 md:h-56">
+            <div aria-hidden className="absolute inset-0" style={{ backgroundImage: BANNER_WASH }} />
+            <AisleGraphic />
+            <div
+              aria-hidden
+              className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-transparent"
+            />
             <div className="absolute bottom-5 left-5 max-w-md">
-              <p className="text-xs font-mono text-cyan-glow tracking-wider mb-1">HARDWARE-AGNOSTIC WES</p>
-              <p className="text-sm text-foreground/90">
-                Software stack running in real warehouse production environments covering 10M+ sq ft
+              <p className="text-xs font-mono text-cyan-glow tracking-wider mb-1 uppercase">
+                {t("banner.eyebrow")}
               </p>
-              <p className="text-[10px] text-foreground/70 mt-0.5">
-                软件栈在超过1000万平方英尺的真实仓库生产环境中稳定运行
-              </p>
+              <p className="text-sm text-foreground">{t("banner.body")}</p>
             </div>
           </div>
         </AnimatedSection>
 
-        {/* Left/Right layout */}
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Left: AGV large video */}
           <AnimatedSection direction="left">
             <GlowCard className="p-5 h-full">
-              <h3 className="font-bold text-sm mb-1">Robotics & Automation</h3>
-              <p className="text-[10px] text-muted-foreground/65 mb-4">机器人与自动化</p>
-              <VideoCard {...leftVideo} large />
+              <h3 className="font-bold text-sm mb-4 text-foreground">{t("groups.robotics")}</h3>
+              <VideoCard
+                title={t("videos.agv.title")}
+                desc={t("videos.agv.desc")}
+                videoId="pdtSXZ2tpQ4"
+                watchLabel={watch}
+                icon={Bot}
+                large
+              />
             </GlowCard>
           </AnimatedSection>
 
-          {/* Right: 5 smaller videos in a grid */}
+          {/* Right: five smaller videos */}
           <AnimatedSection direction="right">
             <GlowCard glowColor="purple" className="p-5 h-full">
-              <h3 className="font-bold text-sm mb-1">Vision & Edge AI Applications</h3>
-              <p className="text-[10px] text-muted-foreground/65 mb-4">视觉与边缘AI应用</p>
+              <h3 className="font-bold text-sm mb-4 text-foreground">{t("groups.vision")}</h3>
               <div className="grid grid-cols-2 gap-4">
                 {rightVideos.slice(0, 4).map((v) => (
-                  <VideoCard key={v.videoId} {...v} />
+                  <VideoCard
+                    key={v.key}
+                    title={t(`videos.${v.key}.title`)}
+                    desc={t(`videos.${v.key}.desc`)}
+                    videoId={v.videoId}
+                    watchLabel={watch}
+                    icon={v.icon}
+                  />
                 ))}
               </div>
-              {/* Last one spans full width */}
               <div className="mt-4">
-                <VideoCard {...rightVideos[4]} />
+                <VideoCard
+                  title={t(`videos.${rightVideos[4].key}.title`)}
+                  desc={t(`videos.${rightVideos[4].key}.desc`)}
+                  videoId={rightVideos[4].videoId}
+                  watchLabel={watch}
+                  icon={rightVideos[4].icon}
+                />
               </div>
             </GlowCard>
           </AnimatedSection>

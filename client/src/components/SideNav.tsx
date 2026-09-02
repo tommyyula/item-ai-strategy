@@ -1,23 +1,30 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
+import { useT } from "@/i18n/runtime";
 
+/**
+ * Section ids match the `id` attribute on each deck section and must not
+ * change. `key` points at the translated label in `common.nav.*`.
+ */
 const sections = [
-  { id: "hero", label: "00", title: "Cover 封面" },
-  { id: "company", label: "01", title: "Who We Are 关于我们" },
-  { id: "evolution", label: "02", title: "Evolution 演进" },
-  { id: "video", label: "03", title: "Demo 实录" },
-  { id: "agents", label: "04", title: "Agents Agent化" },
-  { id: "agent-examples", label: "05", title: "More Agents 更多案例" },
-  { id: "physical", label: "06", title: "Physical AI 物理AI" },
-  { id: "journey", label: "07", title: "Lessons 心路" },
-  { id: "ontology", label: "08", title: "Ontology" },
-  { id: "harness", label: "09", title: "Harness" },
-  { id: "llm", label: "10", title: "LLM Strategy 选型" },
-  { id: "hardware", label: "11", title: "Hardware 硬件" },
-  { id: "future", label: "12", title: "Vision 展望" },
+  { id: "hero", key: "hero", label: "00" },
+  { id: "company", key: "company", label: "01" },
+  { id: "evolution", key: "evolution", label: "02" },
+  { id: "video", key: "video", label: "03" },
+  { id: "agents", key: "agents", label: "04" },
+  { id: "agent-examples", key: "agentExamples", label: "05" },
+  { id: "physical", key: "physical", label: "06" },
+  { id: "journey", key: "journey", label: "07" },
+  { id: "architecture", key: "architecture", label: "08" },
+  { id: "ontology", key: "ontology", label: "09" },
+  { id: "harness", key: "harness", label: "10" },
+  { id: "llm", key: "llm", label: "11" },
+  { id: "hardware", key: "hardware", label: "12" },
+  { id: "future", key: "future", label: "13" },
 ];
 
 export default function SideNav() {
+  const t = useT("common.nav");
   const [active, setActive] = useState("hero");
 
   useEffect(() => {
@@ -48,35 +55,39 @@ export default function SideNav() {
 
   return (
     <nav className="fixed left-0 top-0 h-screen z-50 hidden lg:flex flex-col items-center justify-center w-16 gap-1">
-      <div className="flex flex-col items-center gap-1 py-4 px-2 rounded-r-lg bg-deep-space/80 backdrop-blur-md border-r border-t border-b border-panel-border/30">
-        {sections.map(({ id, label, title }) => (
-          <button
-            key={id}
-            onClick={() => scrollTo(id)}
-            className="group relative flex items-center justify-center w-10 h-10 rounded-md transition-all duration-300"
-            title={title}
-          >
-            {active === id && (
-              <motion.div
-                layoutId="nav-active"
-                className="absolute inset-0 rounded-md bg-cyan-glow/15 border border-cyan-glow/40"
-                transition={{ type: "spring", stiffness: 350, damping: 30 }}
-              />
-            )}
-            <span
-              className={`relative z-10 text-xs font-mono font-medium transition-colors duration-300 ${
-                active === id
-                  ? "text-cyan-glow"
-                  : "text-muted-foreground group-hover:text-foreground"
-              }`}
+      <div className="flex flex-col items-center gap-1 py-4 px-2 rounded-r-lg bg-deep-space/80 backdrop-blur-md border-r border-t border-b border-border">
+        {sections.map(({ id, key, label }) => {
+          const title = t(key);
+          return (
+            <button
+              key={id}
+              onClick={() => scrollTo(id)}
+              aria-label={title}
+              className="group relative flex items-center justify-center w-10 h-10 rounded-md transition-all duration-300"
+              title={title}
             >
-              {label}
-            </span>
-            <div className="absolute left-full ml-3 px-2.5 py-1 rounded bg-panel-bg border border-panel-border text-xs text-foreground opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none font-body">
-              {title}
-            </div>
-          </button>
-        ))}
+              {active === id && (
+                <motion.div
+                  layoutId="nav-active"
+                  className="absolute inset-0 rounded-md bg-cyan-glow/15 border border-cyan-glow/40"
+                  transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                />
+              )}
+              <span
+                className={`relative z-10 text-xs font-mono font-medium transition-colors duration-300 ${
+                  active === id
+                    ? "text-cyan-glow"
+                    : "text-muted-foreground group-hover:text-foreground"
+                }`}
+              >
+                {label}
+              </span>
+              <span className="absolute left-full ml-3 px-2.5 py-1 rounded bg-panel-bg border border-panel-border text-xs text-foreground opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none font-body">
+                {title}
+              </span>
+            </button>
+          );
+        })}
       </div>
     </nav>
   );

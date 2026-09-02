@@ -1,138 +1,181 @@
 /**
- * Design: Deep Space Command — Company Introduction (Merged single page)
- * UNIS (fulfillment) + Item (technology platform) side by side
- * No red backgrounds — consistent dark theme with cyan/purple accents
- * Item content simplified to avoid overlap with Evolution section
+ * Company introduction — UNIS (fulfillment) + Item (technology platform).
+ *
+ * Customer and partner marks used to be hotlinked from a CDN that now 403s on
+ * everything. They are vendored under `client/public/logos/` and referenced via
+ * BASE_URL. They are full-colour brand marks, so each sits in a light neutral
+ * chip that stays light in both themes — never inverted or hue-shifted.
  */
 
+import { useState } from "react";
 import AnimatedSection from "@/components/AnimatedSection";
 import SectionTitle from "@/components/SectionTitle";
+import BrandLogo from "@/components/BrandLogo";
 import { Truck, MapPin, Users } from "lucide-react";
+import { useT } from "@/i18n/runtime";
 
-const ITEM_LOGO_SVG = "https://unisco.sfo3.digitaloceanspaces.com/design-item-com/svg/item-logo-fullcolor-whitetxt.svg";
+const logoUrl = (slug: string, ext = "svg") =>
+  `${import.meta.env.BASE_URL}logos/${slug}.${ext}`;
 
+/** Metrics stay in code — they are not translated. */
 const unisStats = [
-  { value: "100M+", label: "Orders / Year", labelCn: "年订单量" },
-  { value: "1,200+", label: "Customer Accounts", labelCn: "客户账户" },
-  { value: "$20B", label: "Inventory Value", labelCn: "库存价值" },
-  { value: "10M+", label: "Sq Ft Warehouse", labelCn: "平方英尺仓库" },
+  { key: "orders", value: "100M+" },
+  { key: "accounts", value: "1,200+" },
+  { key: "inventory", value: "$20B" },
+  { key: "warehouse", value: "10M+" },
 ];
 
-/* All logos from PPT extraction - CDN URLs */
-const allLogos = [
-  { name: "Walmart", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image2_0b92a732.png" },
-  { name: "Samsung", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image3_15244f3c.png" },
-  { name: "Amazon", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image4_e5b97640.png" },
-  { name: "Meijer", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image5_f32d6f0a.png" },
-  { name: "Foxconn", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image6_97765300.png" },
-  { name: "SharkNinja", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image7_7fa51092.png" },
-  { name: "VeSync", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image14_7275d439.png" },
-  { name: "Omron", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image10_7cb86829.png" },
-  { name: "Adastria", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image11_e8f74934.png" },
-  { name: "GLS", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image12_1335d885.png" },
-  { name: "Libiao Robotics", url: "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image13_565b125e.png" },
+/** Acronym stacks are product vocabulary, not prose. */
+const caps = [
+  { key: "saas", sub: "OMS · WMS · TMS · YMS · RMS · Billing", color: "cyan" as const },
+  { key: "factory", sub: "Ontology → Agent Assembly → Runtime", color: "purple" as const },
+  { key: "robotics", sub: "WES · WCS · AMR · AS/RS · Sortation", color: "cyan" as const },
 ];
+
+const partnerLogos = [
+  { name: "Walmart", src: logoUrl("walmart") },
+  { name: "Samsung", src: logoUrl("samsung") },
+  { name: "Amazon", src: logoUrl("amazon") },
+  { name: "Meijer", src: logoUrl("meijer") },
+  { name: "Foxconn", src: logoUrl("foxconn") },
+  { name: "SharkNinja", src: logoUrl("sharkninja") },
+  { name: "VeSync", src: logoUrl("vesync", "png") },
+  { name: "Omron", src: logoUrl("omron") },
+  { name: "Adastria", src: logoUrl("adastria") },
+  { name: "GLS", src: logoUrl("gls") },
+  { name: "Libiao Robotics", src: logoUrl("libiao") },
+  { name: "Lenovo", src: logoUrl("lenovo") },
+];
+
+/**
+ * A brand mark on a light neutral chip. If the file is missing the chip falls
+ * back to the company name so the strip never shows a broken image.
+ */
+function LogoChip({
+  name,
+  src,
+  heightClass = "h-6 md:h-7",
+}: {
+  name: string;
+  src: string;
+  heightClass?: string;
+}) {
+  const [failed, setFailed] = useState(false);
+
+  return (
+    <span className="inline-flex items-center justify-center px-3 py-2 rounded-lg bg-card dark:bg-white/90 border border-border shadow-sm">
+      {failed ? (
+        <span className="text-xs font-semibold tracking-wide text-slate-700">{name}</span>
+      ) : (
+        <img
+          src={src}
+          alt={name}
+          onError={() => setFailed(true)}
+          className={`${heightClass} w-auto max-w-[92px] object-contain`}
+          loading="lazy"
+        />
+      )}
+    </span>
+  );
+}
 
 export default function CompanyIntroSection() {
+  const t = useT("deck.companyIntro");
+  const ui = useT("common.ui");
+
   return (
     <section id="company" className="py-24 md:py-28">
       <div className="container max-w-6xl">
-        <SectionTitle
-          number="01"
-          title="关于我们"
-          titleEn="Who We Are"
-          subtitleEn="UNIS provides omni-channel fulfillment; Item builds the technology platform that powers it all."
-          subtitle="UNIS提供全渠道履约服务；Item构建驱动一切的技术平台。"
-        />
+        <SectionTitle number="01" title={t("title")} subtitle={t("subtitle")} />
 
-        {/* Merged two-column layout */}
         <div className="grid lg:grid-cols-5 gap-8 mb-10">
-          {/* UNIS — 3 columns, more detail */}
+          {/* UNIS */}
           <AnimatedSection direction="left" className="lg:col-span-3">
-            <div className="p-6 rounded-xl bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm h-full">
+            <div className="p-6 rounded-xl bg-surface-veil border border-border backdrop-blur-sm h-full">
               <div className="flex items-center gap-3 mb-5">
-                <img src="https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/image15_73115e90.png" alt="Unis" className="h-7" />
-                <p className="text-xs text-muted-foreground/65 font-mono">www.unisco.com</p>
+                <LogoChip name="UNIS" src={logoUrl("unis")} heightClass="h-6" />
+                <p className="text-xs text-muted-foreground font-mono">www.unisco.com</p>
               </div>
 
-              <p className="text-sm text-foreground/90 leading-relaxed mb-1">
-                <span className="font-semibold text-cyan-glow">Omni-channel fulfillment on-time and in-full.</span> UNIS started serving Fashion Nova since 2019 at Memphis, US. Strategically designed national footprint reaches 98% of consumers with same-or next-day service.
-              </p>
-              <p className="text-xs text-muted-foreground/65 leading-relaxed mb-5">
-                全渠道准时足量履约。UNIS自2019年起在孟菲斯为Fashion Nova提供服务，全国性网络覆盖98%消费者的当日或次日达。
+              <p className="text-sm text-foreground leading-relaxed mb-5">
+                <span className="font-semibold text-cyan-glow">{t("unis.leadStrong")}</span>{" "}
+                {t("unis.lead")}
               </p>
 
-              {/* Stats row */}
-              <div className="grid grid-cols-4 gap-2 mb-5">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-5">
                 {unisStats.map((s) => (
-                  <div key={s.label} className="p-2.5 rounded-lg bg-white/[0.03] border border-white/[0.08] text-center">
+                  <div
+                    key={s.key}
+                    className="p-2.5 rounded-lg bg-surface-veil-strong border border-border text-center"
+                  >
                     <p className="text-lg font-bold text-cyan-glow font-mono">{s.value}</p>
-                    <p className="text-[10px] text-muted-foreground mt-0.5">{s.label}</p>
-                    <p className="text-[9px] text-muted-foreground/75">{s.labelCn}</p>
+                    <p className="text-[11px] text-muted-foreground mt-0.5 leading-tight">
+                      {t(`unis.stats.${s.key}`)}
+                    </p>
                   </div>
                 ))}
               </div>
 
-              {/* Key highlights */}
-              <div className="flex flex-wrap gap-x-6 gap-y-1.5 text-xs text-foreground/90">
-                <span className="flex items-center gap-1.5"><MapPin className="w-3 h-3 text-cyan-glow/60" /> 4 major US ports (CA, TX, GA, NJ)</span>
-                <span className="flex items-center gap-1.5"><Truck className="w-3 h-3 text-cyan-glow/60" /> 4.5M sq ft in LA area</span>
-                <span className="flex items-center gap-1.5"><Users className="w-3 h-3 text-cyan-glow/60" /> 1,300 service technicians</span>
+              <div className="flex flex-wrap gap-x-6 gap-y-1.5 text-xs text-foreground">
+                <span className="flex items-center gap-1.5">
+                  <MapPin className="w-3 h-3 text-cyan-glow" /> {t("unis.highlights.ports")}
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Truck className="w-3 h-3 text-cyan-glow" /> {t("unis.highlights.la")}
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Users className="w-3 h-3 text-cyan-glow" /> {t("unis.highlights.technicians")}
+                </span>
               </div>
             </div>
           </AnimatedSection>
 
-          {/* Item — 2 columns, concise positioning statement */}
+          {/* Item */}
           <AnimatedSection direction="right" className="lg:col-span-2">
-            <div className="p-6 rounded-xl bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm h-full flex flex-col">
+            <div className="p-6 rounded-xl bg-surface-veil border border-border backdrop-blur-sm h-full flex flex-col">
               <div className="flex items-center gap-3 mb-5">
-                <img src={ITEM_LOGO_SVG} alt="Item" className="h-7" />
+                <BrandLogo heightClass="h-7" />
               </div>
 
-              <p className="text-sm text-foreground/90 leading-relaxed mb-1">
-                <span className="font-semibold text-purple-glow">The technology engine behind UNIS.</span> Item is the implementation foundation for all supply chain transformation projects across UNIS Group.
-              </p>
-              <p className="text-xs text-muted-foreground/65 leading-relaxed mb-5">
-                UNIS背后的技术引擎。Item是UNIS集团所有供应链转型项目的实施底座。
+              <p className="text-sm text-foreground leading-relaxed mb-5">
+                <span className="font-semibold text-purple-glow">{t("item.leadStrong")}</span>{" "}
+                {t("item.lead")}
               </p>
 
-              {/* Simple capability tags instead of detailed stages */}
               <div className="flex-1 flex flex-col justify-center">
-                <p className="text-[10px] text-muted-foreground/65 font-mono tracking-wider mb-3">CAPABILITY STACK</p>
+                <p className="text-[10px] text-muted-foreground font-mono tracking-wider mb-3 uppercase">
+                  {t("item.stackLabel")}
+                </p>
                 <div className="space-y-2">
-                  <CapTag label="SaaS Platform" sub="OMS · WMS · TMS · YMS · RMS · Billing" color="cyan" />
-                  <CapTag label="AI Agent Factory" sub="Ontology → Agent Assembly → Runtime" color="purple" />
-                  <CapTag label="Robotics Integration" sub="WES · WCS · AMR · AS/RS · Sortation" color="cyan" />
+                  {caps.map((c) => (
+                    <CapTag
+                      key={c.key}
+                      label={t(`item.caps.${c.key}`)}
+                      sub={c.sub}
+                      color={c.color}
+                    />
+                  ))}
                 </div>
               </div>
 
-              <div className="mt-5 pt-4 border-t border-white/[0.08]">
-                <p className="text-[10px] text-muted-foreground/65 italic leading-relaxed">
-                  "From digital operations → AI intelligence → physical automation"
-                </p>
-                <p className="text-[9px] text-muted-foreground/75 italic leading-relaxed mt-0.5">
-                  "从数字化运营 → AI智能化 → 物理自动化"
+              <div className="mt-5 pt-4 border-t border-border">
+                <p className="text-xs text-muted-foreground italic leading-relaxed">
+                  “{t("item.quote")}”
                 </p>
               </div>
             </div>
           </AnimatedSection>
         </div>
 
-        {/* Unified logo bar — customers & partners */}
+        {/* Customers & partners */}
         <AnimatedSection delay={0.2}>
-          <div className="p-5 rounded-xl bg-white/[0.04] border border-white/[0.08]">
-            <p className="text-[10px] text-muted-foreground/65 font-mono tracking-wider mb-4 text-center">
-              CUSTOMERS & PARTNERS
+          <div className="p-5 rounded-xl bg-surface-veil-strong border border-border">
+            <p className="text-[10px] text-muted-foreground font-mono tracking-wider mb-4 text-center uppercase">
+              {ui("customersPartners")}
             </p>
-            <div className="flex items-center justify-center gap-6 flex-wrap">
-              {allLogos.map((logo) => (
-                <img
-                  key={logo.name}
-                  src={logo.url}
-                  alt={logo.name}
-                  className="h-5 md:h-6 opacity-50 hover:opacity-80 transition-opacity object-contain"
-                  style={{ maxWidth: "80px" }}
-                />
+            <div className="flex items-center justify-center gap-3 md:gap-4 flex-wrap">
+              {partnerLogos.map((logo) => (
+                <LogoChip key={logo.name} name={logo.name} src={logo.src} />
               ))}
             </div>
           </div>
@@ -142,21 +185,37 @@ export default function CompanyIntroSection() {
   );
 }
 
-function CapTag({ label, sub, color }: { label: string; sub: string; color: "cyan" | "purple" }) {
+function CapTag({
+  label,
+  sub,
+  color,
+}: {
+  label: string;
+  sub: string;
+  color: "cyan" | "purple";
+}) {
   return (
-    <div className={`flex items-center gap-3 p-2.5 rounded-lg border ${
-      color === "cyan"
-        ? "border-cyan-500/15 bg-cyan-500/5"
-        : "border-purple-500/15 bg-purple-500/5"
-    }`}>
-      <div className={`w-1.5 h-6 rounded-full shrink-0 ${
-        color === "cyan" ? "bg-cyan-glow/60" : "bg-purple-glow/60"
-      }`} />
+    <div
+      className={`flex items-center gap-3 p-2.5 rounded-lg border ${
+        color === "cyan"
+          ? "border-cyan-glow/20 bg-cyan-glow/5"
+          : "border-purple-glow/20 bg-purple-glow/5"
+      }`}
+    >
+      <div
+        className={`w-1.5 h-6 rounded-full shrink-0 ${
+          color === "cyan" ? "bg-cyan-glow/70" : "bg-purple-glow/70"
+        }`}
+      />
       <div>
-        <p className={`text-xs font-semibold ${
-          color === "cyan" ? "text-cyan-glow/90" : "text-purple-glow/90"
-        }`}>{label}</p>
-        <p className="text-[10px] text-muted-foreground/65 font-mono">{sub}</p>
+        <p
+          className={`text-xs font-semibold ${
+            color === "cyan" ? "text-cyan-glow" : "text-purple-glow"
+          }`}
+        >
+          {label}
+        </p>
+        <p className="text-[10px] text-muted-foreground font-mono">{sub}</p>
       </div>
     </div>
   );

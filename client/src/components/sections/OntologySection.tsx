@@ -1,81 +1,134 @@
+/**
+ * Ontology — the semantic backbone.
+ *
+ * The hosted `ontology-graph-*.webp` is gone for good. In its place is an
+ * authored inline SVG of the entity graph itself: the domain nodes the copy
+ * talks about (SKU, Dock, Wave …) and the relations between them, drawn with
+ * `currentColor` and theme variables so it works on either ground. The node
+ * labels are domain vocabulary and stay unlocalised.
+ */
+
 import SectionTitle from "@/components/SectionTitle";
 import AnimatedSection from "@/components/AnimatedSection";
 import GlowCard from "@/components/GlowCard";
 import CountUp from "@/components/CountUp";
+import { useT } from "@/i18n/runtime";
 
-const ONTOLOGY_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/117473971/h7qedRhtoqj5LJqKjV6TsA/ontology-graph-ivkiih3h7v7GhQdxQ4RPkg.webp";
+type Node = { id: string; label: string; x: number; y: number; r: number; accent?: boolean };
+
+const NODES: Node[] = [
+  { id: "site", label: "Site", x: 60, y: 52, r: 24 },
+  { id: "order", label: "Order", x: 165, y: 34, r: 27, accent: true },
+  { id: "sku", label: "SKU", x: 152, y: 132, r: 26, accent: true },
+  { id: "wave", label: "Wave", x: 262, y: 88, r: 28, accent: true },
+  { id: "dock", label: "Dock", x: 358, y: 42, r: 25 },
+  { id: "carrier", label: "Carrier", x: 372, y: 140, r: 27 },
+  { id: "task", label: "Task", x: 258, y: 186, r: 24 },
+];
+
+const EDGES: [string, string][] = [
+  ["site", "order"],
+  ["site", "sku"],
+  ["order", "sku"],
+  ["order", "wave"],
+  ["sku", "wave"],
+  ["wave", "dock"],
+  ["wave", "carrier"],
+  ["wave", "task"],
+  ["dock", "carrier"],
+  ["sku", "task"],
+];
+
+const byId = Object.fromEntries(NODES.map((n) => [n.id, n]));
+
+function OntologyGraph() {
+  return (
+    <svg
+      viewBox="0 0 440 230"
+      role="img"
+      aria-label="Ontology entity graph: Site, Order, SKU, Wave, Dock, Carrier and Task connected by domain relations"
+      className="w-full h-auto text-cyan-glow"
+    >
+      <g stroke="currentColor" strokeWidth="1.1" opacity="0.45">
+        {EDGES.map(([a, b]) => (
+          <line key={`${a}-${b}`} x1={byId[a].x} y1={byId[a].y} x2={byId[b].x} y2={byId[b].y} />
+        ))}
+      </g>
+      {NODES.map((n) => (
+        <g key={n.id}>
+          <circle
+            cx={n.x}
+            cy={n.y}
+            r={n.r}
+            fill="color-mix(in oklch, var(--panel-bg) 92%, transparent)"
+            stroke="currentColor"
+            strokeWidth={n.accent ? 1.8 : 1.1}
+            opacity={n.accent ? 1 : 0.7}
+          />
+          <text
+            x={n.x}
+            y={n.y + 4}
+            textAnchor="middle"
+            className="font-mono"
+            fontSize="11"
+            fill="var(--foreground)"
+          >
+            {n.label}
+          </text>
+        </g>
+      ))}
+    </svg>
+  );
+}
+
+const pointKeys = ["unify", "understand", "validate", "transform"];
 
 export default function OntologySection() {
+  const t = useT("deck.ontology");
+
   return (
     <section id="ontology" className="py-24 md:py-32">
       <div className="container max-w-6xl">
-        <SectionTitle
-          number="08"
-          title="Ontology：企业AI的语义骨干"
-          titleEn="Ontology: The Semantic Backbone of Enterprise AI"
-          subtitle="通用大模型不懂企业的「行业暗知识」和「SOP」。没有Ontology，AI Agent无法在企业级场景中做到准确和行为一致。"
-          subtitleEn="General-purpose LLMs don't understand enterprise 'domain dark knowledge' or SOPs. Without Ontology, AI Agents cannot achieve accuracy and behavioral consistency in enterprise scenarios."
-        />
+        <SectionTitle number="09" title={t("title")} subtitle={t("subtitle")} />
 
         <div className="grid lg:grid-cols-2 gap-8 items-start">
-          {/* Left: Image + concept */}
+          {/* Left: authored graph + concept */}
           <AnimatedSection direction="left">
-            <div className="relative rounded-lg overflow-hidden mb-6">
-              <img
-                src={ONTOLOGY_IMG}
-                alt="Ontology Knowledge Graph"
-                className="w-full h-auto rounded-lg"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
-              <div className="absolute bottom-4 left-4 right-4">
-                <p className="text-sm font-mono text-cyan-glow">
-                  Layer 2 · Neo4j GraphRAG · Enterprise Brain 企业大脑
-                </p>
-              </div>
+            <div className="rounded-lg overflow-hidden mb-6 border border-border bg-surface-veil p-5">
+              <OntologyGraph />
+              <p className="mt-3 text-sm font-mono text-cyan-glow">{t("caption")}</p>
             </div>
             <GlowCard className="p-5">
-              <h4 className="font-bold mb-1">What is Ontology?</h4>
-              <p className="text-xs text-muted-foreground/75 mb-2">什么是Ontology？</p>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                Ontology is more than a knowledge graph. It is a domain-specific <strong className="text-foreground">structural framework</strong>, <strong className="text-foreground">entity model</strong>, and <strong className="text-foreground">semantic backbone</strong>. It defines relationships, constraints, and reasoning rules among all concepts within a domain, enabling AI Agents to think and act like domain experts.
-              </p>
-              <p className="text-xs text-muted-foreground/65 leading-relaxed mt-2">
-                Ontology不仅仅是知识图谱。它是特定领域的结构化框架、实体模型和语义骨干。它定义了领域内所有概念之间的关系、约束和推理规则，让AI Agent能够像领域专家一样思考和行动。
-              </p>
+              <h4 className="font-bold mb-2 text-foreground">{t("what.title")}</h4>
+              <p className="text-sm text-muted-foreground leading-relaxed">{t("what.body")}</p>
             </GlowCard>
           </AnimatedSection>
 
-          {/* Right: Metrics + details */}
+          {/* Right: metrics + details */}
           <div className="space-y-6">
             <AnimatedSection direction="right" delay={0.1}>
               <GlowCard className="p-6">
-                <p className="text-xs font-mono text-cyan-glow/60 tracking-widest uppercase mb-1">
-                  Construction Results
+                <p className="text-xs font-mono text-cyan-glow tracking-widest uppercase mb-4">
+                  {t("results.eyebrow")}
                 </p>
-                <p className="text-[10px] font-mono text-cyan-glow/55 tracking-widest uppercase mb-4">
-                  构建成果
-                </p>
-                <div className="grid grid-cols-3 gap-4 mb-6">
+                <div className="grid grid-cols-3 gap-4">
                   <div className="text-center">
                     <div className="text-3xl font-bold font-mono text-cyan-glow glow-text-cyan">
                       <CountUp end={2} suffix=" Days" />
                     </div>
-                    <p className="text-xs text-muted-foreground mt-1">Build Time</p>
-                    <p className="text-[10px] text-muted-foreground/65">构建时间</p>
+                    <p className="text-xs text-muted-foreground mt-1">{t("results.buildTime")}</p>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl font-bold font-mono text-cyan-glow glow-text-cyan">
                       <CountUp end={630} suffix=" Iter." />
                     </div>
-                    <p className="text-xs text-muted-foreground mt-1">Research Iterations</p>
-                    <p className="text-[10px] text-muted-foreground/65">自主研究迭代</p>
+                    <p className="text-xs text-muted-foreground mt-1">{t("results.iterations")}</p>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl font-bold font-mono text-cyan-glow glow-text-cyan">
                       <CountUp end={98} suffix="%" />
                     </div>
-                    <p className="text-xs text-muted-foreground mt-1">Domain Coverage</p>
-                    <p className="text-[10px] text-muted-foreground/65">领域知识覆盖</p>
+                    <p className="text-xs text-muted-foreground mt-1">{t("results.coverage")}</p>
                   </div>
                 </div>
               </GlowCard>
@@ -83,21 +136,15 @@ export default function OntologySection() {
 
             <AnimatedSection direction="right" delay={0.2}>
               <GlowCard glowColor="purple" className="p-6">
-                <h4 className="font-bold mb-1">Why is Ontology Decisive?</h4>
-                <p className="text-xs text-muted-foreground/75 mb-3">为什么Ontology是决定性的？</p>
+                <h4 className="font-bold mb-3 text-foreground">{t("why.title")}</h4>
                 <ul className="space-y-3">
-                  {[
-                    { en: "Unifying 55 independent WMS instances into a single semantic architecture", zh: "将55个独立WMS实例统一到一个语义架构中" },
-                    { en: "Enabling AI Agents to understand the real meaning of domain concepts like SKU, Dock, and Wave", zh: "让AI Agent理解「SKU」「月台」「波次」等领域概念的真实含义" },
-                    { en: "Providing validation benchmarks for Harness — Agent outputs must conform to Ontology-defined constraints", zh: "为Harness提供验证基准——Agent的输出必须符合Ontology定义的约束" },
-                    { en: "The secret weapon for transforming Agents from 'toys' into 'productivity tools'", zh: "将Agent从「玩具」转化为「生产力工具」的秘密武器" },
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm text-muted-foreground">
-                      <span className="w-1.5 h-1.5 rounded-full bg-purple-glow mt-2 shrink-0" />
-                      <div>
-                        <span>{item.en}</span>
-                        <p className="text-xs text-muted-foreground/65 mt-0.5">{item.zh}</p>
-                      </div>
+                  {pointKeys.map((k) => (
+                    <li key={k} className="flex items-start gap-3 text-sm text-muted-foreground">
+                      <span
+                        aria-hidden
+                        className="w-1.5 h-1.5 rounded-full bg-purple-glow mt-2 shrink-0"
+                      />
+                      <span>{t(`why.points.${k}`)}</span>
                     </li>
                   ))}
                 </ul>
@@ -106,12 +153,7 @@ export default function OntologySection() {
 
             <AnimatedSection direction="right" delay={0.3}>
               <div className="p-4 rounded-lg border border-dashed border-cyan-glow/30 bg-cyan-glow/5">
-                <p className="text-sm text-cyan-glow/80 italic">
-                  "Ontology is the bridge from general intelligence to domain expertise. Without it, LLMs are merely clever but ignorant outsiders."
-                </p>
-                <p className="text-xs text-cyan-glow/60 mt-2">
-                  "Ontology是让AI从通用智能走向专业智能的桥梁。没有它，大模型只是一个聪明但无知的外来者。"
-                </p>
+                <p className="text-sm text-cyan-glow italic">“{t("quote")}”</p>
               </div>
             </AnimatedSection>
           </div>

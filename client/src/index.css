@@ -40,19 +40,87 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  /* Deep Space Command custom colors */
-  --color-cyan-glow: oklch(0.82 0.15 195);
-  --color-purple-glow: oklch(0.55 0.25 290);
-  --color-deep-space: oklch(0.12 0.02 270);
-  --color-panel-bg: oklch(0.16 0.02 270);
-  --color-panel-border: oklch(0.30 0.08 200);
+
+  /* Deep Space Command brand accents — resolved per theme below, so that
+     `text-cyan-glow` and friends stay legible on a light background. */
+  --color-cyan-glow: var(--cyan-glow);
+  --color-purple-glow: var(--purple-glow);
+  --color-deep-space: var(--deep-space);
+  --color-panel-bg: var(--panel-bg);
+  --color-panel-border: var(--panel-border);
+  /* Surface tint replacing hardcoded `bg-white/[0.03]` in dark-only markup. */
+  --color-surface-veil: var(--surface-veil);
+  --color-surface-veil-strong: var(--surface-veil-strong);
+
   --font-display: "Space Grotesk", system-ui, sans-serif;
   --font-body: "DM Sans", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 }
 
+/* ---------------------------------------------------------------------------
+   LIGHT (day view) — the default.
+   Same hue families as the dark theme, re-tuned for a light ground: accents
+   are darkened so they carry text contrast, and the neon glows are dialled
+   down, since bloom on white reads as blur rather than as light.
+   --------------------------------------------------------------------------- */
 :root {
   --radius: 0.5rem;
+
+  --background: oklch(0.985 0.004 270);
+  --foreground: oklch(0.22 0.02 270);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.22 0.02 270);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.22 0.02 270);
+  --primary: oklch(0.52 0.13 195);
+  --primary-foreground: oklch(0.99 0.002 270);
+  --secondary: oklch(0.95 0.008 270);
+  --secondary-foreground: oklch(0.28 0.02 270);
+  --muted: oklch(0.955 0.006 270);
+  --muted-foreground: oklch(0.47 0.02 270);
+  --accent: oklch(0.47 0.21 290);
+  --accent-foreground: oklch(0.99 0.002 290);
+  --destructive: oklch(0.55 0.22 27);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.89 0.012 250);
+  --input: oklch(0.93 0.01 270);
+  --ring: oklch(0.52 0.13 195);
+
+  --chart-1: oklch(0.52 0.13 195);
+  --chart-2: oklch(0.47 0.21 290);
+  --chart-3: oklch(0.62 0.11 195);
+  --chart-4: oklch(0.58 0.16 290);
+  --chart-5: oklch(0.55 0.09 250);
+
+  --sidebar: oklch(0.97 0.005 270);
+  --sidebar-foreground: oklch(0.24 0.02 270);
+  --sidebar-primary: oklch(0.52 0.13 195);
+  --sidebar-primary-foreground: oklch(0.99 0.002 270);
+  --sidebar-accent: oklch(0.94 0.008 270);
+  --sidebar-accent-foreground: oklch(0.24 0.02 270);
+  --sidebar-border: oklch(0.89 0.012 250);
+  --sidebar-ring: oklch(0.52 0.13 195);
+
+  --cyan-glow: oklch(0.50 0.13 195);
+  --purple-glow: oklch(0.47 0.21 290);
+  --deep-space: oklch(0.97 0.006 270);
+  --panel-bg: oklch(1 0 0);
+  --panel-border: oklch(0.88 0.02 220);
+
+  --surface-veil: oklch(0.22 0.02 270 / 0.04);
+  --surface-veil-strong: oklch(0.22 0.02 270 / 0.07);
+
+  /* 0 = flat, 1 = full neon. Scales every glow alpha. */
+  --glow: 0.25;
+  --panel-shadow: 0 1px 2px oklch(0.22 0.02 270 / 0.06), 0 8px 24px oklch(0.22 0.02 270 / 0.06);
+
+  color-scheme: light;
+}
+
+/* ---------------------------------------------------------------------------
+   DARK (night view) — the original Deep Space Command palette, unchanged.
+   --------------------------------------------------------------------------- */
+.dark {
   --background: oklch(0.10 0.02 270);
   --foreground: oklch(0.93 0.01 250);
   --card: oklch(0.14 0.02 270);
@@ -72,11 +140,13 @@
   --border: oklch(0.25 0.04 200);
   --input: oklch(0.20 0.03 270);
   --ring: oklch(0.82 0.15 195);
+
   --chart-1: oklch(0.82 0.15 195);
   --chart-2: oklch(0.55 0.25 290);
   --chart-3: oklch(0.70 0.12 195);
   --chart-4: oklch(0.45 0.20 290);
   --chart-5: oklch(0.65 0.10 250);
+
   --sidebar: oklch(0.12 0.02 270);
   --sidebar-foreground: oklch(0.93 0.01 250);
   --sidebar-primary: oklch(0.82 0.15 195);
@@ -85,15 +155,34 @@
   --sidebar-accent-foreground: oklch(0.93 0.01 250);
   --sidebar-border: oklch(0.25 0.04 200);
   --sidebar-ring: oklch(0.82 0.15 195);
+
+  --cyan-glow: oklch(0.82 0.15 195);
+  --purple-glow: oklch(0.55 0.25 290);
+  --deep-space: oklch(0.12 0.02 270);
+  --panel-bg: oklch(0.16 0.02 270);
+  --panel-border: oklch(0.30 0.08 200);
+
+  --surface-veil: oklch(1 0 0 / 0.03);
+  --surface-veil-strong: oklch(1 0 0 / 0.06);
+
+  --glow: 1;
+  --panel-shadow: none;
+
+  color-scheme: dark;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    /* Keep the ground painted during theme swaps so there is no white flash. */
+    background: var(--background);
+  }
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-body);
+    transition: background-color 200ms ease, color 200ms ease;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
@@ -111,6 +200,18 @@
   }
   code, pre, .font-mono {
     font-family: var(--font-mono);
+  }
+  /* Space Grotesk has no CJK coverage — give those locales a face that does. */
+  :lang(ja) h1, :lang(ja) h2, :lang(ja) h3,
+  :lang(ja) h4, :lang(ja) h5, :lang(ja) h6 {
+    font-family: "Space Grotesk", "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif;
+  }
+  :lang(zh) h1, :lang(zh) h2, :lang(zh) h3,
+  :lang(zh) h4, :lang(zh) h5, :lang(zh) h6 {
+    font-family: "Space Grotesk", "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    body { transition: none; }
   }
 }
 
@@ -140,36 +241,54 @@
     }
   }
 
-  /* Glow effects */
+  /* Glow effects — alpha scales with --glow, so the light theme gets a soft
+     lift instead of neon bloom. */
   .glow-cyan {
-    box-shadow: 0 0 20px oklch(0.82 0.15 195 / 0.3), 0 0 60px oklch(0.82 0.15 195 / 0.1);
+    box-shadow:
+      0 0 20px color-mix(in oklch, var(--cyan-glow) calc(30% * var(--glow)), transparent),
+      0 0 60px color-mix(in oklch, var(--cyan-glow) calc(10% * var(--glow)), transparent);
   }
   .glow-purple {
-    box-shadow: 0 0 20px oklch(0.55 0.25 290 / 0.3), 0 0 60px oklch(0.55 0.25 290 / 0.1);
+    box-shadow:
+      0 0 20px color-mix(in oklch, var(--purple-glow) calc(30% * var(--glow)), transparent),
+      0 0 60px color-mix(in oklch, var(--purple-glow) calc(10% * var(--glow)), transparent);
   }
   .glow-text-cyan {
-    text-shadow: 0 0 20px oklch(0.82 0.15 195 / 0.5), 0 0 40px oklch(0.82 0.15 195 / 0.2);
+    text-shadow:
+      0 0 20px color-mix(in oklch, var(--cyan-glow) calc(50% * var(--glow)), transparent),
+      0 0 40px color-mix(in oklch, var(--cyan-glow) calc(20% * var(--glow)), transparent);
   }
   .glow-text-purple {
-    text-shadow: 0 0 20px oklch(0.55 0.25 290 / 0.5), 0 0 40px oklch(0.55 0.25 290 / 0.2);
+    text-shadow:
+      0 0 20px color-mix(in oklch, var(--purple-glow) calc(50% * var(--glow)), transparent),
+      0 0 40px color-mix(in oklch, var(--purple-glow) calc(20% * var(--glow)), transparent);
   }
 
   /* Panel card style */
   .panel {
-    background: oklch(0.14 0.02 270 / 0.8);
-    border: 1px solid oklch(0.30 0.08 200 / 0.4);
+    background: color-mix(in oklch, var(--panel-bg) 80%, transparent);
+    border: 1px solid color-mix(in oklch, var(--panel-border) 40%, transparent);
     backdrop-filter: blur(12px);
     border-radius: 0.5rem;
+    box-shadow: var(--panel-shadow);
   }
   .panel:hover {
-    border-color: oklch(0.82 0.15 195 / 0.5);
-    box-shadow: 0 0 30px oklch(0.82 0.15 195 / 0.1);
+    border-color: color-mix(in oklch, var(--cyan-glow) 50%, transparent);
+    box-shadow:
+      0 0 30px color-mix(in oklch, var(--cyan-glow) calc(10% * var(--glow)), transparent),
+      var(--panel-shadow);
   }
 
   /* Section divider */
   .section-divider {
     height: 1px;
-    background: linear-gradient(90deg, transparent, oklch(0.82 0.15 195 / 0.4), oklch(0.55 0.25 290 / 0.4), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklch, var(--cyan-glow) 40%, transparent),
+      color-mix(in oklch, var(--purple-glow) 40%, transparent),
+      transparent
+    );
   }
 
   /* Scrollbar styling */
@@ -177,14 +296,14 @@
     width: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: oklch(0.12 0.02 270);
+    background: var(--deep-space);
   }
   ::-webkit-scrollbar-thumb {
-    background: oklch(0.30 0.08 200 / 0.6);
+    background: color-mix(in oklch, var(--panel-border) 60%, transparent);
     border-radius: 3px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: oklch(0.82 0.15 195 / 0.5);
+    background: color-mix(in oklch, var(--cyan-glow) 50%, transparent);
   }
 
   /* Hide Manus badge */

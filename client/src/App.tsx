@@ -1,22 +1,93 @@
+import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import { Route, Router as WouterRouter, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { I18nProvider } from "./i18n/runtime";
+import { registerPagePack, type LocalePack } from "./i18n/dict";
 import Home from "./pages/Home";
-import V1 from "./pages/V1";
-import V2 from "./pages/V2";
 import En from "./pages/En";
-import ProductV4 from "./pages/ProductV4";
-import Product2CustV3 from "./pages/Product2CustV3";
-import ProductGeneralV4 from "./pages/ProductGeneralV4";
-import ProductGeneralInvestorV43 from "./pages/ProductGeneralInvestorV43";
-import ProductGeneralCustomerV5 from "./pages/ProductGeneralCustomerV5";
-import ProductV6 from "./pages/ProductV6";
-import ProductENN from "./pages/ProductENN";
-import ProductENN2 from "./pages/ProductENN2";
-import TMSProductV1 from "./pages/TMSProductV1";
+
+/**
+ * The deck at `/` loads eagerly; every other route is a self-contained
+ * presentation weighing a few hundred KB, so they are split out and fetched on
+ * demand rather than shipped to every visitor who lands on the home page.
+ */
+/**
+ * Pair each page with its own translations: both arrive in the route's chunk,
+ * and the pack is merged into the live dictionary before the page first
+ * renders, so no page ever shows an untranslated key on mount.
+ */
+function page(
+  loadPage: () => Promise<{ default: React.ComponentType }>,
+  namespace?: string,
+  loadPack?: () => Promise<{ default: LocalePack }>,
+) {
+  return lazy(async () => {
+    if (!namespace || !loadPack) return loadPage();
+    const [mod, pack] = await Promise.all([loadPage(), loadPack()]);
+    registerPagePack(namespace, pack.default);
+    return mod;
+  });
+}
+
+const V1 = page(() => import("./pages/V1"));
+const V2 = page(() => import("./pages/V2"));
+const ProductV4 = page(
+  () => import("./pages/ProductV4"),
+  "productV4",
+  () => import("./i18n/dict/pages/productV4"),
+);
+const Product2CustV3 = page(
+  () => import("./pages/Product2CustV3"),
+  "product2CustV3",
+  () => import("./i18n/dict/pages/product2CustV3"),
+);
+const ProductGeneralV4 = page(
+  () => import("./pages/ProductGeneralV4"),
+  "productGeneralV4",
+  () => import("./i18n/dict/pages/productGeneralV4"),
+);
+const ProductGeneralInvestorV43 = page(
+  () => import("./pages/ProductGeneralInvestorV43"),
+  "productGeneralInvestorV43",
+  () => import("./i18n/dict/pages/productGeneralInvestorV43"),
+);
+const ProductGeneralCustomerV5 = page(
+  () => import("./pages/ProductGeneralCustomerV5"),
+  "productGeneralCustomerV5",
+  () => import("./i18n/dict/pages/productGeneralCustomerV5"),
+);
+const ProductV6 = page(
+  () => import("./pages/ProductV6"),
+  "productV6",
+  () => import("./i18n/dict/pages/productV6"),
+);
+const ProductENN = page(
+  () => import("./pages/ProductENN"),
+  "productEnn",
+  () => import("./i18n/dict/pages/productEnn"),
+);
+const ProductENN2 = page(() => import("./pages/ProductENN2"));
+const TMSProductV1 = page(
+  () => import("./pages/TMSProductV1"),
+  "tmsProductV1",
+  () => import("./i18n/dict/pages/tmsProductV1"),
+);
+
+function RouteFallback() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-background">
+      <div
+        className="h-6 w-6 animate-spin rounded-full border-2 border-border border-t-cyan-glow motion-reduce:animate-none"
+        role="status"
+        aria-label="Loading"
+      />
+    </div>
+  );
+}
 
 function Router() {
   return (
@@ -44,13 +115,17 @@ function Router() {
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider defaultTheme="dark">
-        <TooltipProvider>
-          <Toaster />
-          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-            <Router />
-          </WouterRouter>
-        </TooltipProvider>
+      <ThemeProvider defaultTheme="dark" switchable>
+        <I18nProvider>
+          <TooltipProvider>
+            <Toaster />
+            <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+              <Suspense fallback={<RouteFallback />}>
+                <Router />
+              </Suspense>
+            </WouterRouter>
+          </TooltipProvider>
+        </I18nProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );
