@@ -16,7 +16,7 @@ export default function FutureSection() {
   return (
     <section id="future" className="py-24 md:py-32 relative">
       <div className="container max-w-6xl relative z-10">
-        <SectionTitle number="13" title={t("title")} subtitle={t("subtitle")} align="center" />
+        <SectionTitle number="15" title={t("title")} subtitle={t("subtitle")} align="center" />
 
         <div className="grid md:grid-cols-3 gap-6 mb-16">
           {visions.map((v, i) => (

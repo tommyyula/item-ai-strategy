@@ -16,11 +16,13 @@ const sections = [
   { id: "physical", key: "physical", label: "06" },
   { id: "journey", key: "journey", label: "07" },
   { id: "architecture", key: "architecture", label: "08" },
-  { id: "ontology", key: "ontology", label: "09" },
-  { id: "harness", key: "harness", label: "10" },
-  { id: "llm", key: "llm", label: "11" },
-  { id: "hardware", key: "hardware", label: "12" },
-  { id: "future", key: "future", label: "13" },
+  { id: "product-systems", key: "productSystems", label: "09" },
+  { id: "industry-templates", key: "industryTemplates", label: "10" },
+  { id: "ontology", key: "ontology", label: "11" },
+  { id: "harness", key: "harness", label: "12" },
+  { id: "llm", key: "llm", label: "13" },
+  { id: "hardware", key: "hardware", label: "14" },
+  { id: "future", key: "future", label: "15" },
 ];
 
 export default function SideNav() {

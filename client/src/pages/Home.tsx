@@ -1,6 +1,8 @@
 import SideNav from "@/components/SideNav";
 import TopBar from "@/components/TopBar";
 import ArchitectureSection from "@/components/sections/ArchitectureSection";
+import ProductSystemsSection from "@/components/sections/ProductSystemsSection";
+import IndustryTemplatesSection from "@/components/sections/IndustryTemplatesSection";
 import HeroSection from "@/components/sections/HeroSection";
 import CompanyIntroSection from "@/components/sections/CompanyIntroSection";
 import EvolutionSection from "@/components/sections/EvolutionSection";
@@ -38,6 +40,10 @@ export default function Home() {
         <JourneySection />
         <div className="section-divider" />
         <ArchitectureSection />
+        <div className="section-divider" />
+        <ProductSystemsSection />
+        <div className="section-divider" />
+        <IndustryTemplatesSection />
         <div className="section-divider" />
         <OntologySection />
         <div className="section-divider" />

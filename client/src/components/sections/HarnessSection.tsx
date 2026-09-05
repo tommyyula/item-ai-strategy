@@ -99,7 +99,7 @@ export default function HarnessSection() {
   return (
     <section id="harness" className="py-24 md:py-32">
       <div className="container max-w-6xl">
-        <SectionTitle number="10" title={t("title")} subtitle={t("subtitle")} />
+        <SectionTitle number="12" title={t("title")} subtitle={t("subtitle")} />
 
         {/* Tab navigation */}
         <AnimatedSection className="mb-8">

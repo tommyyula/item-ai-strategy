@@ -4,6 +4,8 @@ import { LOCALES } from "../runtime";
 import common from "./common";
 import deck from "./deck";
 import architecture from "./architecture";
+import productSystems from "./productSystems";
+import industryTemplates from "./industryTemplates";
 import v2 from "./v2";
 
 /**
@@ -22,6 +24,8 @@ const corePacks: Record<string, LocalePack> = {
   common,
   deck,
   architecture,
+  productSystems,
+  industryTemplates,
   v2,
 };
 

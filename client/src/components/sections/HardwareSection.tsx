@@ -23,7 +23,7 @@ export default function HardwareSection() {
   return (
     <section id="hardware" className="py-24 md:py-32">
       <div className="container max-w-6xl">
-        <SectionTitle number="12" title={t("title")} subtitle={t("subtitle")} />
+        <SectionTitle number="14" title={t("title")} subtitle={t("subtitle")} />
 
         {/* Current hardware */}
         <AnimatedSection className="mb-12">

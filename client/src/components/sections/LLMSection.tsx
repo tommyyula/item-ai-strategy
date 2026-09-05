@@ -29,7 +29,7 @@ export default function LLMSection() {
   return (
     <section id="llm" className="py-24 md:py-32">
       <div className="container max-w-6xl">
-        <SectionTitle number="11" title={t("title")} subtitle={t("subtitle")} />
+        <SectionTitle number="13" title={t("title")} subtitle={t("subtitle")} />
 
         <div className="grid md:grid-cols-2 gap-6 mb-10">
           {/* US frontier models */}
