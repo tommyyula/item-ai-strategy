@@ -20,6 +20,20 @@ const deck: LocalePack = {
         ontologyHarness: "Ontology + Harness",
         physicalAi: "物理 AI",
       },
+      agenda: {
+        badge: "今天",
+        title: "参观与演示",
+        meta: "9月5日 · 13:30–15:30 · 两小时",
+        items: {
+          intro: { topic: "介绍", duration: "10 分钟", owner: "Tom / James" },
+          tour: { topic: "自动化仓库参观", duration: "30 分钟", owner: "Marco" },
+          pa: { topic: "PA + ItemGPT", duration: "20 分钟", owner: "Tom" },
+          hrm: { topic: "HRM + WFM", duration: "20 分钟", owner: "Jimoh" },
+          cx: { topic: "客户体验", duration: "20 分钟", owner: "Lex" },
+          ontology: { topic: "Ontology + Agent Factory", duration: "20 分钟", owner: "Tom" },
+          qa: { topic: "问答", duration: "", owner: "" },
+        },
+      },
     },
 
     companyIntro: {
@@ -384,6 +398,20 @@ const deck: LocalePack = {
         middleware: "AI Middleware",
         ontologyHarness: "Ontology + Harness",
         physicalAi: "Physical AI",
+      },
+      agenda: {
+        badge: "TODAY",
+        title: "Tour & Demo",
+        meta: "Sep 5 · 1:30–3:30 PM · Two hours",
+        items: {
+          intro: { topic: "Introduction", duration: "10 min", owner: "Tom / James" },
+          tour: { topic: "Warehouse tour for automation", duration: "30 min", owner: "Marco" },
+          pa: { topic: "PA + ItemGPT", duration: "20 min", owner: "Tom" },
+          hrm: { topic: "HRM + WFM", duration: "20 min", owner: "Jimoh" },
+          cx: { topic: "Customer Experience", duration: "20 min", owner: "Lex" },
+          ontology: { topic: "Ontology + Agent Factory", duration: "20 min", owner: "Tom" },
+          qa: { topic: "Q & A", duration: "", owner: "" },
+        },
       },
     },
 
@@ -796,6 +824,20 @@ const deck: LocalePack = {
         ontologyHarness: "Ontology + Harness",
         physicalAi: "フィジカルAI",
       },
+      agenda: {
+        badge: "本日",
+        title: "見学とデモ",
+        meta: "9月5日 · 13:30–15:30 · 2時間",
+        items: {
+          intro: { topic: "イントロダクション", duration: "10分", owner: "Tom / James" },
+          tour: { topic: "自動化倉庫の見学", duration: "30分", owner: "Marco" },
+          pa: { topic: "PA + ItemGPT", duration: "20分", owner: "Tom" },
+          hrm: { topic: "HRM + WFM", duration: "20分", owner: "Jimoh" },
+          cx: { topic: "カスタマーエクスペリエンス", duration: "20分", owner: "Lex" },
+          ontology: { topic: "Ontology + Agent Factory", duration: "20分", owner: "Tom" },
+          qa: { topic: "質疑応答", duration: "", owner: "" },
+        },
+      },
     },
 
     companyIntro: {
@@ -1207,6 +1249,20 @@ const deck: LocalePack = {
         middleware: "Capa de middleware de IA",
         ontologyHarness: "Ontology + Harness",
         physicalAi: "IA física",
+      },
+      agenda: {
+        badge: "HOY",
+        title: "Visita y demostración",
+        meta: "5 de septiembre · 13:30–15:30 · Dos horas",
+        items: {
+          intro: { topic: "Introducción", duration: "10 min", owner: "Tom / James" },
+          tour: { topic: "Visita al almacén de automatización", duration: "30 min", owner: "Marco" },
+          pa: { topic: "PA + ItemGPT", duration: "20 min", owner: "Tom" },
+          hrm: { topic: "HRM + WFM", duration: "20 min", owner: "Jimoh" },
+          cx: { topic: "Experiencia del cliente", duration: "20 min", owner: "Lex" },
+          ontology: { topic: "Ontology + Agent Factory", duration: "20 min", owner: "Tom" },
+          qa: { topic: "Preguntas y respuestas", duration: "", owner: "" },
+        },
       },
     },
 

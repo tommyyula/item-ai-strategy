@@ -23,6 +23,9 @@ const GRID = `
 `;
 const GRID_MASK = "radial-gradient(68% 58% at 50% 38%, #000 0%, transparent 100%)";
 
+/** Running order for today's session, in the order it is presented. */
+const AGENDA = ["intro", "tour", "pa", "hrm", "cx", "ontology", "qa"] as const;
+
 export default function HeroSection() {
   const t = useT("deck.hero");
   const ui = useT("common.ui");
@@ -38,7 +41,7 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background py-28 lg:py-24"
     >
       {/* Token-built background wash (replaces the lost hero illustration) */}
       <div aria-hidden className="absolute inset-0" style={{ backgroundImage: AURORA }} />
@@ -107,6 +110,52 @@ export default function HeroSection() {
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-glow" />
             {t("pills.physicalAi")}
           </span>
+        </motion.div>
+
+        {/* Running order for today's session */}
+        <motion.div {...rise(24, 1.5)} className="mx-auto mt-12 max-w-2xl">
+          <div className="panel px-5 py-5 text-left sm:px-7 sm:py-6">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-border pb-4">
+              <div className="flex items-center gap-3">
+                <span className="rounded-full border border-cyan-glow/40 bg-cyan-glow/10 px-2.5 py-0.5 font-mono text-[0.65rem] font-semibold uppercase tracking-widest text-cyan-glow">
+                  {t("agenda.badge")}
+                </span>
+                <h2 className="text-base font-semibold text-foreground sm:text-lg">
+                  {t("agenda.title")}
+                </h2>
+              </div>
+              <span className="font-mono text-xs text-muted-foreground">{t("agenda.meta")}</span>
+            </div>
+
+            <ol className="space-y-0.5">
+              {AGENDA.map((key) => {
+                const duration = t(`agenda.items.${key}.duration`);
+                const owner = t(`agenda.items.${key}.owner`);
+                return (
+                  <li
+                    key={key}
+                    className="flex flex-wrap items-baseline gap-x-3 gap-y-1 rounded-md px-2 py-2 transition-colors hover:bg-surface-veil"
+                  >
+                    <span
+                      aria-hidden
+                      className="h-1.5 w-1.5 shrink-0 translate-y-[-2px] rounded-full bg-cyan-glow"
+                    />
+                    <span className="min-w-0 flex-1 text-sm text-foreground sm:text-[0.95rem]">
+                      {t(`agenda.items.${key}.topic`)}
+                    </span>
+                    {duration && (
+                      <span className="shrink-0 font-mono text-xs text-cyan-glow">{duration}</span>
+                    )}
+                    {owner && (
+                      <span className="shrink-0 text-xs text-muted-foreground sm:w-28 sm:text-right">
+                        {owner}
+                      </span>
+                    )}
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
         </motion.div>
       </div>
 
